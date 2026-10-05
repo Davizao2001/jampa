@@ -5,6 +5,18 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Churros Jampa — Carrinho de churros para festas e eventos em João Pessoa</title>
   <meta name="description" content="Churros fritos na hora para casamentos, aniversários e eventos corporativos em João Pessoa/PB. Estrutura completa por nossa conta. Verifique a disponibilidade da sua data." />
+  <!-- Prévia ao compartilhar o link (WhatsApp, Instagram, etc.).
+       TROCAR "https://SEU-DOMINIO" pelo endereço real do site: og:image e og:url precisam de URL completa. -->
+  <meta property="og:type" content="website" />
+  <meta property="og:locale" content="pt_BR" />
+  <meta property="og:site_name" content="Churros Jampa" />
+  <meta property="og:title" content="Churros Jampa — Carrinho de churros para o seu evento" />
+  <meta property="og:description" content="Churros fritos na hora para casamentos, aniversários e eventos corporativos em João Pessoa e região. Peça seu orçamento pelo WhatsApp." />
+  <meta property="og:url" content="https://SEU-DOMINIO/" />
+  <meta property="og:image" content="https://SEU-DOMINIO/assets/og.jpg" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta name="twitter:card" content="summary_large_image" />
   <meta name="theme-color" content="#FBF7F0" />
 
   <!-- A foto da hero é o LCP: pré-carregada na versão certa para cada tela -->
@@ -99,6 +111,16 @@
               background: rgba(255,255,255,.16); color: #fff; font-size: 1.1rem; }
     .lb-btn:hover { background: rgba(255,255,255,.3); }
 
+    /* Botão flutuante de WhatsApp */
+    .float-wa { position: fixed; right: 1rem; bottom: 1rem; z-index: 40; display: inline-flex; align-items: center; gap: .5rem;
+                height: 3.5rem; min-width: 3.5rem; justify-content: center; padding: 0 1rem; border-radius: 999px;
+                background: #1F8F4E; color: #fff; font-family: Outfit, system-ui, sans-serif; font-weight: 600;
+                box-shadow: 0 10px 28px -8px rgba(35,26,18,.45);
+                opacity: 0; transform: translateY(12px); pointer-events: none; transition: opacity .3s, transform .3s; }
+    .float-wa.is-visible { opacity: 1; transform: none; pointer-events: auto; }
+    .float-wa:hover { transform: scale(1.05); }
+    @media (min-width: 640px) { .float-wa { right: 1.5rem; bottom: 1.5rem; padding: 0 1.25rem; } }
+
     /* Funil */
     .opt { transition: border-color .2s, background-color .2s; }
     .opt[aria-checked="true"] { border-color: #C8873A; background: #F6E6CF; }
@@ -119,12 +141,25 @@
       <a href="#topo" class="font-display text-lg font-bold tracking-tight">Churros Jampa</a>
       <nav class="hidden items-center gap-8 text-sm font-medium md:flex" aria-label="Principal">
         <a href="#porque" class="opacity-85 hover:opacity-100">Por que nós</a>
+        <a href="#como" class="opacity-85 hover:opacity-100">Como funciona</a>
         <a href="#eventos" class="opacity-85 hover:opacity-100">Eventos</a>
         <a href="#pacotes" class="opacity-85 hover:opacity-100">Pacotes</a>
         <a href="#faq" class="opacity-85 hover:opacity-100">Dúvidas</a>
       </nav>
-      <a href="#orcamento" class="head-cta rounded-full px-4 py-2 text-sm font-semibold">Pedir orçamento</a>
+      <div class="flex items-center gap-2">
+        <a href="#orcamento" class="head-cta rounded-full px-3 py-2 text-sm font-semibold sm:px-4">Pedir orçamento</a>
+        <button type="button" id="menuBtn" aria-label="Abrir menu" aria-expanded="false" aria-controls="mobileMenu" class="grid h-10 w-10 place-items-center rounded-full md:hidden">
+          <svg class="h-6 w-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path id="menuIcon" d="M4 7h16M4 12h16M4 17h16"/></svg>
+        </button>
+      </div>
     </div>
+    <nav id="mobileMenu" hidden aria-label="Menu" class="mx-3 rounded-3xl border border-sand-200 bg-white p-2 text-ink-900 shadow-soft md:hidden">
+      <a href="#porque" class="block rounded-2xl px-4 py-3 font-display font-semibold hover:bg-sand-100">Por que nós</a>
+      <a href="#como" class="block rounded-2xl px-4 py-3 font-display font-semibold hover:bg-sand-100">Como funciona</a>
+      <a href="#eventos" class="block rounded-2xl px-4 py-3 font-display font-semibold hover:bg-sand-100">Eventos</a>
+      <a href="#pacotes" class="block rounded-2xl px-4 py-3 font-display font-semibold hover:bg-sand-100">Pacotes</a>
+      <a href="#faq" class="block rounded-2xl px-4 py-3 font-display font-semibold hover:bg-sand-100">Dúvidas</a>
+    </nav>
   </header>
 
   <main id="topo">
@@ -197,6 +232,31 @@
           <p class="mt-3 text-sm leading-relaxed text-ink-700">Carrinho e embalagens pensados para aparecer bem nas fotos e combinar com a decoração.</p>
         </article>
       </div>
+    </section>
+
+    <!-- ============ COMO FUNCIONA ============ -->
+    <section id="como" class="mx-auto max-w-6xl px-5 pb-20 md:pb-28">
+      <div data-reveal class="max-w-2xl">
+        <h2 class="font-display text-3xl font-bold tracking-tight sm:text-4xl">Como funciona</h2>
+        <p class="mt-4 text-ink-700">Do primeiro contato ao último churros, em três passos.</p>
+      </div>
+      <ol data-reveal-group class="mt-12 grid gap-5 md:grid-cols-3">
+        <li class="rounded-4xl bg-sand-100 p-7">
+          <span class="font-display text-5xl font-extrabold text-caramel-500">1</span>
+          <h3 class="mt-4 font-display text-xl font-semibold">Você pede o orçamento</h3>
+          <p class="mt-3 text-sm leading-relaxed text-ink-700">Responde quatro perguntas rápidas aqui no site e a conversa já abre no WhatsApp com os dados do seu evento.</p>
+        </li>
+        <li class="rounded-4xl bg-sand-100 p-7">
+          <span class="font-display text-5xl font-extrabold text-caramel-500">2</span>
+          <h3 class="mt-4 font-display text-xl font-semibold">Confirmamos data e detalhes</h3>
+          <p class="mt-3 text-sm leading-relaxed text-ink-700">Verificamos a disponibilidade, fechamos pacote, sabores e horário, e combinamos o local de montagem.</p>
+        </li>
+        <li class="rounded-4xl bg-sand-100 p-7">
+          <span class="font-display text-5xl font-extrabold text-caramel-500">3</span>
+          <h3 class="mt-4 font-display text-xl font-semibold">No dia, é só aproveitar</h3>
+          <p class="mt-3 text-sm leading-relaxed text-ink-700">Chegamos antes, montamos o carrinho e servimos os churros na hora. No fim, desmontamos tudo.</p>
+        </li>
+      </ol>
     </section>
 
     <!-- ============ GALERIA DE EVENTOS (renderizada a partir de CONFIG.gallery) ============ -->
@@ -291,6 +351,10 @@
             <fieldset data-step="0" data-name="Tipo de evento">
               <legend class="font-display text-xl font-semibold">Qual é o evento?</legend>
               <div id="eventOptions" role="radiogroup" class="mt-5 grid grid-cols-2 gap-3"></div>
+              <div id="eventOtherWrap" hidden>
+                <label class="mt-4 block text-sm text-ink-700" for="eventOther">Qual é o evento?</label>
+                <input id="eventOther" type="text" maxlength="60" placeholder="Ex.: chá de bebê, formatura, feira" class="mt-2 w-full rounded-2xl border border-sand-300 bg-paper px-4 py-3 placeholder:text-ink-500" />
+              </div>
             </fieldset>
 
             <fieldset data-step="1" data-name="Convidados" hidden>
@@ -333,6 +397,12 @@
       </div>
     </section>
   </main>
+
+  <!-- Botão flutuante de WhatsApp -->
+  <a id="floatWa" href="#orcamento" target="_blank" rel="noopener" aria-label="Chamar no WhatsApp" class="float-wa">
+    <svg class="h-6 w-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12a8.5 8.5 0 01-12.6 7.4L3 21l1.7-5.2A8.5 8.5 0 1121 12z"/></svg>
+    <span class="hidden sm:inline">WhatsApp</span>
+  </a>
 
   <footer class="bg-sand-100">
     <div class="mx-auto grid max-w-6xl gap-10 px-5 py-14 md:grid-cols-[1.4fr_1fr_1.2fr]">
@@ -453,9 +523,29 @@
      MÓDULO 1 — HEADER (transparente na hero, claro depois)
   ===================================================================== */
   function initHeader() {
-    const header = $('#siteHeader');
-    new IntersectionObserver(([e]) => header.classList.toggle('is-solid', !e.isIntersecting),
-      { rootMargin: '-72px 0px 0px 0px' }).observe($('#hero'));
+    const header = $('#siteHeader'), btn = $('#menuBtn'), menu = $('#mobileMenu'), icon = $('#menuIcon'), float = $('#floatWa');
+    let pastHero = false, onForm = false, open = false;
+    const sync = () => {
+      header.classList.toggle('is-solid', pastHero || open);
+      // Botão flutuante: aparece depois da hero e some sobre o formulário (para não cobrir o "Continuar")
+      float.classList.toggle('is-visible', pastHero && !onForm);
+    };
+    new IntersectionObserver(([e]) => { pastHero = !e.isIntersecting; sync(); }, { rootMargin: '-72px 0px 0px 0px' }).observe($('#hero'));
+    new IntersectionObserver(([e]) => { onForm = e.isIntersecting; sync(); }, { threshold: 0.15 }).observe($('#orcamento'));
+
+    function setOpen(v) {
+      open = v; menu.hidden = !v;
+      btn.setAttribute('aria-expanded', String(v));
+      btn.setAttribute('aria-label', v ? 'Fechar menu' : 'Abrir menu');
+      icon.setAttribute('d', v ? 'M6 6l12 12M18 6L6 18' : 'M4 7h16M4 12h16M4 17h16');
+      sync();
+      if (v && hasGsap()) gsap.fromTo(menu, { y: -8, autoAlpha: 0 }, { y: 0, autoAlpha: 1, duration: 0.22, ease: 'power2.out' });
+    }
+    btn.addEventListener('click', () => setOpen(!open));
+    menu.addEventListener('click', e => { if (e.target.closest('a')) setOpen(false); });
+    document.addEventListener('keydown', e => { if (e.key === 'Escape' && open) { setOpen(false); btn.focus(); } });
+    document.addEventListener('click', e => { if (open && !e.target.closest('#siteHeader')) setOpen(false); });
+    matchMedia('(min-width: 768px)').addEventListener('change', () => setOpen(false));
   }
 
   /* =====================================================================
@@ -599,7 +689,7 @@
   function initFooter() {
     $$('[data-ig-link]').forEach(a => { a.href = `https://www.instagram.com/${CONFIG.instagram}/`; });
     $$('[data-ig-handle]').forEach(el => { el.textContent = `@${CONFIG.instagram}`; });
-    $('#footWa').href = `https://wa.me/${CONFIG.whatsapp}?text=${encodeURIComponent('Olá! Quero um orçamento da Churros Jampa para o meu evento.')}`;
+    $('#floatWa').href = $('#footWa').href = `https://wa.me/${CONFIG.whatsapp}?text=${encodeURIComponent('Olá! Quero um orçamento da Churros Jampa para o meu evento.')}`;
     $('#footHours').textContent = CONFIG.hours;
     $('#footYear').textContent = new Date().getFullYear();
     $('#footLegal').textContent = CONFIG.legal;
@@ -645,7 +735,12 @@
 
     radioGroup($('#eventOptions'), CONFIG.events.map(e => ({ label: e, value: e })), {
       className: 'opt rounded-2xl border border-sand-300 bg-paper px-4 py-5 text-left font-medium hover:border-ink-500',
-      onSelect: v => { state.event = v; error.textContent = ''; },
+      onSelect: v => {
+        state.event = v; error.textContent = '';
+        const other = v === 'Outro';
+        $('#eventOtherWrap').hidden = !other;
+        if (other) $('#eventOther').focus({ preventScroll: true });
+      },
     });
 
     function syncGuests() {
@@ -665,6 +760,7 @@
 
     function validate(i) {
       if (i === 0 && !state.event) return 'Escolha o tipo de evento.';
+      if (i === 0 && state.event === 'Outro' && !$('#eventOther').value.trim()) return 'Conte qual é o evento.';
       if (i === 2) {
         if (!date.value) return 'Informe a data do evento.';
         if (date.value < date.min) return 'Escolha uma data futura.';
@@ -675,6 +771,7 @@
     }
 
     const fmtDate = iso => { const [y, m, d] = iso.split('-'); return `${d}/${m}/${y}`; };
+    const eventLabel = () => state.event === 'Outro' ? $('#eventOther').value.trim() : state.event;
     const flavorName = () => state.flavor?.name;
 
     function fillSummary() {
@@ -682,7 +779,7 @@
       const p = max ? null : pkgFor(state.guests);
       $('#sumPkg').textContent = p ? `${p.name} · ${p.hours} de serviço` : 'Proposta sob medida';
       $('#sumPrice').textContent = p ? `a partir de ${brl(p.price)}` : 'Sob consulta';
-      $('#sumDetails').textContent = [state.event, `${$('#guestsOut').textContent} convidados`, fmtDate(date.value), place.value.trim(),
+      $('#sumDetails').textContent = [eventLabel(), `${$('#guestsOut').textContent} convidados`, fmtDate(date.value), place.value.trim(),
         flavorName() && `sabor ${flavorName()}`].filter(Boolean).join(' · ');
     }
 
@@ -728,7 +825,7 @@
       const text = [
         `Olá! Sou ${name.value.trim()} e quero verificar a disponibilidade da Churros Jampa.`,
         '',
-        `• Evento: ${state.event}`,
+        `• Evento: ${eventLabel()}`,
         `• Convidados: ${$('#guestsOut').textContent}`,
         `• Data: ${fmtDate(date.value)}`,
         `• Local: ${place.value.trim()}`,
