@@ -84,9 +84,8 @@
       }
     }
 
-    /* Camadas de fundo da hero (crossfade) */
-    .hero-layer { opacity: 0; transition: opacity .7s ease; }
-    .hero-layer.is-on { opacity: 1; }
+    /* Camadas de fundo da hero: ficam ocultas até serem reveladas pelo JS */
+    .hero-layer { visibility: hidden; will-change: clip-path; }
     @media (max-width: 767px) { .hero-layer { object-position: 55% center; } }
 
     /* Chips de sabor (seleção múltipla) */
@@ -207,11 +206,12 @@
              alt="Churros recém-frito recebendo doce de leite no carrinho da Churros Jampa, em um evento ao ar livre"
              class="hero-photo -z-20" />
       </picture>
-      <!-- Camadas de fundo por sabor: já carregadas no HTML (sem piscar) e trocadas por crossfade -->
-      <div id="heroLayers" aria-hidden="true">
-        <img data-flavor="brigadeiro"  src="assets/sabores/brigadeiro.jpg"  alt="" decoding="async" fetchpriority="low" class="hero-photo hero-layer -z-20" />
-        <img data-flavor="nutella"     src="assets/sabores/nutella.jpg"     alt="" decoding="async" fetchpriority="low" class="hero-photo hero-layer -z-20" />
-        <img data-flavor="leite-ninho" src="assets/sabores/leite-ninho.jpg" alt="" decoding="async" fetchpriority="low" class="hero-photo hero-layer -z-20" />
+      <!-- Camadas de fundo por sabor: já carregadas no HTML (sem piscar). A escolhida sobe para o topo e é revelada. -->
+      <div id="heroLayers" aria-hidden="true" class="absolute inset-0 -z-20 isolate overflow-hidden">
+        <img data-flavor="doce-de-leite" src="assets/hero-desktop.webp"       alt="" decoding="async" fetchpriority="low" class="hero-photo hero-layer" />
+        <img data-flavor="brigadeiro"    src="assets/sabores/brigadeiro.jpg"  alt="" decoding="async" fetchpriority="low" class="hero-photo hero-layer" />
+        <img data-flavor="nutella"       src="assets/sabores/nutella.jpg"     alt="" decoding="async" fetchpriority="low" class="hero-photo hero-layer" />
+        <img data-flavor="leite-ninho"   src="assets/sabores/leite-ninho.jpg" alt="" decoding="async" fetchpriority="low" class="hero-photo hero-layer" />
       </div>
       <div class="hero-overlay absolute inset-0 -z-10"></div>
 
@@ -623,10 +623,27 @@
     const box = $('#flavors'), cta = $('#heroCta'), ctaText = $('#heroCtaText'), funnelFlavor = $('#funnelFlavor');
     const mixBar = $('#mixBar'), mixLabel = $('#mixLabel'), mixText = $('#mixText');
     const layers = $$('#heroLayers .hero-layer');
-    let lastClicked = null;                                   // sabor que manda no fundo
+    let lastClicked = null;                                   // sabor que manda no fundo (só muda no clique)
 
-    // Fundo: liga só a camada do sabor pedido (doce de leite = foto base, todas desligadas)
-    const showBg = id => layers.forEach(l => l.classList.toggle('is-on', l.dataset.flavor === id));
+    // Fundo: a camada do sabor sobe para o topo e é revelada por um círculo que se abre a partir do churros,
+    // com um leve "pouso" de zoom. A anterior fica por baixo até a revelação terminar.
+    const ORIGIN = matchMedia('(max-width: 767px)').matches ? '52% 42%' : '54% 46%';
+    let shown = null, z = 1, run = 0;
+    function showBg(id) {
+      id = id || 'doce-de-leite';                              // sem seleção = foto padrão
+      if (id === shown) return;
+      const layer = layers.find(l => l.dataset.flavor === id); if (!layer) return;
+      const first = shown === null; shown = id;
+      const my = ++run;
+      const settle = () => { if (my === run) layers.forEach(l => { if (l !== layer) l.style.visibility = 'hidden'; }); };
+      layer.style.zIndex = ++z; layer.style.visibility = 'visible';
+      if (first || !hasGsap()) { layer.style.clipPath = 'none'; settle(); return; }
+      gsap.killTweensOf(layer, 'clipPath,filter');
+      gsap.fromTo(layer,
+        { clipPath: `circle(0% at ${ORIGIN})`, filter: 'brightness(1.25) saturate(1.15)' },
+        { clipPath: `circle(150% at ${ORIGIN})`, filter: 'brightness(1) saturate(1)', duration: 1.05, ease: 'power3.inOut',
+          onComplete: () => { layer.style.clipPath = 'none'; layer.style.filter = ''; settle(); } });
+    }
 
     box.innerHTML = CONFIG.flavors.map(f => `
       <button type="button" data-id="${f.id}" aria-pressed="false" class="flavor flex items-center gap-2 rounded-full px-4 py-2.5 font-display text-[15px] font-semibold md:px-5 md:py-3 md:text-base">
@@ -668,11 +685,6 @@
       render(true);
     });
 
-    // Desktop: passar o mouse faz a prévia do sabor; ao sair, volta para o último clicado
-    if (matchMedia('(hover: hover)').matches) {
-      box.addEventListener('mouseover', e => { const b = e.target.closest('.flavor'); if (b) showBg(b.dataset.id); });
-      box.addEventListener('mouseleave', () => showBg(lastClicked));
-    }
     render(false);
   }
 
