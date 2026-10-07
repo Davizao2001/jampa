@@ -130,17 +130,22 @@
     .float-wa:hover { transform: scale(1.05); }
     @media (min-width: 640px) { .float-wa { right: 1.5rem; bottom: 1.5rem; padding: 0 1.25rem; } }
 
-    /* Destaques */
-    .hscroll { scrollbar-width: none; -webkit-overflow-scrolling: touch; scroll-padding-inline: 1.25rem; }
+    /* Destaques: banners full-width */
+    .hscroll { scrollbar-width: none; -webkit-overflow-scrolling: touch; }
     .hscroll::-webkit-scrollbar { display: none; }
-    .banner { flex: 0 0 80%; aspect-ratio: 3 / 4; scroll-snap-align: start; }
-    @media (min-width: 640px) { .banner { flex-basis: 46%; } }
-    @media (min-width: 768px) { .banner { flex-basis: auto; } }
-    .banner img { transition: transform .7s cubic-bezier(.2,.7,.2,1); }
-    .banner:hover img, .banner:focus-visible img { transform: scale(1.07); }
-    .banner-shade { background: linear-gradient(to top, rgba(20,14,9,.9) 0%, rgba(20,14,9,.45) 38%, rgba(20,14,9,0) 65%); }
-    .banner .go { transition: transform .25s, background-color .25s; }
-    .banner:hover .go { transform: translateX(4px); background-color: #FBBF24; }
+    .banner { position: relative; display: block; overflow: hidden; flex: 0 0 66.667vw; height: min(72svh, 30rem); scroll-snap-align: start; color: #fff; background: #231A12; }
+    .banner-bg { position: absolute; inset: 0; background-size: cover; background-repeat: no-repeat; transition: transform .9s cubic-bezier(.2,.7,.2,1); will-change: transform; }
+    .banner-shade { position: absolute; inset: 0; background: linear-gradient(to top, rgba(0,0,0,.8) 0%, rgba(0,0,0,.35) 38%, rgba(0,0,0,0) 62%); }
+    .banner-title { text-shadow: 0 2px 14px rgba(0,0,0,.45); }
+    .banner .go { transition: opacity .3s, transform .3s, box-shadow .3s; }
+    @media (min-width: 768px) {
+      .banner { flex: 1 1 0; height: clamp(30rem, 78vh, 46rem); }
+    }
+    @media (hover: hover) {
+      .banner:hover .banner-bg, .banner:focus-visible .banner-bg { transform: scale(1.08); }
+      .banner .go { opacity: 0; transform: translateY(10px); }                       /* a seta aparece no hover */
+      .banner:hover .go, .banner:focus-visible .go { opacity: 1; transform: none; box-shadow: 0 0 0 4px rgba(245,158,11,.25), 0 10px 28px -6px rgba(245,158,11,.7); }
+    }
 
     /* Funil */
     .opt { transition: border-color .2s, background-color .2s; }
@@ -224,14 +229,11 @@
       </div>
     </section>
 
-    <!-- ============ DESTAQUES (renderizado a partir de CONFIG.highlights) ============ -->
-    <section id="destaques" class="mx-auto max-w-6xl pt-14 md:pt-24">
-      <div data-reveal class="px-5">
-        <h2 class="font-display text-3xl font-bold tracking-tight sm:text-4xl">Destaques da casa</h2>
-        <p class="mt-4 max-w-2xl text-ink-700">Do clássico ao bar completo: escolha o formato que combina com o seu evento.</p>
-      </div>
-      <!-- Mobile: scroll horizontal com snap · Desktop: três banners lado a lado -->
-      <div id="highlightGrid" data-reveal-group class="hscroll mt-8 flex snap-x snap-mandatory gap-4 overflow-x-auto px-5 pb-3 md:mt-12 md:grid md:grid-cols-3 md:gap-5 md:overflow-visible"></div>
+    <!-- ============ DESTAQUES: banners de ponta a ponta (renderizado a partir de CONFIG.highlights) ============ -->
+    <section id="destaques" aria-labelledby="destaquesTitle">
+      <h2 id="destaquesTitle" class="sr-only">Destaques da casa</h2>
+      <!-- Desktop: banners lado a lado, sem espaço · Mobile: swipe horizontal com um banner e meio visível -->
+      <div id="highlightGrid" class="hscroll flex snap-x snap-mandatory overflow-x-auto md:overflow-hidden"></div>
     </section>
 
     <!-- ============ 2. PROPOSTA DE VALOR ============ -->
@@ -501,11 +503,11 @@
       { src: 'assets/eventos/evento-2.webp', caption: 'Mesa de churros recheados no evento' },
       { src: 'assets/eventos/evento-3.webp', caption: 'Churros de brigadeiro com embalagem personalizada' },
     ],
-    /* DESTAQUES: banners logo abaixo da Hero. Textos são sugestões; trocar fotos por versões em alta. */
+    /* DESTAQUES: banners full-width logo abaixo da Hero. `pos` = ponto focal da foto (background-position). */
     highlights: [
-      { tag: 'O clássico',     title: 'Churros Tradicional de Doce de Leite', text: 'Frito na hora e recheado na frente do convidado.',        img: 'assets/hero-mobile.webp',      pos: '50% 35%' },
-      { tag: 'Gourmet',        title: 'Churros Gourmet com Toppings',         text: 'Coberturas e confeitos para deixar cada um do seu jeito.', img: 'assets/eventos/evento-3.webp', pos: '50% 60%' },
-      { tag: 'Para eventos',   title: 'Bar de Churros para Eventos',          text: 'Carrinho completo, equipe e embalagens personalizadas.',   img: 'assets/eventos/evento-2.webp', pos: '50% 70%' },
+      { tag: 'O clássico', title: 'Churros Tradicional',  text: 'Doce de leite cremoso, frito e recheado na hora.',  img: 'assets/destaques/tradicional.jpg', pos: '62% 50%' },
+      { tag: 'Gourmet',    title: 'Churros Gourmet',      text: 'Com toppings: creme de avelã e morangos frescos.',  img: 'assets/destaques/gourmet.jpg',     pos: '50% 50%' },
+      { tag: 'Para dividir', title: 'Mini Churros',       text: 'Crocantes, com potinho de doce de leite à parte.',   img: 'assets/destaques/mini.jpg',        pos: '52% 50%' },
     ],
     events: ['Casamento', 'Aniversário', 'Corporativo', 'Outro'],
     packages: [
@@ -735,16 +737,16 @@
   /* ---------- DESTAQUES ---------- */
   function initHighlights() {
     $('#highlightGrid').innerHTML = CONFIG.highlights.map(h => `
-      <a href="#orcamento" class="banner group relative block overflow-hidden rounded-4xl bg-sand-200 shadow-soft">
-        <img src="${h.img}" alt="" loading="lazy" decoding="async" class="absolute inset-0 h-full w-full object-cover" style="object-position:${h.pos}" />
-        <span class="banner-shade absolute inset-0"></span>
-        <span class="absolute left-5 top-5 rounded-full bg-caramel-500 px-3 py-1 text-xs font-bold uppercase tracking-wider text-ink-900">${h.tag}</span>
-        <span class="absolute inset-x-0 bottom-0 flex items-end gap-3 p-5 text-white sm:p-6">
+      <a href="#orcamento" class="banner" aria-label="${h.title}: pedir orçamento">
+        <span class="banner-bg" style="background-image:url('${h.img}');background-position:${h.pos}"></span>
+        <span class="banner-shade"></span>
+        <span class="absolute left-5 top-5 rounded-full bg-caramel-500 px-3 py-1 text-xs font-bold uppercase tracking-wider text-ink-900 md:left-8 md:top-8">${h.tag}</span>
+        <span class="absolute inset-x-0 bottom-0 flex items-end gap-4 p-5 md:p-8">
           <span class="flex-1">
-            <span class="block font-display text-2xl font-extrabold leading-tight tracking-tight">${h.title}</span>
-            <span class="mt-2 block text-sm text-white/85">${h.text}</span>
+            <span class="banner-title block font-display text-2xl font-extrabold leading-[1.05] tracking-tight sm:text-3xl lg:text-5xl">${h.title}</span>
+            <span class="mt-2 block max-w-xs text-sm text-white/90 md:mt-3 md:text-base">${h.text}</span>
           </span>
-          <span class="go grid h-11 w-11 shrink-0 place-items-center rounded-full bg-caramel-500 text-ink-900" aria-hidden="true">→</span>
+          <span class="go grid h-11 w-11 shrink-0 place-items-center rounded-full bg-caramel-500 text-lg text-ink-900 md:h-14 md:w-14" aria-hidden="true">→</span>
         </span>
       </a>`).join('');
   }
