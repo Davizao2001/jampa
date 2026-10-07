@@ -231,7 +231,21 @@
 
     <!-- ============ DESTAQUES: banners de ponta a ponta (renderizado a partir de CONFIG.highlights) ============ -->
     <section id="destaques" aria-labelledby="destaquesTitle">
-      <h2 id="destaquesTitle" class="sr-only">Destaques da casa</h2>
+      <!-- Faixa clara de respiro entre a foto da Hero e os banners -->
+      <div class="mx-auto max-w-6xl px-5 py-12 md:py-20">
+        <div data-reveal class="flex flex-col gap-6 md:flex-row md:items-end md:justify-between">
+          <div class="max-w-2xl">
+            <p class="text-xs font-semibold uppercase tracking-[.2em] text-caramel-600">Nosso cardápio</p>
+            <h2 id="destaquesTitle" class="mt-3 font-display text-3xl font-bold tracking-tight sm:text-5xl">Destaques da casa</h2>
+            <p class="mt-4 text-ink-700 md:text-lg">Do clássico ao gourmet, tudo frito e recheado na hora, na frente dos seus convidados.</p>
+          </div>
+          <ul class="flex flex-wrap gap-2 text-sm font-medium">
+            <li class="rounded-full border border-sand-300 bg-white px-4 py-2">Fritos na hora</li>
+            <li class="rounded-full border border-sand-300 bg-white px-4 py-2">Recheio à escolha</li>
+            <li class="rounded-full border border-sand-300 bg-white px-4 py-2">Estrutura completa</li>
+          </ul>
+        </div>
+      </div>
       <!-- Desktop: banners lado a lado, sem espaço · Mobile: swipe horizontal com um banner e meio visível -->
       <div id="highlightGrid" class="hscroll flex snap-x snap-mandatory overflow-x-auto md:overflow-hidden"></div>
     </section>
