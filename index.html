@@ -84,14 +84,23 @@
       }
     }
 
-    /* Cards de sabor */
-    .flavor { background: rgba(255,255,255,.14); border: 1px solid rgba(255,255,255,.28); color: #fff;
+    /* Camadas de fundo da hero (crossfade) */
+    .hero-layer { opacity: 0; transition: opacity .7s ease; }
+    .hero-layer.is-on { opacity: 1; }
+    @media (max-width: 767px) { .hero-layer { object-position: 55% center; } }
+
+    /* Chips de sabor (seleção múltipla) */
+    .chips { scrollbar-width: none; -webkit-overflow-scrolling: touch; scroll-padding-inline: 1.25rem; }
+    .chips::-webkit-scrollbar { display: none; }
+    .flavor { flex: 0 0 auto; background: rgba(255,255,255,.14); border: 1px solid rgba(255,255,255,.3); color: #fff;
               -webkit-backdrop-filter: blur(10px); backdrop-filter: blur(10px);
-              transition: background-color .25s, border-color .25s, color .25s; }
-    .flavor:hover { background: rgba(255,255,255,.24); }
-    .flavor[aria-checked="true"] { background: #fff; border-color: #F59E0B; color: #231A12; box-shadow: 0 0 0 3px #F59E0B; }
-    .flavor .check { opacity: 0; transition: opacity .2s; }
-    .flavor[aria-checked="true"] .check { opacity: 1; }
+              transition: background-color .25s, border-color .25s, box-shadow .25s; }
+    .flavor:hover { background: rgba(255,255,255,.26); }
+    .flavor[aria-pressed="true"] { background: #F59E0B; border-color: #F59E0B; color: #fff; text-shadow: 0 1px 2px rgba(120,60,0,.55);
+                                   box-shadow: 0 8px 24px -8px rgba(245,158,11,.8); }
+    .flavor .check { width: 0; opacity: 0; transition: width .25s, opacity .2s; }
+    .flavor[aria-pressed="true"] .check { width: 1rem; opacity: 1; }
+    .mix-bar { background: rgba(20,14,9,.55); border: 1px solid rgba(255,255,255,.18); -webkit-backdrop-filter: blur(10px); backdrop-filter: blur(10px); }
 
     /* Header: transparente sobre a foto, claro depois da hero */
     #siteHeader { color: #fff; transition: background-color .3s, color .3s, box-shadow .3s; }
@@ -198,6 +207,12 @@
              alt="Churros recém-frito recebendo doce de leite no carrinho da Churros Jampa, em um evento ao ar livre"
              class="hero-photo -z-20" />
       </picture>
+      <!-- Camadas de fundo por sabor: já carregadas no HTML (sem piscar) e trocadas por crossfade -->
+      <div id="heroLayers" aria-hidden="true">
+        <img data-flavor="brigadeiro"  src="assets/sabores/brigadeiro.jpg"  alt="" decoding="async" fetchpriority="low" class="hero-photo hero-layer -z-20" />
+        <img data-flavor="nutella"     src="assets/sabores/nutella.jpg"     alt="" decoding="async" fetchpriority="low" class="hero-photo hero-layer -z-20" />
+        <img data-flavor="leite-ninho" src="assets/sabores/leite-ninho.jpg" alt="" decoding="async" fetchpriority="low" class="hero-photo hero-layer -z-20" />
+      </div>
       <div class="hero-overlay absolute inset-0 -z-10"></div>
 
       <div class="mx-auto flex w-full max-w-6xl flex-1 flex-col justify-between px-5 pb-7 pt-24 md:pb-10 md:pt-36">
@@ -215,8 +230,13 @@
 
         <!-- Sabores + CTA na base -->
         <div data-hero>
-          <p id="flavorLabel" class="mb-3 text-sm font-medium text-white/90">Qual sabor não pode faltar?</p>
-          <div id="flavors" role="radiogroup" aria-labelledby="flavorLabel" class="grid grid-cols-2 gap-2 md:grid-cols-4 md:gap-3"></div>
+          <p id="flavorLabel" class="mb-3 text-sm font-medium text-white/90">Quais sabores não podem faltar? <span class="text-white/70">Pode escolher mais de um.</span></p>
+          <!-- Mobile: scroll horizontal sem barra · Desktop: chips em linha -->
+          <div id="flavors" role="group" aria-labelledby="flavorLabel" class="chips -mx-5 flex gap-2 overflow-x-auto px-5 pb-1 md:mx-0 md:flex-wrap md:gap-3 md:overflow-visible md:px-0"></div>
+          <p id="mixBar" hidden aria-live="polite" class="mix-bar mt-3 inline-flex max-w-full items-center gap-2 rounded-full px-4 py-2 text-sm text-white">
+            <span class="h-2 w-2 shrink-0 rounded-full bg-caramel-500"></span>
+            <span><span id="mixLabel" class="text-white/75"></span> <strong id="mixText" class="font-display font-semibold"></strong></span>
+          </p>
 
           <div class="mt-4 flex flex-col gap-3 sm:flex-row sm:items-center md:mt-5">
             <a id="heroCta" href="#orcamento" class="inline-flex items-center justify-center gap-2 rounded-full bg-caramel-500 px-7 py-4 text-center font-display text-base font-semibold text-ink-900 shadow-lg shadow-black/20 transition-transform hover:scale-[1.02] active:scale-[.98]">
@@ -375,7 +395,7 @@
           <ul class="mt-8 space-y-3 text-sm text-ink-700">
             <li class="flex gap-3"><span class="text-caramel-600">✓</span> Sem compromisso</li>
             <li class="flex gap-3"><span class="text-caramel-600">✓</span> Leva menos de 1 minuto</li>
-            <li class="flex gap-3"><span class="text-caramel-600">✓</span> Sabor escolhido: <strong id="funnelFlavor" class="text-ink-900">a definir</strong></li>
+            <li class="flex gap-3"><span class="text-caramel-600">✓</span> Sabores: <strong id="funnelFlavor" class="text-ink-900">a definir</strong></li>
           </ul>
         </div>
 
@@ -540,7 +560,7 @@
   const hasGsap = () => !!window.gsap && !reduceMotion;
 
   /* Estado compartilhado entre Hero e Funil (sabor começa vazio) */
-  const state = { flavor: null, event: null, guests: 80 };
+  const state = { flavors: [], event: null, guests: 80 };
 
   /* Grupo de opções tipo "radio" com teclado (setas) — sabores e tipo de evento */
   function radioGroup(container, items, { className, onSelect, render = i => i.label }) {
@@ -600,31 +620,60 @@
      MÓDULO 2 — SABORES → CTA DINÂMICO
   ===================================================================== */
   function initFlavors() {
-    const cta = $('#heroCta'), ctaText = $('#heroCtaText'), funnelFlavor = $('#funnelFlavor');
+    const box = $('#flavors'), cta = $('#heroCta'), ctaText = $('#heroCtaText'), funnelFlavor = $('#funnelFlavor');
+    const mixBar = $('#mixBar'), mixLabel = $('#mixLabel'), mixText = $('#mixText');
+    const layers = $$('#heroLayers .hero-layer');
+    let lastClicked = null;                                   // sabor que manda no fundo
 
-    radioGroup($('#flavors'), CONFIG.flavors.map(f => ({ value: f })), {
-      className: 'flavor flex items-center gap-3 rounded-2xl px-4 py-3.5 text-left font-display text-[15px] font-semibold md:px-5 md:py-4 md:text-base',
-      render: ({ value: f }) => `
-        <span class="text-xl leading-none md:text-2xl" aria-hidden="true">${f.emoji}</span>
-        <span class="flex-1">${f.name}</span>
-        <svg class="check h-4 w-4 shrink-0 text-caramel-600" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="M4 10.5l4 4 8-9"/></svg>`,
-      onSelect(flavor, btn) {
-        state.flavor = flavor;
-        funnelFlavor.textContent = flavor.name;
-        const text = `Quero Churros de ${flavor.name} para minha festa`;
-        if (!hasGsap()) { ctaText.textContent = text; return; }
+    // Fundo: liga só a camada do sabor pedido (doce de leite = foto base, todas desligadas)
+    const showBg = id => layers.forEach(l => l.classList.toggle('is-on', l.dataset.flavor === id));
 
-        // 1) o card escolhido "responde"  2) o texto do CTA troca  3) o CTA dá um pulso leve
-        gsap.fromTo(btn, { scale: 0.96 }, { scale: 1, duration: 0.45, ease: 'back.out(2.2)' });
-        gsap.killTweensOf([ctaText, cta]);
-        gsap.timeline()
-          .to(ctaText, { y: -8, autoAlpha: 0, duration: 0.16, ease: 'power2.in' })
-          .add(() => { ctaText.textContent = text; })
-          .fromTo(ctaText, { y: 8 }, { y: 0, autoAlpha: 1, duration: 0.32, ease: 'power3.out' })
-          .fromTo(cta, { scale: 1 }, { scale: 1.03, duration: 0.16, yoyo: true, repeat: 1, ease: 'power2.out' }, '<');
-      },
+    box.innerHTML = CONFIG.flavors.map(f => `
+      <button type="button" data-id="${f.id}" aria-pressed="false" class="flavor flex items-center gap-2 rounded-full px-4 py-2.5 font-display text-[15px] font-semibold md:px-5 md:py-3 md:text-base">
+        <span class="text-lg leading-none md:text-xl" aria-hidden="true">${f.emoji}</span>
+        <span>${f.name}</span>
+        <svg class="check h-4 shrink-0" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2.8" aria-hidden="true"><path d="M4 10.5l4 4 8-9"/></svg>
+      </button>`).join('');
+
+    function render(animate) {
+      const names = state.flavors.map(f => f.name), n = names.length;
+      const text = n === 0 ? CONFIG.defaultCta : n === 1 ? `Quero Churros de ${names[0]} para minha festa` : 'Quero esse mix para minha festa';
+      funnelFlavor.textContent = n ? names.join(' + ') : 'a definir';
+      mixLabel.textContent = n > 1 ? 'Mix perfeito:' : 'Sabor escolhido:';
+      mixText.textContent = names.join(' + ');
+      const wasHidden = mixBar.hidden; mixBar.hidden = n === 0;
+
+      if (!animate || !hasGsap()) { ctaText.textContent = text; return; }
+      if (wasHidden && n) gsap.fromTo(mixBar, { y: 8, autoAlpha: 0 }, { y: 0, autoAlpha: 1, duration: 0.35, ease: 'power3.out' });
+      else if (n) gsap.fromTo(mixText, { autoAlpha: 0.3 }, { autoAlpha: 1, duration: 0.35 });
+      if (ctaText.textContent === text) return;
+      gsap.killTweensOf([ctaText, cta]);
+      gsap.timeline()
+        .to(ctaText, { y: -8, autoAlpha: 0, duration: 0.16, ease: 'power2.in' })
+        .add(() => { ctaText.textContent = text; })
+        .fromTo(ctaText, { y: 8 }, { y: 0, autoAlpha: 1, duration: 0.32, ease: 'power3.out' })
+        .fromTo(cta, { scale: 1 }, { scale: 1.03, duration: 0.16, yoyo: true, repeat: 1, ease: 'power2.out' }, '<');
+    }
+
+    box.addEventListener('click', e => {
+      const btn = e.target.closest('.flavor'); if (!btn) return;
+      const flavor = CONFIG.flavors.find(f => f.id === btn.dataset.id);
+      const on = btn.getAttribute('aria-pressed') !== 'true';
+      btn.setAttribute('aria-pressed', String(on));
+      state.flavors = on ? [...state.flavors, flavor] : state.flavors.filter(f => f !== flavor);
+      // Último clicado manda no fundo; ao desmarcar, volta para o último que continua escolhido
+      lastClicked = on ? flavor.id : (state.flavors.at(-1)?.id ?? null);
+      showBg(lastClicked);
+      if (hasGsap()) gsap.fromTo(btn, { scale: 0.94 }, { scale: 1, duration: 0.4, ease: 'back.out(2.4)' });
+      render(true);
     });
-    ctaText.textContent = CONFIG.defaultCta;
+
+    // Desktop: passar o mouse faz a prévia do sabor; ao sair, volta para o último clicado
+    if (matchMedia('(hover: hover)').matches) {
+      box.addEventListener('mouseover', e => { const b = e.target.closest('.flavor'); if (b) showBg(b.dataset.id); });
+      box.addEventListener('mouseleave', () => showBg(lastClicked));
+    }
+    render(false);
   }
 
   /* =====================================================================
@@ -837,7 +886,7 @@
 
     const fmtDate = iso => { const [y, m, d] = iso.split('-'); return `${d}/${m}/${y}`; };
     const eventLabel = () => state.event === 'Outro' ? $('#eventOther').value.trim() : state.event;
-    const flavorName = () => state.flavor?.name;
+    const flavorName = () => state.flavors.map(f => f.name).join(' + ');
 
     function fillSummary() {
       const max = state.guests >= +guests.max;
@@ -845,7 +894,7 @@
       $('#sumPkg').textContent = p ? `${p.name} · ${p.hours} de serviço` : 'Proposta sob medida';
       $('#sumPrice').textContent = p ? `a partir de ${brl(p.price)}` : 'Sob consulta';
       $('#sumDetails').textContent = [eventLabel(), `${$('#guestsOut').textContent} convidados`, fmtDate(date.value), place.value.trim(),
-        flavorName() && `sabor ${flavorName()}`].filter(Boolean).join(' · ');
+        flavorName() && `sabores: ${flavorName()}`].filter(Boolean).join(' · ');
     }
 
     function show(i, dir = 1) {
@@ -894,7 +943,7 @@
         `• Convidados: ${$('#guestsOut').textContent}`,
         `• Data: ${fmtDate(date.value)}`,
         `• Local: ${place.value.trim()}`,
-        flavorName() && `• Sabor que não pode faltar: ${flavorName()}`,
+        flavorName() && `• Sabores que não podem faltar: ${flavorName()}`,
         `• Pacote sugerido no site: ${p ? `${p.name} (a partir de ${brl(p.price)})` : 'sob medida'}`,
       ].filter(l => l !== undefined && l !== null && l !== false).join('\n');
       // Ponto de integração de analytics: window.dataLayer?.push({ event: 'lead_whatsapp', ... })
