@@ -31,7 +31,7 @@
   <script src="https://cdn.tailwindcss.com"></script>
   <script>
     /* ---------- DESIGN SYSTEM (tokens) ----------
-       Base clara e quente (luz do dia, toldo branco, madeira) + caramelo como único acento. */
+       Base clara e quente (luz do dia, toldo branco, madeira) + caramelo como base. Amarelo-ouro (#F59E0B) como cor de ação e destaque. */
     tailwind.config = {
       theme: {
         extend: {
@@ -39,7 +39,7 @@
             paper:   '#FBF7F0',                                   // fundo da página
             sand:    { 100: '#F4ECDF', 200: '#E9DDCA', 300: '#D8C7AE' },
             ink:     { 900: '#231A12', 700: '#4A3B2D', 500: '#7A6A59' }, // texto
-            caramel: { 100: '#F6E6CF', 400: '#D99A4E', 500: '#C8873A', 600: '#A96B26' },
+            caramel: { 100: '#FEF3C7', 400: '#FBBF24', 500: '#F59E0B', 600: '#B45309' },   // amarelo-ouro (600 = texto sobre fundo claro)
           },
           fontFamily: {
             display: ['Outfit', 'system-ui', 'sans-serif'],
@@ -54,7 +54,16 @@
 
   <style>
     body { background: #FBF7F0; overflow-x: clip; }
-    :focus-visible { outline: 2px solid #C8873A; outline-offset: 3px; }
+    :focus-visible { outline: 2px solid #F59E0B; outline-offset: 3px; }
+
+    /* ---------- AMARELO-OURO: botões de ação e acentos ---------- */
+    a.bg-caramel-500, button.bg-caramel-500 { transition: transform .2s, box-shadow .3s, background-color .2s; }
+    a.bg-caramel-500:hover, button.bg-caramel-500:hover {
+      background-color: #FBBF24;
+      box-shadow: 0 0 0 4px rgba(245,158,11,.22), 0 12px 32px -6px rgba(245,158,11,.65);   /* glow */
+    }
+    /* Sublinhado amarelo nos títulos de seção */
+    main h2.font-display::after { content: ''; display: block; width: 3.5rem; height: 4px; margin-top: .85rem; border-radius: 999px; background: #F59E0B; }
 
     /* ---------- HERO ---------- */
     .hero-photo { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: 58% center; }
@@ -62,9 +71,9 @@
     /* Overlay sutil: um véu leve na foto inteira + reforço só onde há texto (esquerda e base) */
     .hero-overlay {
       background:
-        linear-gradient(to top, rgba(28,20,13,.78) 0%, rgba(28,20,13,.35) 30%, rgba(28,20,13,0) 52%),
-        linear-gradient(to bottom, rgba(28,20,13,.45) 0%, rgba(28,20,13,0) 34%),
-        rgba(28,20,13,.14);
+        linear-gradient(to top, rgba(20,14,9,.92) 0%, rgba(20,14,9,.62) 32%, rgba(20,14,9,0) 60%),
+        linear-gradient(to bottom, rgba(20,14,9,.68) 0%, rgba(20,14,9,.3) 22%, rgba(20,14,9,0) 40%),
+        rgba(20,14,9,.16);
     }
     @media (min-width: 768px) {
       .hero-overlay {
@@ -80,7 +89,7 @@
               -webkit-backdrop-filter: blur(10px); backdrop-filter: blur(10px);
               transition: background-color .25s, border-color .25s, color .25s; }
     .flavor:hover { background: rgba(255,255,255,.24); }
-    .flavor[aria-checked="true"] { background: #fff; border-color: #fff; color: #231A12; }
+    .flavor[aria-checked="true"] { background: #fff; border-color: #F59E0B; color: #231A12; box-shadow: 0 0 0 3px #F59E0B; }
     .flavor .check { opacity: 0; transition: opacity .2s; }
     .flavor[aria-checked="true"] .check { opacity: 1; }
 
@@ -121,10 +130,22 @@
     .float-wa:hover { transform: scale(1.05); }
     @media (min-width: 640px) { .float-wa { right: 1.5rem; bottom: 1.5rem; padding: 0 1.25rem; } }
 
+    /* Destaques */
+    .hscroll { scrollbar-width: none; -webkit-overflow-scrolling: touch; scroll-padding-inline: 1.25rem; }
+    .hscroll::-webkit-scrollbar { display: none; }
+    .banner { flex: 0 0 80%; aspect-ratio: 3 / 4; scroll-snap-align: start; }
+    @media (min-width: 640px) { .banner { flex-basis: 46%; } }
+    @media (min-width: 768px) { .banner { flex-basis: auto; } }
+    .banner img { transition: transform .7s cubic-bezier(.2,.7,.2,1); }
+    .banner:hover img, .banner:focus-visible img { transform: scale(1.07); }
+    .banner-shade { background: linear-gradient(to top, rgba(20,14,9,.9) 0%, rgba(20,14,9,.45) 38%, rgba(20,14,9,0) 65%); }
+    .banner .go { transition: transform .25s, background-color .25s; }
+    .banner:hover .go { transform: translateX(4px); background-color: #FBBF24; }
+
     /* Funil */
     .opt { transition: border-color .2s, background-color .2s; }
-    .opt[aria-checked="true"] { border-color: #C8873A; background: #F6E6CF; }
-    input[type="range"] { accent-color: #C8873A; }
+    .opt[aria-checked="true"] { border-color: #F59E0B; background: #FEF3C7; }
+    input[type="range"] { accent-color: #F59E0B; }
 
     @media (prefers-reduced-motion: reduce) {
       html { scroll-behavior: auto; }
@@ -203,8 +224,18 @@
       </div>
     </section>
 
+    <!-- ============ DESTAQUES (renderizado a partir de CONFIG.highlights) ============ -->
+    <section id="destaques" class="mx-auto max-w-6xl pt-14 md:pt-24">
+      <div data-reveal class="px-5">
+        <h2 class="font-display text-3xl font-bold tracking-tight sm:text-4xl">Destaques da casa</h2>
+        <p class="mt-4 max-w-2xl text-ink-700">Do clássico ao bar completo: escolha o formato que combina com o seu evento.</p>
+      </div>
+      <!-- Mobile: scroll horizontal com snap · Desktop: três banners lado a lado -->
+      <div id="highlightGrid" data-reveal-group class="hscroll mt-8 flex snap-x snap-mandatory gap-4 overflow-x-auto px-5 pb-3 md:mt-12 md:grid md:grid-cols-3 md:gap-5 md:overflow-visible"></div>
+    </section>
+
     <!-- ============ 2. PROPOSTA DE VALOR ============ -->
-    <section id="porque" class="mx-auto max-w-6xl px-5 py-20 md:py-28">
+    <section id="porque" class="mx-auto max-w-6xl px-5 py-14 md:py-28">
       <div data-reveal class="max-w-2xl">
         <h2 class="font-display text-3xl font-bold tracking-tight sm:text-4xl">Você recebe os convidados. A gente cuida dos churros.</h2>
         <p class="mt-4 text-ink-700">Nada de improviso no dia do evento: chegamos antes, montamos tudo e deixamos o espaço como encontramos.</p>
@@ -235,7 +266,7 @@
     </section>
 
     <!-- ============ COMO FUNCIONA ============ -->
-    <section id="como" class="mx-auto max-w-6xl px-5 pb-20 md:pb-28">
+    <section id="como" class="mx-auto max-w-6xl px-5 pb-14 md:pb-28">
       <div data-reveal class="max-w-2xl">
         <h2 class="font-display text-3xl font-bold tracking-tight sm:text-4xl">Como funciona</h2>
         <p class="mt-4 text-ink-700">Do primeiro contato ao último churros, em três passos.</p>
@@ -260,7 +291,7 @@
     </section>
 
     <!-- ============ GALERIA DE EVENTOS (renderizada a partir de CONFIG.gallery) ============ -->
-    <section id="eventos" class="mx-auto max-w-6xl px-5 pb-20 md:pb-28">
+    <section id="eventos" class="mx-auto max-w-6xl px-5 pb-14 md:pb-28">
       <div data-reveal class="flex flex-wrap items-end justify-between gap-4">
         <div class="max-w-2xl">
           <h2 class="font-display text-3xl font-bold tracking-tight sm:text-4xl">Eventos que já adoçamos</h2>
@@ -288,7 +319,7 @@
 
     <!-- ============ 3. PACOTES (renderizado a partir de CONFIG.packages) ============ -->
     <section id="pacotes" class="bg-sand-100">
-      <div class="mx-auto max-w-6xl px-5 py-20 md:py-28">
+      <div class="mx-auto max-w-6xl px-5 py-14 md:py-28">
         <div data-reveal class="max-w-2xl">
           <h2 class="font-display text-3xl font-bold tracking-tight sm:text-4xl">Pacotes por tamanho de evento</h2>
           <p class="mt-4 text-ink-700">Churros à vontade durante todo o tempo de serviço. Montagem e desmontagem incluídas.</p>
@@ -299,7 +330,7 @@
     </section>
 
     <!-- ============ 4. FAQ / REQUISITOS TÉCNICOS ============ -->
-    <section id="faq" class="mx-auto max-w-3xl px-5 py-20 md:py-28">
+    <section id="faq" class="mx-auto max-w-3xl px-5 py-14 md:py-28">
       <div data-reveal>
         <h2 class="font-display text-3xl font-bold tracking-tight sm:text-4xl">O que precisamos no local</h2>
         <p class="mt-4 text-ink-700">As dúvidas de logística que todo mundo tem antes de fechar.</p>
@@ -308,8 +339,8 @@
     </section>
 
     <!-- ============ INSTAGRAM ============ -->
-    <section id="instagram" class="mx-auto max-w-6xl px-5 pb-20 md:pb-28">
-      <div data-reveal class="flex flex-col items-start gap-6 rounded-4xl bg-ink-900 p-8 text-white sm:p-10 md:flex-row md:items-center md:justify-between">
+    <section id="instagram" class="mx-auto max-w-6xl px-5 pb-14 md:pb-28">
+      <div data-reveal class="flex flex-col items-start gap-6 rounded-4xl bg-ink-900 p-6 text-white sm:p-10 md:flex-row md:items-center md:justify-between">
         <div class="flex items-start gap-5">
           <span class="grid h-14 w-14 shrink-0 place-items-center rounded-2xl bg-caramel-500 text-ink-900"><svg class="h-7 w-7" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 8h3l1.5-2.5h7L17 8h3a1 1 0 011 1v9a1 1 0 01-1 1H4a1 1 0 01-1-1V9a1 1 0 011-1z"/><circle cx="12" cy="13" r="3.5"/></svg></span>
           <div>
@@ -325,9 +356,9 @@
     </section>
 
     <!-- ============ 5. FUNIL DE CAPTAÇÃO ============ -->
-    <section id="orcamento" class="mx-auto max-w-6xl px-5 pb-24">
-      <div class="grid gap-10 rounded-4xl bg-sand-100 p-6 sm:p-10 lg:grid-cols-[1fr_1.2fr]">
-        <div data-reveal>
+    <section id="orcamento" class="mx-auto max-w-6xl scroll-mt-20 px-3 pb-16 sm:px-5 md:pb-24">
+      <div class="grid gap-10 rounded-4xl bg-sand-100 p-4 sm:p-10 lg:grid-cols-[1fr_1.2fr]">
+        <div data-reveal class="px-2 pt-3 sm:p-0">
           <h2 class="font-display text-3xl font-bold tracking-tight sm:text-4xl">Verifique a disponibilidade da sua data</h2>
           <p class="mt-4 text-ink-700">Quatro perguntas rápidas. No final você vê uma estimativa e segue para o WhatsApp com tudo preenchido.</p>
           <ul class="mt-8 space-y-3 text-sm text-ink-700">
@@ -337,7 +368,7 @@
           </ul>
         </div>
 
-        <form id="funnel" novalidate class="rounded-3xl bg-white p-6 shadow-soft sm:p-8">
+        <form id="funnel" novalidate class="rounded-3xl bg-white p-5 shadow-soft sm:p-8">
           <div class="mb-8">
             <div class="mb-2 flex justify-between text-xs text-ink-500">
               <span id="stepLabel">Etapa 1 de 4</span><span id="stepName">Tipo de evento</span>
@@ -469,6 +500,12 @@
       { src: 'assets/eventos/evento-1.webp', caption: 'Churros servidos na hora em festa temática' },
       { src: 'assets/eventos/evento-2.webp', caption: 'Mesa de churros recheados no evento' },
       { src: 'assets/eventos/evento-3.webp', caption: 'Churros de brigadeiro com embalagem personalizada' },
+    ],
+    /* DESTAQUES: banners logo abaixo da Hero. Textos são sugestões; trocar fotos por versões em alta. */
+    highlights: [
+      { tag: 'O clássico',     title: 'Churros Tradicional de Doce de Leite', text: 'Frito na hora e recheado na frente do convidado.',        img: 'assets/hero-mobile.webp',      pos: '50% 35%' },
+      { tag: 'Gourmet',        title: 'Churros Gourmet com Toppings',         text: 'Coberturas e confeitos para deixar cada um do seu jeito.', img: 'assets/eventos/evento-3.webp', pos: '50% 60%' },
+      { tag: 'Para eventos',   title: 'Bar de Churros para Eventos',          text: 'Carrinho completo, equipe e embalagens personalizadas.',   img: 'assets/eventos/evento-2.webp', pos: '50% 70%' },
     ],
     events: ['Casamento', 'Aniversário', 'Corporativo', 'Outro'],
     packages: [
@@ -695,6 +732,23 @@
     $('#footLegal').textContent = CONFIG.legal;
   }
 
+  /* ---------- DESTAQUES ---------- */
+  function initHighlights() {
+    $('#highlightGrid').innerHTML = CONFIG.highlights.map(h => `
+      <a href="#orcamento" class="banner group relative block overflow-hidden rounded-4xl bg-sand-200 shadow-soft">
+        <img src="${h.img}" alt="" loading="lazy" decoding="async" class="absolute inset-0 h-full w-full object-cover" style="object-position:${h.pos}" />
+        <span class="banner-shade absolute inset-0"></span>
+        <span class="absolute left-5 top-5 rounded-full bg-caramel-500 px-3 py-1 text-xs font-bold uppercase tracking-wider text-ink-900">${h.tag}</span>
+        <span class="absolute inset-x-0 bottom-0 flex items-end gap-3 p-5 text-white sm:p-6">
+          <span class="flex-1">
+            <span class="block font-display text-2xl font-extrabold leading-tight tracking-tight">${h.title}</span>
+            <span class="mt-2 block text-sm text-white/85">${h.text}</span>
+          </span>
+          <span class="go grid h-11 w-11 shrink-0 place-items-center rounded-full bg-caramel-500 text-ink-900" aria-hidden="true">→</span>
+        </span>
+      </a>`).join('');
+  }
+
   function initFaq() {
     const list = $('#faqList');
     list.innerHTML = CONFIG.faq.map((f, i) => `
@@ -875,6 +929,7 @@
   initHeader();
   initFlavors();
   initPackages();
+  initHighlights();
   initGallery();
   initFooter();
   initFaq();
