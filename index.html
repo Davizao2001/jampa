@@ -23,6 +23,8 @@
 
   <!-- A primeira foto do slideshow é o maior elemento da primeira tela -->
   <link rel="preload" as="image" href="assets/hero/evento.jpg" fetchpriority="high" />
+  <link rel="preload" as="image" href="assets/hero/festa.jpg" fetchpriority="low" />
+  <link rel="preload" as="image" href="assets/hero/carrinho.jpg" fetchpriority="low" />
 
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -59,9 +61,16 @@
     a, button { touch-action: manipulation; }                   /* sem atraso de toque duplo */
     @media (hover: none) { .car-btn { display: none; } }        /* no toque, o carrossel é por deslize */
     :focus-visible { outline: 2px solid #F59E0B; outline-offset: 3px; }
+    /* Transições de 300 ms em todos os links e botões (só cor, opacidade, sombra e transform: 60 fps) */
+    a, button { transition-property: color, background-color, border-color, opacity, box-shadow, transform; transition-duration: .3s; transition-timing-function: ease; }
+    .btn-ifood:active, a.bg-caramel-500:active, button.bg-caramel-500:active, a.bg-ink-900:active, .head-cta:active,
+    .float-wa.is-visible:active, .story-btn:active, .flavor:active { transform: scale(.97); }
+    /* Alvos de toque de no mínimo 44×44 px */
+    .tap { display: inline-flex; align-items: center; min-height: 44px; }
+    .tap-sq { min-width: 44px; min-height: 44px; }
 
     /* ---------- AMARELO-OURO: botões de ação e acentos ---------- */
-    a.bg-caramel-500, button.bg-caramel-500 { transition: transform .2s, box-shadow .3s, background-color .2s; }
+    a.bg-caramel-500, button.bg-caramel-500 { transition: transform .3s, box-shadow .3s, background-color .3s; }
     a.bg-caramel-500:hover, button.bg-caramel-500:hover {
       background-color: #FBBF24;
       box-shadow: 0 0 0 4px rgba(245,158,11,.22), 0 12px 32px -6px rgba(245,158,11,.65);   /* glow */
@@ -108,7 +117,7 @@
     #siteHeader { color: #fff; transition: background-color .3s, color .3s, box-shadow .3s; }
     #siteHeader.is-solid { background: rgba(251,247,240,.92); color: #231A12; box-shadow: 0 1px 0 rgba(35,26,18,.08);
                            -webkit-backdrop-filter: blur(12px); backdrop-filter: blur(12px); }
-    #siteHeader .head-cta { border: 1px solid currentColor; }
+    #siteHeader .head-cta { border: 1px solid currentColor; display: inline-flex; align-items: center; min-height: 44px; }
 
     /* Galeria */
     .carousel { scrollbar-width: none; cursor: grab; -webkit-overflow-scrolling: touch; }
@@ -166,21 +175,28 @@
     .hero-shade { background: linear-gradient(to right, rgba(0,0,0,.55) 0%, rgba(0,0,0,.2) 38%, rgba(0,0,0,0) 55%),
                               linear-gradient(to top, rgba(0,0,0,.7) 0%, rgba(0,0,0,.25) 30%, rgba(0,0,0,0) 55%),
                               linear-gradient(to bottom, rgba(0,0,0,.45) 0%, rgba(0,0,0,0) 22%); }
-    .hero-dot { width: .5rem; height: .5rem; border-radius: 999px; background: rgba(255,255,255,.5); transition: width .4s, background-color .4s; }
-    .hero-dot[aria-current="true"] { width: 1.6rem; background: #F59E0B; }
+    .hero-dot { position: relative; width: 44px; height: 44px; display: grid; place-items: center; }
+    .hero-dot::before { content: ''; width: 1.6rem; height: .5rem; border-radius: 999px; background: rgba(255,255,255,.55);
+                        transform: scaleX(.3125); transition: transform .4s ease, background-color .4s ease; }
+    .hero-dot:hover::before { background: rgba(255,255,255,.85); }
+    .hero-dot[aria-current="true"]::before { transform: scaleX(1); background: #F59E0B; }
+    #heroShow { touch-action: pan-y; }                          /* deslize horizontal troca a foto; vertical rola a página */
+    @media (max-width: 639px) {
+      .hero-shade { background: linear-gradient(to top, rgba(0,0,0,.85) 0%, rgba(0,0,0,.55) 38%, rgba(0,0,0,0) 62%),
+                                linear-gradient(to bottom, rgba(0,0,0,.3) 0%, rgba(0,0,0,0) 18%); }
+    }
     @media (prefers-reduced-motion: reduce) { .hero-slide { transition: none; transform: none; } }
 
     /* Botão do iFood: vermelho da plataforma, reconhecível de longe */
-    .btn-ifood { background: #EA1D2C; transition: transform .2s, box-shadow .3s, background-color .2s; }
+    .btn-ifood { background: #EA1D2C; transition: transform .3s, box-shadow .3s, background-color .3s; }
     .btn-ifood:hover { background: #F2303E; transform: scale(1.02); box-shadow: 0 0 0 4px rgba(234,29,44,.18), 0 12px 30px -8px rgba(234,29,44,.6); }
 
     /* Cards expansíveis "O que nos torna únicos" */
     .intent-row { display: grid; gap: .75rem; }                 /* celular: cards empilhados, conteúdo aberto */
     .intent-card { position: relative; overflow: hidden; display: flex; flex-direction: column; gap: 1rem;
                    min-height: 15rem; padding: 1.5rem; border-radius: 28px; color: #231A12; background: #F59E0B; transition: background-color .6s; }
-    .intent-card:hover { background: #FBA91E; }
     .intent-card.is-dark { background: #3A1A0D; color: #fff; }
-    .intent-card.is-dark:hover { background: #4A2312; }
+    @media (min-width: 640px) and (max-width: 1023px) { .intent-row { grid-template-columns: repeat(2, minmax(0, 1fr)); } .intent-card.is-dark { grid-column: 1 / -1; } }
     .intent-card.is-dark .intent-title, .intent-card.is-dark .intent-num { color: #F59E0B; }
     .intent-card.is-dark .intent-text, .intent-card.is-dark .intent-more { color: rgba(255,255,255,.85); }
     .intent-card img { width: 100%; height: 12rem; object-fit: cover; border-radius: 18px; }
@@ -191,6 +207,8 @@
     @keyframes nudge { 0%,100% { transform: translateY(0); } 50% { transform: translateY(4px); } }
     @media (prefers-reduced-motion: reduce) { .intent-arrow { animation: none; } }
     @media (min-width: 1024px) {
+      .intent-card:hover { background: #FBA91E; }
+      .intent-card.is-dark:hover { background: #4A2312; }
       .intent-row { display: flex; gap: .9rem; height: 36rem; }
       .intent-card { flex: 1 1 0; min-width: 0; min-height: 0; padding: 1.5rem 1.25rem; gap: 0; justify-content: flex-start;
                      transition: flex-grow .9s cubic-bezier(.22,.61,.36,1), background-color .6s; }
@@ -210,8 +228,8 @@
     }
 
     /* Botão de Stories: logo dentro do aro em gradiente do Instagram, girando devagar */
-    .story-btn { position: fixed; right: 1rem; bottom: 5.25rem; z-index: 40; width: 3.75rem; height: 3.75rem; border-radius: 999px;
-                 display: grid; place-items: center; box-shadow: 0 10px 28px -8px rgba(35,26,18,.45); transition: transform .2s; }
+    .story-btn { position: fixed; right: 1rem; bottom: 5.25rem; z-index: 45; width: 3.75rem; height: 3.75rem; border-radius: 999px;
+                 display: grid; place-items: center; box-shadow: 0 10px 28px -8px rgba(35,26,18,.45); transition: transform .3s; }
     .story-btn:hover { transform: scale(1.06); }
     .story-ring { position: absolute; inset: 0; border-radius: 999px;
                   background: conic-gradient(from 0deg, #FACC15, #F97316, #EC4899, #A855F7, #F97316, #FACC15);
@@ -234,12 +252,12 @@
     @media (min-width: 768px) { .story-frame { height: min(92vh, 56rem); width: auto; aspect-ratio: 9 / 16; border-radius: 22px; box-shadow: 0 30px 80px -20px rgba(0,0,0,.7); } }
     .story-top { position: absolute; inset: 0 0 auto 0; z-index: 2; padding: .9rem .9rem 2.5rem; background: linear-gradient(to bottom, rgba(0,0,0,.6), rgba(0,0,0,0)); }
     .story-bar { flex: 1; height: 3px; border-radius: 999px; background: rgba(255,255,255,.35); overflow: hidden; }
-    .story-bar > i { display: block; height: 100%; width: 0; background: #fff; }
-    .story-icon { position: relative; z-index: 3; display: grid; place-items: center; width: 2.5rem; height: 2.5rem; border-radius: 999px; }
+    .story-bar > i { display: block; height: 100%; width: 100%; background: #fff; transform: scaleX(0); transform-origin: left; will-change: transform; }
+    .story-icon { position: relative; z-index: 3; display: grid; place-items: center; width: 2.75rem; height: 2.75rem; border-radius: 999px; }
     .story-icon:hover { background: rgba(255,255,255,.15); }
     #storyPrev, #storyNext { z-index: 1; }
     /* Controle de volume: trilha fina branca, preenchida até o nível atual */
-    .story-vol { position: relative; z-index: 3; width: 5.5rem; height: 1.5rem; background: transparent; cursor: pointer; -webkit-appearance: none; appearance: none; }
+    .story-vol { position: relative; z-index: 3; width: 5.5rem; height: 2.75rem; background: transparent; cursor: pointer; -webkit-appearance: none; appearance: none; }
     .story-vol::-webkit-slider-runnable-track { height: 3px; border-radius: 999px;
       background: linear-gradient(to right, #fff var(--v, 80%), rgba(255,255,255,.35) var(--v, 80%)); }
     .story-vol::-webkit-slider-thumb { -webkit-appearance: none; width: 13px; height: 13px; margin-top: -5px; border-radius: 999px; background: #fff; }
@@ -265,26 +283,26 @@
   <!-- ============ HEADER ============ -->
   <header id="siteHeader" class="fixed inset-x-0 top-0 z-50">
     <div class="mx-auto flex max-w-6xl items-center justify-between px-5 py-4">
-      <a href="#topo" class="flex items-center gap-2.5 font-display text-lg font-bold tracking-tight" aria-label="Churros in Jampa, início">
+      <a href="#topo" class="flex min-h-[44px] min-w-[44px] items-center gap-2.5 font-display text-lg font-bold tracking-tight" aria-label="Churros in Jampa, início">
         <img src="assets/logo.svg" alt="" width="44" height="44" class="h-10 w-10 md:h-11 md:w-11" />
         <span class="hidden sm:inline">Churros in Jampa</span>
       </a>
-      <nav class="hidden items-center gap-8 text-sm font-medium md:flex" aria-label="Principal">
-        <a href="#unicos" class="opacity-85 hover:opacity-100">Diferenciais</a>
-        <a href="#como" class="opacity-85 hover:opacity-100">Como funciona</a>
-        <a href="#eventos" class="opacity-85 hover:opacity-100">Eventos</a>
-        <a href="#pacotes" class="opacity-85 hover:opacity-100">Pacotes</a>
-        <a href="#faq" class="opacity-85 hover:opacity-100">Dúvidas</a>
-        <a href="#delivery" class="opacity-85 hover:opacity-100">Delivery</a>
+      <nav class="hidden items-center gap-7 text-sm font-medium lg:flex" aria-label="Principal">
+        <a href="#unicos" class="tap opacity-85 hover:opacity-100">Diferenciais</a>
+        <a href="#como" class="tap opacity-85 hover:opacity-100">Como funciona</a>
+        <a href="#eventos" class="tap opacity-85 hover:opacity-100">Eventos</a>
+        <a href="#pacotes" class="tap opacity-85 hover:opacity-100">Pacotes</a>
+        <a href="#faq" class="tap opacity-85 hover:opacity-100">Dúvidas</a>
+        <a href="#delivery" class="tap opacity-85 hover:opacity-100">Delivery</a>
       </nav>
       <div class="flex items-center gap-2">
-        <a href="#orcamento" class="head-cta rounded-full px-3 py-2 text-sm font-semibold sm:px-4">Pedir orçamento</a>
-        <button type="button" id="menuBtn" aria-label="Abrir menu" aria-expanded="false" aria-controls="mobileMenu" class="grid h-10 w-10 place-items-center rounded-full md:hidden">
+        <a href="#orcamento" class="head-cta whitespace-nowrap rounded-full px-3 py-2 text-sm font-semibold sm:px-4">Pedir orçamento</a>
+        <button type="button" id="menuBtn" aria-label="Abrir menu" aria-expanded="false" aria-controls="mobileMenu" class="grid h-11 w-11 place-items-center rounded-full lg:hidden">
           <svg class="h-6 w-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path id="menuIcon" d="M4 7h16M4 12h16M4 17h16"/></svg>
         </button>
       </div>
     </div>
-    <nav id="mobileMenu" hidden aria-label="Menu" class="mx-3 rounded-3xl border border-sand-200 bg-white p-2 text-ink-900 shadow-soft md:hidden">
+    <nav id="mobileMenu" hidden aria-label="Menu" class="mx-3 rounded-3xl border border-sand-200 bg-white p-2 text-ink-900 shadow-soft lg:hidden">
       <a href="#unicos" class="block rounded-2xl px-4 py-3 font-display font-semibold hover:bg-sand-100">Diferenciais</a>
       <a href="#como" class="block rounded-2xl px-4 py-3 font-display font-semibold hover:bg-sand-100">Como funciona</a>
       <a href="#eventos" class="block rounded-2xl px-4 py-3 font-display font-semibold hover:bg-sand-100">Eventos</a>
@@ -304,28 +322,28 @@
         <img src="assets/hero/carrinho.jpg" alt="Carrinho de churros de madeira personalizado para empresa" decoding="async" fetchpriority="low" class="hero-slide" style="--pos:40% 50%;--pos-m:38% 50%" />
         <div class="hero-shade absolute inset-0"></div>
 
-        <div class="absolute bottom-0 left-0 w-full max-w-[40rem] px-6 pb-12 text-white md:px-12 md:pb-16 lg:px-16">
+        <div class="absolute bottom-0 left-0 w-full max-w-[40rem] px-5 pb-16 text-white sm:px-6 md:px-12 md:pb-20 lg:px-16">
           <p data-hero class="text-xs font-semibold uppercase tracking-[.2em] text-white/85">João Pessoa · Interior da PB · Recife (PE) · RN</p>
-          <h1 data-hero class="mt-3 font-display text-[2.4rem] font-extrabold leading-[1.02] tracking-[-.02em] sm:text-5xl lg:text-6xl">Nossos churros no seu evento</h1>
-          <p data-hero class="mt-4 max-w-xl text-white/90 md:text-lg">Aniversários, Casamentos e eventos corporativos em João Pessoa, RN e PE</p>
-          <div data-hero class="mt-6 flex flex-col gap-3 sm:flex-row">
-            <a data-ifood href="#" target="_blank" rel="noopener" class="btn-ifood inline-flex items-center justify-center gap-2 rounded-full px-7 py-4 font-display text-base font-bold text-white">
+          <h1 data-hero class="mt-3 font-display text-[2.1rem] font-extrabold leading-[1.02] min-[380px]:text-[2.4rem] tracking-[-.02em] sm:text-5xl lg:text-6xl">Nossos churros no seu evento</h1>
+          <p data-hero class="mt-3 max-w-xl text-[15px] text-white/90 sm:mt-4 sm:text-base md:text-lg">Aniversários, Casamentos e eventos corporativos em João Pessoa, RN e PE</p>
+          <div data-hero class="mt-5 flex flex-col gap-2.5 pr-[4.5rem] sm:mt-6 sm:flex-row sm:gap-3 sm:pr-0">
+            <a data-ifood href="#" target="_blank" rel="noopener noreferrer" class="btn-ifood inline-flex items-center justify-center gap-2 rounded-full px-7 py-3.5 font-display text-base font-bold text-white sm:py-4">
               Peça no iFood
               <svg class="h-4 w-4" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><path d="M6 14L14 6M7 6h7v7"/></svg>
             </a>
-            <a href="#orcamento" class="inline-flex items-center justify-center gap-2 rounded-full bg-white/15 px-7 py-4 font-display text-base font-semibold text-white ring-1 ring-white/40 backdrop-blur hover:bg-white/25">
+            <a href="#orcamento" class="inline-flex items-center justify-center gap-2 rounded-full bg-white/15 px-7 py-3.5 font-display text-base font-semibold text-white ring-1 ring-white/40 backdrop-blur hover:bg-white/25 sm:py-4">
               Orçamento para eventos <span aria-hidden="true">→</span>
             </a>
           </div>
         </div>
 
         <!-- Indicadores -->
-        <div id="heroDots" class="absolute bottom-5 left-1/2 flex -translate-x-1/2 gap-1.5 md:bottom-8"></div>
+        <div id="heroDots" class="absolute bottom-2 left-1/2 flex -translate-x-1/2 md:bottom-5"></div>
       </div>
     </section>
 
     <!-- ============ O QUE NOS TORNA ÚNICOS: cards expansíveis (sanfona no hover, desktop) ============ -->
-    <section id="unicos" class="mx-auto max-w-6xl px-5 py-14 md:py-24">
+    <section id="unicos" class="mx-auto max-w-6xl px-5 py-16 md:py-24">
       <div data-reveal class="max-w-2xl">
         <h2 class="font-display text-3xl font-bold tracking-tight sm:text-4xl">O que nos torna únicos</h2>
         <p class="mt-4 text-ink-700">Passe o mouse (ou role, no celular) para conhecer cada detalhe.</p>
@@ -338,7 +356,7 @@
     </section>
 
     <!-- ============ COMO FUNCIONA ============ -->
-    <section id="como" class="mx-auto max-w-6xl px-5 pb-14 md:pb-28">
+    <section id="como" class="mx-auto max-w-6xl px-5 pb-16 md:pb-24">
       <div data-reveal class="max-w-2xl">
         <h2 class="font-display text-3xl font-bold tracking-tight sm:text-4xl">Como funciona</h2>
         <p class="mt-4 text-ink-700">Do primeiro contato ao último churros, em três passos.</p>
@@ -369,13 +387,13 @@
     </section>
 
     <!-- ============ GALERIA DE EVENTOS (renderizada a partir de CONFIG.gallery) ============ -->
-    <section id="eventos" class="mx-auto max-w-6xl px-5 pb-14 md:pb-28">
+    <section id="eventos" class="mx-auto max-w-6xl px-5 pb-16 md:pb-24">
       <div data-reveal class="flex flex-wrap items-end justify-between gap-4">
         <div class="max-w-2xl">
           <h2 class="font-display text-3xl font-bold tracking-tight sm:text-4xl">Eventos que já adoçamos</h2>
           <p class="mt-4 text-ink-700">Aniversários, casamentos e eventos corporativos em João Pessoa, interior da Paraíba, região de Recife (PE) e RN.</p>
         </div>
-        <a href="#orcamento" class="rounded-full bg-ink-900 px-5 py-3 font-display text-sm font-semibold text-white transition-transform hover:scale-[1.02]">Quero no meu evento</a>
+        <a href="#orcamento" class="rounded-full bg-ink-900 px-5 py-3 font-display text-sm font-semibold text-white hover:scale-[1.02]">Quero no meu evento</a>
       </div>
       <div data-reveal class="relative mt-10">
         <div id="carousel" class="carousel flex snap-x snap-mandatory gap-4 overflow-x-auto scroll-smooth pb-2" tabindex="0" role="region" aria-roledescription="carrossel" aria-label="Fotos de eventos"></div>
@@ -397,19 +415,19 @@
 
     <!-- ============ 3. PACOTES (renderizado a partir de CONFIG.packages) ============ -->
     <section id="pacotes" class="bg-sand-100">
-      <div class="mx-auto max-w-6xl px-5 py-14 md:py-28">
+      <div class="mx-auto max-w-6xl px-5 py-16 md:py-24">
         <div data-reveal class="max-w-2xl">
           <h2 class="font-display text-3xl font-bold tracking-tight sm:text-4xl">Pacotes por evento</h2>
           <p class="mt-4 text-ink-700"><strong class="text-ink-900">Valor base: R$ 19,00 por pessoa.</strong> Personalização à parte.</p>
         </div>
         <div id="packageGrid" data-reveal-group class="hscroll -mx-5 mt-8 flex snap-x snap-mandatory gap-4 overflow-x-auto px-5 py-2 md:mx-0 md:mt-12 md:grid md:grid-cols-3 md:gap-5 md:overflow-visible md:p-0"></div>
         <p class="mt-3 text-center text-xs text-ink-500 md:hidden">Deslize para ver os outros pacotes →</p>
-        <p class="mt-8 text-sm text-ink-700">Mais de 200 convidados ou formato diferente? <a href="#orcamento" class="font-semibold underline underline-offset-4">Montamos uma proposta sob medida.</a></p>
+        <p class="mt-8 text-sm text-ink-700">Mais de 200 convidados ou formato diferente? <a href="#orcamento" class="inline-block py-3 font-semibold underline underline-offset-4 hover:text-caramel-600">Montamos uma proposta sob medida.</a></p>
       </div>
     </section>
 
     <!-- ============ 4. FAQ / REQUISITOS TÉCNICOS ============ -->
-    <section id="faq" class="mx-auto max-w-3xl px-5 py-14 md:py-28">
+    <section id="faq" class="mx-auto max-w-3xl px-5 py-16 md:py-24">
       <div data-reveal>
         <h2 class="font-display text-3xl font-bold tracking-tight sm:text-4xl">O que precisamos no local</h2>
       </div>
@@ -417,7 +435,7 @@
     </section>
 
     <!-- ============ INSTAGRAM ============ -->
-    <section id="instagram" class="mx-auto max-w-6xl px-5 pb-14 md:pb-28">
+    <section id="instagram" class="mx-auto max-w-6xl px-5 pb-16 md:pb-24">
       <div data-reveal class="flex flex-col items-start gap-6 rounded-4xl bg-ink-900 p-6 text-white sm:p-10 md:flex-row md:items-center md:justify-between">
         <div class="flex items-start gap-5">
           <span class="grid h-14 w-14 shrink-0 place-items-center rounded-2xl bg-caramel-500 text-ink-900"><svg class="h-7 w-7" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 8h3l1.5-2.5h7L17 8h3a1 1 0 011 1v9a1 1 0 01-1 1H4a1 1 0 01-1-1V9a1 1 0 011-1z"/><circle cx="12" cy="13" r="3.5"/></svg></span>
@@ -426,7 +444,7 @@
             <p class="mt-2 max-w-lg text-white/80">Vídeos dos eventos, o carrinho em ação e os churros saindo na hora, em <strong class="text-white" data-ig-handle>@churrosjampa</strong>.</p>
           </div>
         </div>
-        <a data-ig-link href="https://www.instagram.com/churrosjampa/" target="_blank" rel="noopener" class="inline-flex shrink-0 items-center gap-2 rounded-full bg-white px-6 py-3.5 font-display font-semibold text-ink-900 transition-transform hover:scale-[1.02]">
+        <a data-ig-link href="https://www.instagram.com/churrosjampa/" target="_blank" rel="noopener noreferrer" class="inline-flex min-h-[44px] shrink-0 items-center gap-2 rounded-full bg-white px-6 py-3.5 font-display font-semibold text-ink-900 hover:scale-[1.02]">
           Seguir <span data-ig-handle>@churrosjampa</span>
           <svg class="h-4 w-4" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M6 14L14 6M7 6h7v7"/></svg>
         </a>
@@ -503,7 +521,7 @@
 
           <div class="mt-2 flex items-center justify-between gap-3">
             <button type="button" id="prevBtn" class="invisible rounded-full px-4 py-3 text-sm text-ink-700 hover:text-ink-900">← Voltar</button>
-            <button type="submit" id="nextBtn" class="rounded-full bg-caramel-500 px-6 py-3 font-display font-semibold text-ink-900 transition-transform hover:scale-[1.02] active:scale-[.98]">Continuar</button>
+            <button type="submit" id="nextBtn" class="rounded-full bg-caramel-500 px-6 py-3 font-display font-semibold text-ink-900 hover:scale-[1.02] active:scale-[.98]">Continuar</button>
           </div>
         </form>
       </div>
@@ -512,14 +530,14 @@
     <!-- ============ DELIVERY / iFOOD: banners de ponta a ponta (renderizado a partir de CONFIG.highlights) ============ -->
     <section id="delivery" aria-labelledby="deliveryTitle">
       <!-- Faixa clara de respiro entre a foto da Hero e os banners -->
-      <div class="mx-auto max-w-6xl px-5 py-12 md:py-20">
+      <div class="mx-auto max-w-6xl px-5 py-16 md:py-24">
         <div data-reveal class="flex flex-col gap-6 md:flex-row md:items-end md:justify-between">
           <div class="max-w-2xl">
             <p class="text-xs font-semibold uppercase tracking-[.2em] text-caramel-600">Delivery</p>
             <h2 id="deliveryTitle" class="mt-3 font-display text-3xl font-bold tracking-tight sm:text-5xl">Vontade de churros em casa?</h2>
             <p class="mt-4 text-ink-700 md:text-lg">Os mesmos churros dos nossos eventos, entregues quentinhos pelo iFood.</p>
           </div>
-          <a data-ifood href="#" target="_blank" rel="noopener" class="btn-ifood inline-flex shrink-0 items-center justify-center gap-2 rounded-full px-7 py-4 font-display font-bold text-white">
+          <a data-ifood href="#" target="_blank" rel="noopener noreferrer" class="btn-ifood inline-flex shrink-0 items-center justify-center gap-2 rounded-full px-7 py-4 font-display font-bold text-white">
             Pedir no iFood
             <svg class="h-4 w-4" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><path d="M6 14L14 6M7 6h7v7"/></svg>
           </a>
@@ -539,7 +557,7 @@
   <!-- Visualizador de Stories -->
   <dialog id="storyBox" class="story-box" aria-label="Stories da Churros in Jampa">
     <div class="story-frame">
-      <video id="storyVideo" playsinline preload="metadata" class="absolute inset-0 h-full w-full object-cover"></video>
+      <video id="storyVideo" playsinline preload="none" class="absolute inset-0 h-full w-full object-cover"></video>
       <div class="story-top">
         <div id="storyBars" class="flex gap-1"></div>
         <div class="mt-3 flex items-center gap-2.5">
@@ -562,7 +580,7 @@
   </dialog>
 
   <!-- Botão flutuante de WhatsApp -->
-  <a id="floatWa" href="#orcamento" target="_blank" rel="noopener" aria-label="Chamar no WhatsApp" class="float-wa">
+  <a id="floatWa" href="#orcamento" target="_blank" rel="noopener noreferrer" aria-label="Chamar no WhatsApp" class="float-wa">
     <svg class="h-6 w-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12a8.5 8.5 0 01-12.6 7.4L3 21l1.7-5.2A8.5 8.5 0 1121 12z"/></svg>
     <span class="hidden sm:inline">WhatsApp</span>
   </a>
@@ -570,31 +588,31 @@
   <footer class="bg-sand-100">
     <div class="mx-auto grid max-w-6xl gap-10 px-5 py-14 md:grid-cols-[1.4fr_1fr_1.2fr]">
       <div>
-        <a href="#topo" class="flex items-center gap-3 font-display text-2xl font-extrabold tracking-tight"><img src="assets/logo.svg" alt="" width="56" height="56" class="h-14 w-14" />Churros in Jampa</a>
+        <a href="#topo" class="inline-flex items-center gap-3 font-display text-2xl font-extrabold tracking-tight"><img src="assets/logo.svg" alt="" width="56" height="56" loading="lazy" decoding="async" class="h-14 w-14" />Churros in Jampa</a>
         <p class="mt-3 max-w-xs text-sm leading-relaxed text-ink-700">O melhor carrinho de churros para o seu evento em João Pessoa, interior da Paraíba, região de Recife (PE) e RN.</p>
-        <a data-ig-link href="https://www.instagram.com/churrosjampa/" target="_blank" rel="noopener" class="mt-5 inline-flex items-center gap-2 rounded-full border border-sand-300 bg-white px-4 py-2 text-sm font-semibold hover:border-ink-500">
+        <a data-ig-link href="https://www.instagram.com/churrosjampa/" target="_blank" rel="noopener noreferrer" class="mt-5 inline-flex min-h-[44px] items-center gap-2 rounded-full border border-sand-300 bg-white px-5 py-2 text-sm font-semibold hover:border-ink-500">
           <svg class="h-4 w-4 text-caramel-600" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 8h3l1.5-2.5h7L17 8h3a1 1 0 011 1v9a1 1 0 01-1 1H4a1 1 0 01-1-1V9a1 1 0 011-1z"/><circle cx="12" cy="13" r="3.5"/></svg> <span data-ig-handle>@churrosjampa</span>
         </a>
       </div>
       <nav aria-label="Links rápidos">
-        <p class="font-display text-sm font-semibold uppercase tracking-widest text-ink-500">Links rápidos</p>
-        <ul class="mt-2 text-sm font-medium md:mt-4 md:space-y-3">
-          <li><a href="#unicos" class="inline-block py-2 hover:text-caramel-600 md:py-0">Diferenciais</a></li>
-          <li><a href="#eventos" class="inline-block py-2 hover:text-caramel-600 md:py-0">Eventos</a></li>
-          <li><a href="#pacotes" class="inline-block py-2 hover:text-caramel-600 md:py-0">Pacotes</a></li>
-          <li><a href="#faq" class="inline-block py-2 hover:text-caramel-600 md:py-0">Dúvidas</a></li>
+        <h2 class="font-display text-sm font-semibold uppercase tracking-widest text-ink-500">Links rápidos</h2>
+        <ul class="mt-2 text-sm font-medium md:mt-3">
+          <li><a href="#unicos" class="tap hover:text-caramel-600">Diferenciais</a></li>
+          <li><a href="#eventos" class="tap hover:text-caramel-600">Eventos</a></li>
+          <li><a href="#pacotes" class="tap hover:text-caramel-600">Pacotes</a></li>
+          <li><a href="#faq" class="tap hover:text-caramel-600">Dúvidas</a></li>
         </ul>
       </nav>
       <div>
-        <p class="font-display text-sm font-semibold uppercase tracking-widest text-ink-500">Contato rápido</p>
-        <a id="footWa" href="#orcamento" target="_blank" rel="noopener" class="mt-4 inline-flex items-center gap-2 rounded-full bg-caramel-500 px-5 py-3 font-display font-semibold text-ink-900 transition-transform hover:scale-[1.02]">
+        <h2 class="font-display text-sm font-semibold uppercase tracking-widest text-ink-500">Contato rápido</h2>
+        <a id="footWa" href="#orcamento" target="_blank" rel="noopener noreferrer" class="mt-4 inline-flex items-center gap-2 rounded-full bg-caramel-500 px-5 py-3 font-display font-semibold text-ink-900 hover:scale-[1.02]">
           <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12a8.5 8.5 0 01-12.6 7.4L3 21l1.7-5.2A8.5 8.5 0 1121 12z"/></svg>
           Chamar no WhatsApp
         </a>
         <dl class="mt-5 space-y-2 text-sm text-ink-700">
           <div class="flex gap-2"><dt class="font-semibold text-ink-900">Atendimento:</dt><dd id="footHours"></dd></div>
           <div class="flex gap-2"><dt class="font-semibold text-ink-900">Atendemos:</dt><dd>João Pessoa, interior da Paraíba, região de Recife (PE) e RN</dd></div>
-          <div class="flex gap-2"><dt class="font-semibold text-ink-900">Endereço:</dt><dd><a id="footAddr" href="#" target="_blank" rel="noopener" class="underline underline-offset-4 hover:text-caramel-600"></a></dd></div>
+          <div class="flex items-center gap-2"><dt class="font-semibold text-ink-900">Endereço:</dt><dd><a id="footAddr" href="#" target="_blank" rel="noopener noreferrer" class="tap underline underline-offset-4 hover:text-caramel-600"></a></dd></div>
         </dl>
       </div>
     </div>
@@ -777,7 +795,7 @@
         <ul class="mt-6 flex-1 space-y-2 text-sm text-ink-700">
           ${p.features.map(f => `<li class="flex gap-2"><span class="text-caramel-600">✓</span>${f}</li>`).join('')}
         </ul>
-        <a href="#orcamento" data-guests="${p.maxGuests}" class="mt-8 rounded-full px-5 py-3 text-center font-display font-semibold transition-transform hover:scale-[1.02] ${hot ? 'bg-caramel-500 text-ink-900' : 'bg-ink-900 text-white'}">Quero este pacote</a>
+        <a href="#orcamento" data-guests="${p.maxGuests}" class="mt-8 rounded-full px-5 py-3 text-center font-display font-semibold hover:scale-[1.02] ${hot ? 'bg-caramel-500 text-ink-900' : 'bg-ink-900 text-white'}">Quero este pacote</a>
       </article>`;
     }).join('');
   }
@@ -902,6 +920,17 @@
     }
     const start = () => { clearInterval(timer); timer = setInterval(() => go(i + 1), DELAY); };
     dotEls.forEach((d, k) => d.addEventListener('click', () => { go(k); start(); }));
+    // Decodifica as fotos seguintes antes da 1ª troca: o crossfade não pisca
+    slides.slice(1).forEach(img => { if (img.decode) img.decode().catch(() => {}); });
+    // Deslize (touch/caneta/mouse): esquerda = próxima, direita = anterior; o timer de 3 s reinicia
+    const show = $('#heroShow'); let x0 = null, y0 = 0;
+    show.addEventListener('pointerdown', e => { if (e.pointerType === 'mouse' && e.button !== 0) return; x0 = e.clientX; y0 = e.clientY; });
+    show.addEventListener('pointerup', e => {
+      if (x0 === null) return;
+      const dx = e.clientX - x0, dy = e.clientY - y0; x0 = null;
+      if (Math.abs(dx) > 40 && Math.abs(dx) > Math.abs(dy) * 1.2) { go(dx < 0 ? i + 1 : i - 1); start(); }
+    });
+    show.addEventListener('pointercancel', () => { x0 = null; });
     document.addEventListener('visibilitychange', () => document.hidden ? clearInterval(timer) : start());   // pausa com a aba oculta
     start();
   }
@@ -962,17 +991,17 @@
     }
     vol.addEventListener('input', () => setVolume(parseFloat(vol.value)));
     function tick() {                                              // barra de progresso do story atual
-      if (video.duration) fills[i].style.width = `${(video.currentTime / video.duration) * 100}%`;
+      if (video.duration) fills[i].style.transform = `scaleX(${video.currentTime / video.duration})`;
       raf = requestAnimationFrame(tick);
     }
     function show(n) {
       if (n < 0) n = 0;
       if (n >= list.length) return close();                        // acabou o último: fecha
       i = n;
-      fills.forEach((f, k) => { f.style.width = k < i ? '100%' : '0%'; });
+      fills.forEach((f, k) => { f.style.transform = `scaleX(${k < i ? 1 : 0})`; });
       cap.textContent = list[i].caption ? `· ${list[i].caption}` : '';
       video.poster = list[i].poster || '';                        // primeira imagem aparece na hora, sem tela preta
-      video.src = list[i].src;
+      video.preload = 'auto'; video.src = list[i].src;
       video.play().catch(() => { video.muted = true; setMuteIcon(); video.play().catch(() => {}); });   // navegador bloqueou o som
     }
     function open() {
@@ -981,7 +1010,7 @@
       show(0); cancelAnimationFrame(raf); tick();
     }
     function close() {
-      video.pause(); video.removeAttribute('src'); video.load();
+      video.pause(); video.muted = true; video.removeAttribute('src'); video.preload = 'none'; video.load();   // corta som e download na hora
       cancelAnimationFrame(raf); document.documentElement.style.overflow = '';
       if (box.open) box.close();
     }
@@ -995,7 +1024,11 @@
       else video.muted = true;
       setMuteIcon();
     });
-    box.addEventListener('close', close);                          // Esc também fecha
+    box.addEventListener('close', close);
+    document.addEventListener('visibilitychange', () => { if (document.hidden && box.open) close(); });
+    // Pré-carrega as capas dos stories quando o navegador estiver ocioso: abre sem tela preta
+    const warm = () => list.forEach(s => { if (s.poster) { const im = new Image(); im.decoding = 'async'; im.src = s.poster; } });
+    addEventListener('load', () => ('requestIdleCallback' in window ? requestIdleCallback(warm, { timeout: 3000 }) : setTimeout(warm, 1500)), { once: true });                          // Esc também fecha
     box.addEventListener('click', e => { if (e.target === box) close(); });   // clique fora do vídeo (desktop)
     box.addEventListener('keydown', e => {
       if (e.target === vol) return;                                // setas no controle mudam o volume
@@ -1014,8 +1047,8 @@
   /* ---------- DELIVERY (banners) ---------- */
   function initHighlights() {
     $('#highlightGrid').innerHTML = CONFIG.highlights.map(h => `
-      <a data-ifood href="#" target="_blank" rel="noopener" class="banner" aria-label="${h.title}: pedir no iFood">
-        <span class="banner-bg" style="background-image:url('${h.img}');background-position:${h.pos}"></span>
+      <a data-ifood href="#" target="_blank" rel="noopener noreferrer" class="banner" aria-label="${h.title}: pedir no iFood">
+        <span class="banner-bg" data-bg="${h.img}" style="background-position:${h.pos}"></span>
         <span class="banner-shade"></span>
         <span class="absolute left-5 top-5 rounded-full bg-caramel-500 px-3 py-1 text-xs font-bold uppercase tracking-wider text-ink-900 md:left-8 md:top-8">${h.tag}</span>
         <span class="absolute inset-x-0 bottom-0 flex items-end gap-4 p-5 md:p-8">
@@ -1026,6 +1059,11 @@
           <span class="go grid h-11 w-11 shrink-0 place-items-center rounded-full bg-caramel-500 text-lg text-ink-900 md:h-14 md:w-14" aria-hidden="true">→</span>
         </span>
       </a>`).join('');
+    const bgs = $$('#highlightGrid [data-bg]');
+    const paint = el => { el.style.backgroundImage = `url('${el.dataset.bg}')`; el.removeAttribute('data-bg'); };
+    if (!('IntersectionObserver' in window)) return bgs.forEach(paint);
+    const io = new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting) { paint(e.target); io.unobserve(e.target); } }), { rootMargin: '400px 400px' });
+    bgs.forEach(el => io.observe(el));
   }
 
   function initFaq() {
@@ -1157,17 +1195,17 @@
       const max = state.guests >= +guests.max;
       const p = max ? null : pkgFor(state.guests);
       const text = [
-        `Olá! Sou ${name.value.trim()} e quero verificar a disponibilidade da Churros in Jampa.`,
+        `Olá! Sou *${name.value.trim()}* e quero verificar a disponibilidade da Churros in Jampa.`,
         '',
-        `• Evento: ${eventLabel()}`,
-        `• Convidados: ${$('#guestsOut').textContent}`,
-        `• Data: ${fmtDate(date.value)}`,
-        `• Local: ${place.value.trim()}`,
-        flavorName() && `• Sabores desejados: ${flavorName()}`,
-        `• Estimativa do site: ${p ? `${p.name}, a partir de ${brl(estimate(p))}` : 'sob medida'}`,
-      ].filter(l => l !== undefined && l !== null && l !== false).join('\n');
+        `• *Evento:* ${eventLabel()}`,
+        `• *Convidados:* ${$('#guestsOut').textContent}`,
+        `• *Data:* ${fmtDate(date.value)}`,
+        `• *Bairro/Cidade:* ${place.value.trim()}`,
+        `• *Sabores desejados:* ${flavorName() || 'a definir'}`,
+        `• *Estimativa do site:* ${p ? `${p.name}, a partir de ${brl(estimate(p))}` : 'sob medida'}`,
+      ].join('\n');
       // Ponto de integração de analytics: window.dataLayer?.push({ event: 'lead_whatsapp', ... })
-      window.open(`https://wa.me/${CONFIG.whatsapp}?text=${encodeURIComponent(text)}`, '_blank', 'noopener');
+      window.open(`https://wa.me/${CONFIG.whatsapp}?text=${encodeURIComponent(text)}`, '_blank', 'noopener,noreferrer');
     });
   }
 
