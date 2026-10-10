@@ -1,4 +1,4 @@
-# Churros Jampa — Landing page
+# Jampa Churros — Landing page
 
 Landing page de página única para captação de eventos (casamentos, aniversários e corporativos) em João Pessoa/PB.
 

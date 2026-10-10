@@ -3,14 +3,14 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Churros Jampa — Carrinho de churros para festas e eventos em João Pessoa</title>
+  <title>Jampa Churros — Carrinho de churros para festas e eventos em João Pessoa</title>
   <meta name="description" content="Churros fritos na hora para casamentos, aniversários e eventos corporativos em João Pessoa/PB. Estrutura completa por nossa conta. Verifique a disponibilidade da sua data." />
   <!-- Prévia ao compartilhar o link (WhatsApp, Instagram, etc.).
        TROCAR "https://SEU-DOMINIO" pelo endereço real do site: og:image e og:url precisam de URL completa. -->
   <meta property="og:type" content="website" />
   <meta property="og:locale" content="pt_BR" />
-  <meta property="og:site_name" content="Churros Jampa" />
-  <meta property="og:title" content="Churros Jampa — Carrinho de churros para o seu evento" />
+  <meta property="og:site_name" content="Jampa Churros" />
+  <meta property="og:title" content="Jampa Churros — Carrinho de churros para o seu evento" />
   <meta property="og:description" content="Churros fritos na hora para casamentos, aniversários e eventos corporativos em João Pessoa e região. Peça seu orçamento pelo WhatsApp." />
   <meta property="og:url" content="https://SEU-DOMINIO/" />
   <meta property="og:image" content="https://SEU-DOMINIO/assets/og.jpg" />
@@ -19,9 +19,8 @@
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="theme-color" content="#FBF7F0" />
 
-  <!-- A foto da hero é o LCP: pré-carregada na versão certa para cada tela -->
-  <link rel="preload" as="image" href="assets/hero-mobile.webp" media="(max-width: 767px)" />
-  <link rel="preload" as="image" href="assets/hero-desktop.webp" media="(min-width: 768px)" />
+  <!-- O primeiro bloco da hero é o maior elemento da primeira tela -->
+  <link rel="preload" as="image" href="assets/eventos/evento-2.webp" />
 
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -104,7 +103,7 @@
     .mix-bar { background: rgba(20,14,9,.55); border: 1px solid rgba(255,255,255,.18); -webkit-backdrop-filter: blur(10px); backdrop-filter: blur(10px); }
 
     /* Header: transparente sobre a foto, claro depois da hero */
-    #siteHeader { color: #fff; transition: background-color .3s, color .3s, box-shadow .3s; }
+    #siteHeader { color: #231A12; transition: background-color .3s, color .3s, box-shadow .3s; }
     #siteHeader.is-solid { background: rgba(251,247,240,.92); color: #231A12; box-shadow: 0 1px 0 rgba(35,26,18,.08);
                            -webkit-backdrop-filter: blur(12px); backdrop-filter: blur(12px); }
     #siteHeader .head-cta { border: 1px solid currentColor; }
@@ -157,6 +156,32 @@
       .banner:hover .go, .banner:focus-visible .go { opacity: 1; transform: none; box-shadow: 0 0 0 4px rgba(245,158,11,.25), 0 10px 28px -6px rgba(245,158,11,.7); }
     }
 
+    /* Botão do iFood: vermelho da plataforma, reconhecível de longe */
+    .btn-ifood { background: #EA1D2C; transition: transform .2s, box-shadow .3s, background-color .2s; }
+    .btn-ifood:hover { background: #F2303E; transform: scale(1.02); box-shadow: 0 0 0 4px rgba(234,29,44,.18), 0 12px 30px -8px rgba(234,29,44,.6); }
+
+    /* Cards expansíveis "O que nos torna únicos" */
+    .intent-row { display: grid; gap: .75rem; }                 /* celular: cards empilhados, conteúdo aberto */
+    .intent-card { position: relative; overflow: hidden; display: flex; flex-direction: column; justify-content: space-between;
+                   min-height: 15rem; padding: 1.5rem; border-radius: 28px; color: #231A12; }
+    .intent-card:nth-child(1) { background: #F59E0B; }
+    .intent-card:nth-child(2) { background: #FBBF24; }
+    .intent-card:nth-child(3) { background: #FCD34D; }
+    .intent-card:nth-child(4) { background: #FDE68A; }
+    .intent-card img { width: 100%; height: 11rem; object-fit: cover; border-radius: 18px; }
+    @media (min-width: 1024px) {
+      .intent-row { display: flex; gap: 1rem; height: 34rem; }
+      .intent-card { flex: 1 1 0; min-width: 0; min-height: 0; padding: 2rem; transition: flex-grow .9s cubic-bezier(.22,.61,.36,1), background-color .6s; }
+      .intent-row:hover .intent-card { flex-grow: .8; }
+      .intent-row .intent-card:hover { flex-grow: 2.1; }
+      /* fechado, o corpo não ocupa altura: o título fica na base do card; no hover ele abre */
+      .intent-card .intent-body { max-height: 0; opacity: 0; transform: translateY(12px); overflow: hidden;
+                                  transition: max-height .8s cubic-bezier(.22,.61,.36,1), opacity .6s .15s, transform .8s .15s cubic-bezier(.22,.61,.36,1); }
+      .intent-card:hover .intent-body, .intent-card:focus-within .intent-body { max-height: 26rem; opacity: 1; transform: none; }
+      .intent-card img { height: 13rem; }
+      .intent-card .intent-body p { min-width: 18rem; }          /* o texto não se espreme durante a abertura */
+    }
+
     /* Funil */
     .opt { transition: border-color .2s, background-color .2s; }
     .opt[aria-checked="true"] { border-color: #F59E0B; background: #FEF3C7; }
@@ -174,12 +199,13 @@
   <!-- ============ HEADER ============ -->
   <header id="siteHeader" class="fixed inset-x-0 top-0 z-50">
     <div class="mx-auto flex max-w-6xl items-center justify-between px-5 py-4">
-      <a href="#topo" class="font-display text-lg font-bold tracking-tight">Churros Jampa</a>
+      <a href="#topo" class="font-display text-lg font-bold tracking-tight">Jampa Churros</a>
       <nav class="hidden items-center gap-8 text-sm font-medium md:flex" aria-label="Principal">
         <a href="#porque" class="opacity-85 hover:opacity-100">Por que nós</a>
         <a href="#como" class="opacity-85 hover:opacity-100">Como funciona</a>
         <a href="#eventos" class="opacity-85 hover:opacity-100">Eventos</a>
         <a href="#pacotes" class="opacity-85 hover:opacity-100">Pacotes</a>
+        <a href="#delivery" class="opacity-85 hover:opacity-100">Delivery</a>
         <a href="#faq" class="opacity-85 hover:opacity-100">Dúvidas</a>
       </nav>
       <div class="flex items-center gap-2">
@@ -194,89 +220,48 @@
       <a href="#como" class="block rounded-2xl px-4 py-3 font-display font-semibold hover:bg-sand-100">Como funciona</a>
       <a href="#eventos" class="block rounded-2xl px-4 py-3 font-display font-semibold hover:bg-sand-100">Eventos</a>
       <a href="#pacotes" class="block rounded-2xl px-4 py-3 font-display font-semibold hover:bg-sand-100">Pacotes</a>
+      <a href="#delivery" class="block rounded-2xl px-4 py-3 font-display font-semibold hover:bg-sand-100">Delivery</a>
       <a href="#faq" class="block rounded-2xl px-4 py-3 font-display font-semibold hover:bg-sand-100">Dúvidas</a>
     </nav>
   </header>
 
   <main id="topo">
 
-    <!-- ============ 1. HERO (foto estática, sem vídeo) ============ -->
-    <section id="hero" class="relative isolate flex min-h-[100svh] flex-col overflow-hidden bg-ink-900">
-      <picture>
-        <source media="(max-width: 767px)" srcset="assets/hero-mobile.webp" />
-        <img src="assets/hero-desktop.webp" width="2752" height="1536" fetchpriority="high" decoding="async"
-             alt="Churros recém-frito recebendo doce de leite no carrinho da Churros Jampa, em um evento ao ar livre"
-             class="hero-photo -z-20" />
-      </picture>
-      <!-- Camadas de fundo por sabor: já carregadas no HTML (sem piscar). A escolhida sobe para o topo e é revelada. -->
-      <div id="heroLayers" aria-hidden="true" class="absolute inset-0 -z-20 isolate overflow-hidden">
-        <picture>
-          <source media="(max-width: 767px)" srcset="assets/hero-mobile.webp" />
-          <img data-flavor="doce-de-leite" src="assets/hero-desktop.webp" alt="" decoding="async" fetchpriority="low" class="hero-photo hero-layer" />
-        </picture>
-        <picture>
-          <source media="(max-width: 767px)" srcset="assets/sabores/brigadeiro-mobile.webp" />
-          <img data-flavor="brigadeiro" src="assets/sabores/brigadeiro.jpg" alt="" decoding="async" fetchpriority="low" class="hero-photo hero-layer" />
-        </picture>
-        <picture>
-          <source media="(max-width: 767px)" srcset="assets/sabores/nutella-mobile.webp" />
-          <img data-flavor="nutella" src="assets/sabores/nutella.jpg" alt="" decoding="async" fetchpriority="low" class="hero-photo hero-layer" />
-        </picture>
-        <picture>
-          <source media="(max-width: 767px)" srcset="assets/sabores/leite-ninho-mobile.webp" />
-          <img data-flavor="leite-ninho" src="assets/sabores/leite-ninho.jpg" alt="" decoding="async" fetchpriority="low" class="hero-photo hero-layer" />
-        </picture>
-      </div>
-      <div class="hero-overlay absolute inset-0 -z-10"></div>
-
-      <div class="mx-auto flex w-full max-w-6xl flex-1 flex-col justify-between px-5 pb-7 pt-24 md:pb-10 md:pt-36">
-
-        <!-- Título à esquerda -->
-        <div class="max-w-[21rem] sm:max-w-md md:max-w-xl">
-          <p data-hero class="mb-4 text-xs font-semibold uppercase tracking-[.2em] text-white/85">João Pessoa e região</p>
-          <h1 data-hero class="font-display text-[2.5rem] font-extrabold leading-[1] tracking-[-.02em] text-white sm:text-6xl lg:text-7xl">
-            Churros fritos na hora na sua festa.
-          </h1>
-          <p data-hero class="mt-5 hidden max-w-md text-lg text-white/90 md:block">
-            Carrinho completo para casamentos, aniversários e eventos corporativos.
-          </p>
-        </div>
-
-        <!-- Sabores + CTA na base -->
-        <div data-hero>
-          <p id="flavorLabel" class="mb-3 text-sm font-medium text-white/90">Quais sabores não podem faltar? <span class="text-white/70">Pode escolher mais de um.</span></p>
-          <!-- Mobile: scroll horizontal sem barra · Desktop: chips em linha -->
-          <div id="flavors" role="group" aria-labelledby="flavorLabel" class="chips -mx-5 flex gap-2 overflow-x-auto px-5 pb-1 md:mx-0 md:flex-wrap md:gap-3 md:overflow-visible md:px-0"></div>
-          <p id="mixBar" hidden aria-live="polite" class="mix-bar mt-3 inline-flex max-w-full items-center gap-2 rounded-full px-4 py-2 text-sm text-white">
-            <span class="h-2 w-2 shrink-0 rounded-full bg-caramel-500"></span>
-            <span><span id="mixLabel" class="text-white/75"></span> <strong id="mixText" class="font-display font-semibold"></strong></span>
-          </p>
-
-          <div class="mt-4 flex flex-col gap-3 sm:flex-row sm:items-center md:mt-5">
-            <a id="heroCta" href="#orcamento" class="inline-flex items-center justify-center gap-2 rounded-full bg-caramel-500 px-7 py-4 text-center font-display text-base font-semibold text-ink-900 shadow-lg shadow-black/20 transition-transform hover:scale-[1.02] active:scale-[.98]">
-              <span id="heroCtaText" aria-live="polite">Quero um orçamento</span>
-              <svg class="h-4 w-4 shrink-0" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M4 10h12M11 5l5 5-5 5"/></svg>
-            </a>
-            <p class="text-center text-sm text-white/80 sm:text-left">Resposta pelo WhatsApp, sem compromisso.</p>
-          </div>
+    <!-- ============ 1. HERO: foco em eventos, blocos de imagem flutuantes (não encostam nas bordas) ============ -->
+    <section id="hero" class="px-3 pb-8 pt-24 md:px-6 md:pb-12 md:pt-32">
+      <div class="mx-auto max-w-4xl px-2 text-center">
+        <p data-hero class="text-xs font-semibold uppercase tracking-[.2em] text-caramel-600">Eventos em João Pessoa e região</p>
+        <h1 data-hero class="mt-4 font-display text-[2.4rem] font-extrabold leading-[1.02] tracking-[-.02em] sm:text-6xl lg:text-7xl">Churros fritos na hora para o seu evento.</h1>
+        <p data-hero class="mx-auto mt-5 max-w-xl text-ink-700 md:text-lg">Casamentos, aniversários e eventos corporativos com carrinho completo. E quando bater a vontade em casa, é só pedir pelo iFood.</p>
+        <div data-hero class="mt-7 flex flex-col items-center justify-center gap-3 sm:flex-row">
+          <a data-ifood href="#" target="_blank" rel="noopener" class="btn-ifood inline-flex w-full items-center justify-center gap-2 rounded-full px-7 py-4 font-display text-base font-bold text-white sm:w-auto">
+            Peça no iFood
+            <svg class="h-4 w-4" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><path d="M6 14L14 6M7 6h7v7"/></svg>
+          </a>
+          <a href="#orcamento" class="inline-flex w-full items-center justify-center gap-2 rounded-full bg-caramel-500 px-7 py-4 font-display text-base font-semibold text-ink-900 sm:w-auto">
+            Orçamento para eventos <span aria-hidden="true">→</span>
+          </a>
         </div>
       </div>
-    </section>
-
-    <!-- ============ DESTAQUES: banners de ponta a ponta (renderizado a partir de CONFIG.highlights) ============ -->
-    <section id="destaques" aria-labelledby="destaquesTitle">
-      <!-- Faixa clara de respiro entre a foto da Hero e os banners -->
-      <div class="mx-auto max-w-6xl px-5 py-12 md:py-20">
-        <div data-reveal>
-          <div class="max-w-2xl">
-            <p class="text-xs font-semibold uppercase tracking-[.2em] text-caramel-600">Nosso cardápio</p>
-            <h2 id="destaquesTitle" class="mt-3 font-display text-3xl font-bold tracking-tight sm:text-5xl">Destaques da casa</h2>
-            <p class="mt-4 text-ink-700 md:text-lg">Do clássico ao gourmet, tudo frito e recheado na hora, na frente dos seus convidados.</p>
-          </div>
-        </div>
+      <!-- 4 blocos: 2x2 no celular, 4 lado a lado no desktop -->
+      <div class="mx-auto mt-10 grid max-w-[1400px] grid-cols-2 gap-3 md:mt-14 md:grid-cols-4 md:gap-4">
+        <figure class="hero-tile relative aspect-[4/5] overflow-hidden rounded-[24px] bg-sand-200 md:rounded-[32px]">
+          <img src="assets/eventos/evento-2.webp" alt="Jampa Churros em evento: Casamento" fetchpriority="high" decoding="async" class="h-full w-full object-cover" style="object-position:50% 65%" />
+          <figcaption class="absolute bottom-3 left-3 rounded-full bg-white/90 px-3 py-1.5 font-display text-sm font-semibold text-ink-900 backdrop-blur md:bottom-4 md:left-4 md:px-4 md:py-2">Casamento</figcaption>
+        </figure>
+        <figure class="hero-tile relative aspect-[4/5] overflow-hidden rounded-[24px] bg-sand-200 md:rounded-[32px]">
+          <img src="assets/eventos/evento-1.webp" alt="Jampa Churros em evento: Aniversário" loading="eager" decoding="async" class="h-full w-full object-cover" style="object-position:50% 35%" />
+          <figcaption class="absolute bottom-3 left-3 rounded-full bg-white/90 px-3 py-1.5 font-display text-sm font-semibold text-ink-900 backdrop-blur md:bottom-4 md:left-4 md:px-4 md:py-2">Aniversário</figcaption>
+        </figure>
+        <figure class="hero-tile relative aspect-[4/5] overflow-hidden rounded-[24px] bg-sand-200 md:rounded-[32px]">
+          <img src="assets/eventos/evento-3.webp" alt="Jampa Churros em evento: Corporativo" loading="eager" decoding="async" class="h-full w-full object-cover" style="object-position:50% 55%" />
+          <figcaption class="absolute bottom-3 left-3 rounded-full bg-white/90 px-3 py-1.5 font-display text-sm font-semibold text-ink-900 backdrop-blur md:bottom-4 md:left-4 md:px-4 md:py-2">Corporativo</figcaption>
+        </figure>
+        <figure class="hero-tile relative aspect-[4/5] overflow-hidden rounded-[24px] bg-sand-200 md:rounded-[32px]">
+          <img src="assets/destaques/tradicional.jpg" alt="Jampa Churros em evento: Seu evento" loading="eager" decoding="async" class="h-full w-full object-cover" style="object-position:40% 50%" />
+          <figcaption class="absolute bottom-3 left-3 rounded-full bg-white/90 px-3 py-1.5 font-display text-sm font-semibold text-ink-900 backdrop-blur md:bottom-4 md:left-4 md:px-4 md:py-2">Seu evento</figcaption>
+        </figure>
       </div>
-      <!-- Desktop: banners lado a lado, sem espaço · Mobile: swipe horizontal com um banner e meio visível -->
-      <div id="highlightGrid" class="hscroll flex snap-x snap-mandatory overflow-x-auto md:overflow-hidden"></div>
     </section>
 
     <!-- ============ 2. PROPOSTA DE VALOR ============ -->
@@ -387,6 +372,35 @@
       </div>
     </section>
 
+    <!-- ============ DELIVERY / iFOOD: banners de ponta a ponta (renderizado a partir de CONFIG.highlights) ============ -->
+    <section id="delivery" aria-labelledby="deliveryTitle">
+      <!-- Faixa clara de respiro entre a foto da Hero e os banners -->
+      <div class="mx-auto max-w-6xl px-5 py-12 md:py-20">
+        <div data-reveal class="flex flex-col gap-6 md:flex-row md:items-end md:justify-between">
+          <div class="max-w-2xl">
+            <p class="text-xs font-semibold uppercase tracking-[.2em] text-caramel-600">Delivery</p>
+            <h2 id="deliveryTitle" class="mt-3 font-display text-3xl font-bold tracking-tight sm:text-5xl">Vontade de churros em casa?</h2>
+            <p class="mt-4 text-ink-700 md:text-lg">Os mesmos churros dos nossos eventos, entregues quentinhos pelo iFood.</p>
+          </div>
+          <a data-ifood href="#" target="_blank" rel="noopener" class="btn-ifood inline-flex shrink-0 items-center justify-center gap-2 rounded-full px-7 py-4 font-display font-bold text-white">
+            Pedir no iFood
+            <svg class="h-4 w-4" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><path d="M6 14L14 6M7 6h7v7"/></svg>
+          </a>
+        </div>
+      </div>
+      <!-- Desktop: banners lado a lado, sem espaço · Mobile: swipe horizontal com um banner e meio visível -->
+      <div id="highlightGrid" class="hscroll flex snap-x snap-mandatory overflow-x-auto md:overflow-hidden"></div>
+    </section>
+
+    <!-- ============ O QUE NOS TORNA ÚNICOS: cards expansíveis (sanfona no hover, desktop) ============ -->
+    <section id="unicos" class="mx-auto max-w-6xl px-5 py-14 md:py-28">
+      <div data-reveal class="max-w-2xl">
+        <h2 class="font-display text-3xl font-bold tracking-tight sm:text-4xl">O que nos torna únicos</h2>
+        <p class="mt-4 text-ink-700">Passe o mouse (ou role, no celular) para conhecer cada detalhe.</p>
+      </div>
+      <div id="intentRow" data-reveal-group class="intent-row mt-8 md:mt-12"></div>
+    </section>
+
     <!-- ============ 4. FAQ / REQUISITOS TÉCNICOS ============ -->
     <section id="faq" class="mx-auto max-w-3xl px-5 py-14 md:py-28">
       <div data-reveal>
@@ -422,7 +436,6 @@
           <ul class="mt-8 space-y-3 text-sm text-ink-700">
             <li class="flex gap-3"><span class="text-caramel-600">✓</span> Sem compromisso</li>
             <li class="flex gap-3"><span class="text-caramel-600">✓</span> Leva menos de 1 minuto</li>
-            <li class="flex gap-3"><span class="text-caramel-600">✓</span> Sabores: <strong id="funnelFlavor" class="text-ink-900">a definir</strong></li>
           </ul>
         </div>
 
@@ -496,7 +509,7 @@
   <footer class="bg-sand-100">
     <div class="mx-auto grid max-w-6xl gap-10 px-5 py-14 md:grid-cols-[1.4fr_1fr_1.2fr]">
       <div>
-        <a href="#topo" class="font-display text-2xl font-extrabold tracking-tight">Churros Jampa</a>
+        <a href="#topo" class="font-display text-2xl font-extrabold tracking-tight">Jampa Churros</a>
         <p class="mt-3 max-w-xs text-sm leading-relaxed text-ink-700">O melhor carrinho de churros para o seu evento em João Pessoa e região.</p>
         <a data-ig-link href="https://www.instagram.com/churrosjampa/" target="_blank" rel="noopener" class="mt-5 inline-flex items-center gap-2 rounded-full border border-sand-300 bg-white px-4 py-2 text-sm font-semibold hover:border-ink-500">
           <svg class="h-4 w-4 text-caramel-600" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 8h3l1.5-2.5h7L17 8h3a1 1 0 011 1v9a1 1 0 01-1 1H4a1 1 0 01-1-1V9a1 1 0 011-1z"/><circle cx="12" cy="13" r="3.5"/></svg> <span data-ig-handle>@churrosjampa</span>
@@ -524,7 +537,7 @@
       </div>
     </div>
     <div class="border-t border-sand-200">
-      <p class="mx-auto max-w-6xl px-5 py-6 text-xs text-ink-500">© <span id="footYear"></span> Churros Jampa. Todos os direitos reservados. <span id="footLegal"></span></p>
+      <p class="mx-auto max-w-6xl px-5 py-6 text-xs text-ink-500">© <span id="footYear"></span> Jampa Churros. Todos os direitos reservados. <span id="footLegal"></span></p>
     </div>
   </footer>
 
@@ -539,6 +552,7 @@
   const CONFIG = {
     whatsapp: '5583999999999',
     instagram: 'churrosjampa',
+    ifood: '#',                             // TROCAR pelo link da loja no iFood
     hours: 'Seg a Sáb, 9h às 18h',          // PLACEHOLDER
     legal: '',                              // ex.: 'CNPJ 00.000.000/0001-00' (vazio = não aparece)
     defaultCta: 'Quero um orçamento',
@@ -564,6 +578,13 @@
       { tag: 'O clássico', title: 'Churros Tradicional',  text: 'Doce de leite cremoso, frito e recheado na hora.',  img: 'assets/destaques/tradicional.jpg', pos: '62% 50%' },
       { tag: 'Gourmet',    title: 'Churros Gourmet',      text: 'Com toppings: creme de avelã e morangos frescos.',  img: 'assets/destaques/gourmet.jpg',     pos: '50% 50%' },
       { tag: 'Para dividir', title: 'Mini Churros',       text: 'Crocantes, com potinho de doce de leite à parte.',   img: 'assets/destaques/mini.jpg',        pos: '52% 50%' },
+    ],
+    /* O QUE NOS TORNA ÚNICOS: textos são sugestões, revisar com a cliente */
+    unique: [
+      { title: 'Nosso carrinho',        text: 'Estrutura completa montada no seu evento, com equipe uniformizada e visual que aparece bem nas fotos.', img: 'assets/eventos/evento-2.webp', pos: '50% 70%' },
+      { title: 'Massa de churros',      text: 'Frita na hora, crocante por fora e macia por dentro, passada no açúcar e canela.',                    img: 'assets/hero-desktop.webp',    pos: '58% 45%' },
+      { title: 'Formas de servir',      text: 'Tradicional recheado, gourmet com toppings ou mini churros para dividir: escolha o formato da festa.', img: 'assets/destaques/mini.jpg',    pos: '50% 50%' },
+      { title: 'Sessão festa infantil', text: 'Um momento pensado para a criançada, com churros no tamanho certo e atendimento que vira parte da festa.', img: 'assets/eventos/evento-1.webp', pos: '50% 40%' },
     ],
     events: ['Casamento', 'Aniversário', 'Corporativo', 'Outro'],
     packages: [
@@ -646,75 +667,6 @@
   /* =====================================================================
      MÓDULO 2 — SABORES → CTA DINÂMICO
   ===================================================================== */
-  function initFlavors() {
-    const box = $('#flavors'), cta = $('#heroCta'), ctaText = $('#heroCtaText'), funnelFlavor = $('#funnelFlavor');
-    const mixBar = $('#mixBar'), mixLabel = $('#mixLabel'), mixText = $('#mixText');
-    const layers = $$('#heroLayers .hero-layer');
-    let lastClicked = null;                                   // sabor que manda no fundo (só muda no clique)
-
-    // Fundo: a camada do sabor sobe para o topo e é revelada por um círculo que se abre a partir do churros,
-    // com um leve "pouso" de zoom. A anterior fica por baixo até a revelação terminar.
-    const ORIGIN = matchMedia('(max-width: 767px)').matches ? '52% 42%' : '54% 46%';
-    let shown = null, z = 1, run = 0;
-    function showBg(id) {
-      id = id || 'doce-de-leite';                              // sem seleção = foto padrão
-      if (id === shown) return;
-      const layer = layers.find(l => l.dataset.flavor === id); if (!layer) return;
-      const first = shown === null; shown = id;
-      const my = ++run;
-      const settle = () => { if (my === run) layers.forEach(l => { if (l !== layer) l.style.visibility = 'hidden'; }); };
-      layer.style.zIndex = ++z; layer.style.visibility = 'visible';
-      if (first || !hasGsap()) { layer.style.clipPath = 'none'; settle(); return; }
-      gsap.killTweensOf(layer, 'clipPath,filter');
-      gsap.fromTo(layer,
-        { clipPath: `circle(0% at ${ORIGIN})`, filter: 'brightness(1.25) saturate(1.15)' },
-        { clipPath: `circle(150% at ${ORIGIN})`, filter: 'brightness(1) saturate(1)', duration: 1.05, ease: 'power3.inOut',
-          onComplete: () => { layer.style.clipPath = 'none'; layer.style.filter = ''; settle(); } });
-    }
-
-    box.innerHTML = CONFIG.flavors.map(f => `
-      <button type="button" data-id="${f.id}" aria-pressed="false" class="flavor flex items-center gap-2 rounded-full px-4 py-2.5 font-display text-[15px] font-semibold md:px-5 md:py-3 md:text-base">
-        <span class="text-lg leading-none md:text-xl" aria-hidden="true">${f.emoji}</span>
-        <span>${f.name}</span>
-        <svg class="check h-4 shrink-0" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2.8" aria-hidden="true"><path d="M4 10.5l4 4 8-9"/></svg>
-      </button>`).join('');
-
-    function render(animate) {
-      const names = state.flavors.map(f => f.name), n = names.length;
-      const text = n === 0 ? CONFIG.defaultCta : n === 1 ? `Quero Churros de ${names[0]} para minha festa` : 'Quero esse mix para minha festa';
-      funnelFlavor.textContent = n ? names.join(' + ') : 'a definir';
-      mixLabel.textContent = n > 1 ? 'Mix perfeito:' : 'Sabor escolhido:';
-      mixText.textContent = names.join(' + ');
-      const wasHidden = mixBar.hidden; mixBar.hidden = n === 0;
-
-      if (!animate || !hasGsap()) { ctaText.textContent = text; return; }
-      if (wasHidden && n) gsap.fromTo(mixBar, { y: 8, autoAlpha: 0 }, { y: 0, autoAlpha: 1, duration: 0.35, ease: 'power3.out' });
-      else if (n) gsap.fromTo(mixText, { autoAlpha: 0.3 }, { autoAlpha: 1, duration: 0.35 });
-      if (ctaText.textContent === text) return;
-      gsap.killTweensOf([ctaText, cta]);
-      gsap.timeline()
-        .to(ctaText, { y: -8, autoAlpha: 0, duration: 0.16, ease: 'power2.in' })
-        .add(() => { ctaText.textContent = text; })
-        .fromTo(ctaText, { y: 8 }, { y: 0, autoAlpha: 1, duration: 0.32, ease: 'power3.out' })
-        .fromTo(cta, { scale: 1 }, { scale: 1.03, duration: 0.16, yoyo: true, repeat: 1, ease: 'power2.out' }, '<');
-    }
-
-    box.addEventListener('click', e => {
-      const btn = e.target.closest('.flavor'); if (!btn) return;
-      const flavor = CONFIG.flavors.find(f => f.id === btn.dataset.id);
-      const on = btn.getAttribute('aria-pressed') !== 'true';
-      btn.setAttribute('aria-pressed', String(on));
-      state.flavors = on ? [...state.flavors, flavor] : state.flavors.filter(f => f !== flavor);
-      // Último clicado manda no fundo; ao desmarcar, volta para o último que continua escolhido
-      lastClicked = on ? flavor.id : (state.flavors.at(-1)?.id ?? null);
-      showBg(lastClicked);
-      if (hasGsap()) gsap.fromTo(btn, { scale: 0.94 }, { scale: 1, duration: 0.4, ease: 'back.out(2.4)' });
-      render(true);
-    });
-
-    render(false);
-  }
-
   /* =====================================================================
      MÓDULO 3 — PACOTES + FAQ (renderizados de CONFIG)
   ===================================================================== */
@@ -825,16 +777,36 @@
   function initFooter() {
     $$('[data-ig-link]').forEach(a => { a.href = `https://www.instagram.com/${CONFIG.instagram}/`; });
     $$('[data-ig-handle]').forEach(el => { el.textContent = `@${CONFIG.instagram}`; });
-    $('#floatWa').href = $('#footWa').href = `https://wa.me/${CONFIG.whatsapp}?text=${encodeURIComponent('Olá! Quero um orçamento da Churros Jampa para o meu evento.')}`;
+    $('#floatWa').href = $('#footWa').href = `https://wa.me/${CONFIG.whatsapp}?text=${encodeURIComponent('Olá! Quero um orçamento da Jampa Churros para o meu evento.')}`;
     $('#footHours').textContent = CONFIG.hours;
     $('#footYear').textContent = new Date().getFullYear();
     $('#footLegal').textContent = CONFIG.legal;
   }
 
-  /* ---------- DESTAQUES ---------- */
+  /* ---------- O QUE NOS TORNA ÚNICOS ---------- */
+  function initUnique() {
+    $('#intentRow').innerHTML = CONFIG.unique.map((u, i) => `
+      <article class="intent-card" tabindex="0">
+        <span class="font-display text-sm font-bold tracking-widest">0${i + 1}</span>
+        <div>
+          <h3 class="intent-title font-display text-2xl font-extrabold leading-tight tracking-tight lg:text-3xl">${u.title}</h3>
+          <div class="intent-body mt-4">
+            <img src="${u.img}" alt="" loading="lazy" decoding="async" style="object-position:${u.pos}" />
+            <p class="mt-4 max-w-sm text-sm leading-relaxed text-ink-900/85 lg:text-base">${u.text}</p>
+          </div>
+        </div>
+      </article>`).join('');
+  }
+
+  /* ---------- iFOOD: todos os botões usam o mesmo link do CONFIG ---------- */
+  function initIfood() {
+    $$('[data-ifood]').forEach(a => { a.href = CONFIG.ifood; });
+  }
+
+  /* ---------- DELIVERY (banners) ---------- */
   function initHighlights() {
     $('#highlightGrid').innerHTML = CONFIG.highlights.map(h => `
-      <a href="#orcamento" class="banner" aria-label="${h.title}: pedir orçamento">
+      <a data-ifood href="#" target="_blank" rel="noopener" class="banner" aria-label="${h.title}: pedir no iFood">
         <span class="banner-bg" style="background-image:url('${h.img}');background-position:${h.pos}"></span>
         <span class="banner-shade"></span>
         <span class="absolute left-5 top-5 rounded-full bg-caramel-500 px-3 py-1 text-xs font-bold uppercase tracking-wider text-ink-900 md:left-8 md:top-8">${h.tag}</span>
@@ -976,7 +948,7 @@
       const max = state.guests >= +guests.max;
       const p = max ? null : pkgFor(state.guests);
       const text = [
-        `Olá! Sou ${name.value.trim()} e quero verificar a disponibilidade da Churros Jampa.`,
+        `Olá! Sou ${name.value.trim()} e quero verificar a disponibilidade da Jampa Churros.`,
         '',
         `• Evento: ${eventLabel()}`,
         `• Convidados: ${$('#guestsOut').textContent}`,
@@ -1007,13 +979,8 @@
 
       // Entrada da hero: título, depois sabores + CTA
       gsap.from('[data-hero]', { y: travel, autoAlpha: 0, duration: 0.8, stagger: 0.09, ease: 'power3.out', delay: 0.1 });
-      gsap.from('#flavors > *', { y: 14, autoAlpha: 0, duration: 0.5, stagger: 0.06, ease: 'power3.out', delay: 0.55 });
+      gsap.from('.hero-tile', { y: 36, autoAlpha: 0, scale: 0.97, duration: 0.9, stagger: 0.08, ease: 'power3.out', delay: 0.35 });
 
-      // Parallax leve da foto ao rolar (só desktop)
-      if (desktop) {
-        gsap.fromTo('#hero .hero-photo', { scale: 1 }, { scale: 1.06, ease: 'none',
-          scrollTrigger: { trigger: '#hero', start: 'top top', end: 'bottom top', scrub: true } });
-      }
 
       $$('[data-reveal]').forEach(el => gsap.from(el, { y: travel, autoAlpha: 0, duration: 0.75, ease: 'power3.out',
         scrollTrigger: { trigger: el, start: 'top 82%', once: true } }));
@@ -1037,9 +1004,10 @@
 
   /* ---------- BOOT ---------- */
   initHeader();
-  initFlavors();
   initPackages();
   initHighlights();
+  initUnique();
+  initIfood();
   initGallery();
   initFooter();
   initFaq();
