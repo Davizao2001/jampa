@@ -209,6 +209,36 @@
       .intent-card:hover .intent-more, .intent-card:focus-within .intent-more { opacity: 1; transform: none; }
     }
 
+    /* Botão de Stories: logo dentro do aro em gradiente do Instagram, girando devagar */
+    .story-btn { position: fixed; right: 1rem; bottom: 5.25rem; z-index: 40; width: 3.75rem; height: 3.75rem; border-radius: 999px;
+                 display: grid; place-items: center; box-shadow: 0 10px 28px -8px rgba(35,26,18,.45); transition: transform .2s; }
+    .story-btn:hover { transform: scale(1.06); }
+    .story-ring { position: absolute; inset: 0; border-radius: 999px;
+                  background: conic-gradient(from 0deg, #FACC15, #F97316, #EC4899, #A855F7, #F97316, #FACC15);
+                  animation: storySpin 4s linear infinite; }
+    .story-ring::after { content: ''; position: absolute; inset: -4px; border-radius: 999px; border: 2px solid rgba(236,72,153,.55);
+                         animation: storyPulse 2s ease-out infinite; }
+    .story-logo { position: relative; width: calc(100% - 6px); height: calc(100% - 6px); border-radius: 999px; background: #FBF7F0;
+                  display: grid; place-items: center; overflow: hidden; }
+    .story-logo img { width: 100%; height: 100%; }
+    @keyframes storySpin { to { transform: rotate(360deg); } }
+    @keyframes storyPulse { from { transform: scale(1); opacity: .9; } to { transform: scale(1.25); opacity: 0; } }
+    @media (min-width: 640px) { .story-btn { right: 1.5rem; bottom: 5.75rem; } }
+    @media (prefers-reduced-motion: reduce) { .story-ring, .story-ring::after { animation: none; } }
+
+    /* Visualizador de Stories: tela cheia no celular, 9:16 centralizado no desktop */
+    .story-box { width: 100vw; max-width: none; height: 100svh; max-height: none; margin: 0; padding: 0; border: 0; background: transparent; color: #fff; }
+    .story-box::backdrop { background: rgba(10,7,5,.82); -webkit-backdrop-filter: blur(14px); backdrop-filter: blur(14px); }
+    .story-box[open] { display: grid; place-items: center; }
+    .story-frame { position: relative; width: 100%; height: 100%; overflow: hidden; background: #000; }
+    @media (min-width: 768px) { .story-frame { height: min(92vh, 56rem); width: auto; aspect-ratio: 9 / 16; border-radius: 22px; box-shadow: 0 30px 80px -20px rgba(0,0,0,.7); } }
+    .story-top { position: absolute; inset: 0 0 auto 0; z-index: 2; padding: .9rem .9rem 2.5rem; background: linear-gradient(to bottom, rgba(0,0,0,.6), rgba(0,0,0,0)); }
+    .story-bar { flex: 1; height: 3px; border-radius: 999px; background: rgba(255,255,255,.35); overflow: hidden; }
+    .story-bar > i { display: block; height: 100%; width: 0; background: #fff; }
+    .story-icon { position: relative; z-index: 3; display: grid; place-items: center; width: 2.5rem; height: 2.5rem; border-radius: 999px; }
+    .story-icon:hover { background: rgba(255,255,255,.15); }
+    #storyPrev, #storyNext { z-index: 1; }
+
     /* Funil */
     .opt { transition: border-color .2s, background-color .2s; }
     .opt[aria-checked="true"] { border-color: #F59E0B; background: #FEF3C7; }
@@ -484,6 +514,36 @@
     </section>
   </main>
 
+  <!-- Botão flutuante de Stories (acima do WhatsApp) -->
+  <button type="button" id="storyBtn" class="story-btn" aria-label="Ver stories da Churros in Jampa">
+    <span class="story-ring" aria-hidden="true"></span>
+    <span class="story-logo"><img src="assets/logo.svg" alt="" width="48" height="48" /></span>
+  </button>
+
+  <!-- Visualizador de Stories -->
+  <dialog id="storyBox" class="story-box" aria-label="Stories da Churros in Jampa">
+    <div class="story-frame">
+      <video id="storyVideo" playsinline preload="metadata" class="absolute inset-0 h-full w-full object-cover"></video>
+      <div class="story-top">
+        <div id="storyBars" class="flex gap-1"></div>
+        <div class="mt-3 flex items-center gap-2.5">
+          <img src="assets/logo.svg" alt="" width="32" height="32" class="h-8 w-8 rounded-full ring-2 ring-white/80" />
+          <span class="font-display text-sm font-semibold">Churros in Jampa</span>
+          <span id="storyCaption" class="truncate text-sm text-white/75"></span>
+          <button type="button" id="storyMute" class="story-icon ml-auto" aria-label="Desativar som">
+            <svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M11 5L6 9H3v6h3l5 4V5z"/><path id="storyWave" d="M15.5 8.5a5 5 0 010 7M18.5 5.5a9 9 0 010 13"/><path id="storyX" d="M16 9l5 6M21 9l-5 6" style="display:none"/></svg>
+          </button>
+          <button type="button" id="storyClose" class="story-icon" aria-label="Fechar stories">
+            <svg class="h-6 w-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg>
+          </button>
+        </div>
+      </div>
+      <!-- toque à esquerda volta, à direita avança -->
+      <button type="button" id="storyPrev" class="absolute bottom-0 left-0 top-24 w-1/3" aria-label="Story anterior"></button>
+      <button type="button" id="storyNext" class="absolute bottom-0 right-0 top-24 w-2/3" aria-label="Próximo story"></button>
+    </div>
+  </dialog>
+
   <!-- Botão flutuante de WhatsApp -->
   <a id="floatWa" href="#orcamento" target="_blank" rel="noopener" aria-label="Chamar no WhatsApp" class="float-wa">
     <svg class="h-6 w-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12a8.5 8.5 0 01-12.6 7.4L3 21l1.7-5.2A8.5 8.5 0 1121 12z"/></svg>
@@ -586,6 +646,13 @@
         img: 'assets/galeria/img_0255.webp', pos: '50% 35%', cta: { label: 'Quero na festa do meu filho', href: '#orcamento' } },
       { title: 'Kit Degustação', dark: true, text: 'Prove nossos churros e recheios antes de fechar o seu evento.',
         img: 'assets/galeria/img_0395.webp', pos: '50% 60%', cta: { label: 'Quero provar', href: '#orcamento' } },
+    ],
+    /* STORIES: vídeos com som exibidos no botão flutuante (ordem = ordem de exibição) */
+    stories: [
+      { src: 'assets/stories/img_0259.mp4', poster: 'assets/galeria/img_0259-poster.jpg', caption: 'Festa infantil' },
+      { src: 'assets/stories/img_0226.mp4', poster: 'assets/galeria/img_0226-poster.jpg', caption: 'Carrinho na festa' },
+      { src: 'assets/stories/img_9165.mp4', poster: 'assets/galeria/img_9165-poster.jpg', caption: 'Evento corporativo' },
+      { src: 'assets/stories/img_9551.mp4', poster: 'assets/galeria/img_9551-poster.jpg', caption: 'Recheios e toppings' },
     ],
     events: ['Casamento', 'Aniversário', 'Corporativo', 'Outro'],
     packages: [
@@ -839,6 +906,56 @@
       </article>`).join('');
   }
 
+  /* ---------- STORIES: botão flutuante + visualizador estilo Instagram ---------- */
+  function initStories() {
+    const btn = $('#storyBtn'), box = $('#storyBox'), video = $('#storyVideo'), bars = $('#storyBars');
+    const mute = $('#storyMute'), wave = $('#storyWave'), xMark = $('#storyX'), cap = $('#storyCaption');
+    const list = CONFIG.stories; let i = 0, raf = 0;
+    bars.innerHTML = list.map(() => '<span class="story-bar"><i></i></span>').join('');
+    const fills = $$('i', bars);
+
+    const setMuteIcon = () => {
+      wave.style.display = video.muted ? 'none' : ''; xMark.style.display = video.muted ? '' : 'none';
+      mute.setAttribute('aria-label', video.muted ? 'Ativar som' : 'Desativar som');
+    };
+    function tick() {                                              // barra de progresso do story atual
+      if (video.duration) fills[i].style.width = `${(video.currentTime / video.duration) * 100}%`;
+      raf = requestAnimationFrame(tick);
+    }
+    function show(n) {
+      if (n < 0) n = 0;
+      if (n >= list.length) return close();                        // acabou o último: fecha
+      i = n;
+      fills.forEach((f, k) => { f.style.width = k < i ? '100%' : '0%'; });
+      cap.textContent = list[i].caption ? `· ${list[i].caption}` : '';
+      video.poster = list[i].poster || '';                        // primeira imagem aparece na hora, sem tela preta
+      video.src = list[i].src;
+      video.play().catch(() => { video.muted = true; setMuteIcon(); video.play().catch(() => {}); });   // navegador bloqueou o som
+    }
+    function open() {
+      video.muted = false; setMuteIcon();
+      box.showModal(); document.documentElement.style.overflow = 'hidden';
+      show(0); cancelAnimationFrame(raf); tick();
+    }
+    function close() {
+      video.pause(); video.removeAttribute('src'); video.load();
+      cancelAnimationFrame(raf); document.documentElement.style.overflow = '';
+      if (box.open) box.close();
+    }
+    btn.addEventListener('click', open);                           // o clique libera autoplay com som
+    video.addEventListener('ended', () => show(i + 1));
+    $('#storyNext').addEventListener('click', () => show(i + 1));
+    $('#storyPrev').addEventListener('click', () => show(i - 1));
+    $('#storyClose').addEventListener('click', close);
+    mute.addEventListener('click', () => { video.muted = !video.muted; setMuteIcon(); });
+    box.addEventListener('close', close);                          // Esc também fecha
+    box.addEventListener('click', e => { if (e.target === box) close(); });   // clique fora do vídeo (desktop)
+    box.addEventListener('keydown', e => {
+      if (e.key === 'ArrowRight') show(i + 1);
+      if (e.key === 'ArrowLeft') show(i - 1);
+    });
+  }
+
   /* ---------- iFOOD: todos os botões usam o mesmo link do CONFIG ---------- */
   function initIfood() {
     $$('[data-ifood]').forEach(a => { a.href = CONFIG.ifood; });
@@ -1050,6 +1167,7 @@
   initHighlights();
   initUnique();
   initIfood();
+  initStories();
   initGallery();
   initFooter();
   initFaq();
