@@ -3,24 +3,26 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Jampa Churros — Carrinho de churros para festas e eventos em João Pessoa</title>
+  <title>Churros in Jampa — Carrinho de churros para festas e eventos em João Pessoa</title>
   <meta name="description" content="Churros fritos na hora para casamentos, aniversários e eventos corporativos em João Pessoa/PB. Estrutura completa por nossa conta. Verifique a disponibilidade da sua data." />
   <!-- Prévia ao compartilhar o link (WhatsApp, Instagram, etc.).
        TROCAR "https://SEU-DOMINIO" pelo endereço real do site: og:image e og:url precisam de URL completa. -->
   <meta property="og:type" content="website" />
   <meta property="og:locale" content="pt_BR" />
-  <meta property="og:site_name" content="Jampa Churros" />
-  <meta property="og:title" content="Jampa Churros — Carrinho de churros para o seu evento" />
+  <meta property="og:site_name" content="Churros in Jampa" />
+  <meta property="og:title" content="Churros in Jampa — Carrinho de churros para o seu evento" />
   <meta property="og:description" content="Churros fritos na hora para casamentos, aniversários e eventos corporativos em João Pessoa e região. Peça seu orçamento pelo WhatsApp." />
   <meta property="og:url" content="https://SEU-DOMINIO/" />
   <meta property="og:image" content="https://SEU-DOMINIO/assets/og.jpg" />
   <meta property="og:image:width" content="1200" />
   <meta property="og:image:height" content="630" />
   <meta name="twitter:card" content="summary_large_image" />
+  <link rel="icon" type="image/svg+xml" href="assets/logo.svg" />
+  <link rel="apple-touch-icon" href="assets/logo.svg" />
   <meta name="theme-color" content="#FBF7F0" />
 
-  <!-- O primeiro bloco da hero é o maior elemento da primeira tela -->
-  <link rel="preload" as="image" href="assets/eventos/evento-2.webp" />
+  <!-- A primeira foto do slideshow é o maior elemento da primeira tela -->
+  <link rel="preload" as="image" href="assets/hero/evento.jpg" fetchpriority="high" />
 
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -156,6 +158,17 @@
       .banner:hover .go, .banner:focus-visible .go { opacity: 1; transform: none; box-shadow: 0 0 0 4px rgba(245,158,11,.25), 0 10px 28px -6px rgba(245,158,11,.7); }
     }
 
+    /* Slideshow da hero: crossfade suave + leve aproximação enquanto a foto está ativa */
+    .hero-slide { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: var(--pos);
+                  opacity: 0; transform: scale(1.06); transition: opacity 1.4s ease, transform 4.5s linear; }
+    .hero-slide.is-active { opacity: 1; transform: scale(1); }
+    @media (max-width: 767px) { .hero-slide { object-position: var(--pos-m); } }
+    .hero-shade { background: linear-gradient(to top, rgba(0,0,0,.82) 0%, rgba(0,0,0,.45) 35%, rgba(0,0,0,0) 65%),
+                              linear-gradient(to bottom, rgba(0,0,0,.25) 0%, rgba(0,0,0,0) 20%); }
+    .hero-dot { width: .5rem; height: .5rem; border-radius: 999px; background: rgba(255,255,255,.5); transition: width .4s, background-color .4s; }
+    .hero-dot[aria-current="true"] { width: 1.6rem; background: #F59E0B; }
+    @media (prefers-reduced-motion: reduce) { .hero-slide { transition: none; transform: none; } }
+
     /* Botão do iFood: vermelho da plataforma, reconhecível de longe */
     .btn-ifood { background: #EA1D2C; transition: transform .2s, box-shadow .3s, background-color .2s; }
     .btn-ifood:hover { background: #F2303E; transform: scale(1.02); box-shadow: 0 0 0 4px rgba(234,29,44,.18), 0 12px 30px -8px rgba(234,29,44,.6); }
@@ -164,10 +177,8 @@
     .intent-row { display: grid; gap: .75rem; }                 /* celular: cards empilhados, conteúdo aberto */
     .intent-card { position: relative; overflow: hidden; display: flex; flex-direction: column; justify-content: space-between;
                    min-height: 15rem; padding: 1.5rem; border-radius: 28px; color: #231A12; }
-    .intent-card:nth-child(1) { background: #F59E0B; }
-    .intent-card:nth-child(2) { background: #FBBF24; }
-    .intent-card:nth-child(3) { background: #FCD34D; }
-    .intent-card:nth-child(4) { background: #FDE68A; }
+    .intent-card { background: #F59E0B; }
+    .intent-card:hover { background: #FBA91E; }
     .intent-card img { width: 100%; height: 11rem; object-fit: cover; border-radius: 18px; }
     @media (min-width: 1024px) {
       .intent-row { display: flex; gap: 1rem; height: 34rem; }
@@ -199,7 +210,10 @@
   <!-- ============ HEADER ============ -->
   <header id="siteHeader" class="fixed inset-x-0 top-0 z-50">
     <div class="mx-auto flex max-w-6xl items-center justify-between px-5 py-4">
-      <a href="#topo" class="font-display text-lg font-bold tracking-tight">Jampa Churros</a>
+      <a href="#topo" class="flex items-center gap-2.5 font-display text-lg font-bold tracking-tight" aria-label="Churros in Jampa, início">
+        <img src="assets/logo.svg" alt="" width="44" height="44" class="h-10 w-10 md:h-11 md:w-11" />
+        <span class="hidden sm:inline">Churros in Jampa</span>
+      </a>
       <nav class="hidden items-center gap-8 text-sm font-medium md:flex" aria-label="Principal">
         <a href="#porque" class="opacity-85 hover:opacity-100">Por que nós</a>
         <a href="#como" class="opacity-85 hover:opacity-100">Como funciona</a>
@@ -227,41 +241,61 @@
 
   <main id="topo">
 
-    <!-- ============ 1. HERO: foco em eventos, blocos de imagem flutuantes (não encostam nas bordas) ============ -->
-    <section id="hero" class="px-3 pb-8 pt-24 md:px-6 md:pb-12 md:pt-32">
-      <div class="mx-auto max-w-4xl px-2 text-center">
-        <p data-hero class="text-xs font-semibold uppercase tracking-[.2em] text-caramel-600">Eventos em João Pessoa e região</p>
-        <h1 data-hero class="mt-4 font-display text-[2.4rem] font-extrabold leading-[1.02] tracking-[-.02em] sm:text-6xl lg:text-7xl">Churros fritos na hora para o seu evento.</h1>
-        <p data-hero class="mx-auto mt-5 max-w-xl text-ink-700 md:text-lg">Casamentos, aniversários e eventos corporativos com carrinho completo. E quando bater a vontade em casa, é só pedir pelo iFood.</p>
-        <div data-hero class="mt-7 flex flex-col items-center justify-center gap-3 sm:flex-row">
-          <a data-ifood href="#" target="_blank" rel="noopener" class="btn-ifood inline-flex w-full items-center justify-center gap-2 rounded-full px-7 py-4 font-display text-base font-bold text-white sm:w-auto">
-            Peça no iFood
+    <!-- ============ 1. HERO: slideshow de eventos (troca a cada 3 s, crossfade), bloco flutuante arredondado ============ -->
+    <section id="hero" class="px-3 pb-4 pt-20 md:px-6 md:pb-8 md:pt-24">
+      <div id="heroShow" class="relative mx-auto h-[82svh] min-h-[32rem] max-w-[1400px] overflow-hidden rounded-[28px] bg-ink-900 md:h-[84vh] md:min-h-[36rem] md:rounded-[32px]" aria-roledescription="carrossel" aria-label="Fotos dos nossos eventos">
+        <img src="assets/hero/evento.jpg" alt="Cartão Churros no seu Evento e carrinho em um evento ao ar livre" decoding="async" fetchpriority="high" class="hero-slide is-active" style="--pos:50% 50%;--pos-m:42% 50%" />
+        <img src="assets/hero/festa.jpg" alt="Carrinho de churros decorado em festa com balões azuis e amarelos" decoding="async" fetchpriority="low" class="hero-slide" style="--pos:40% 50%;--pos-m:36% 50%" />
+        <img src="assets/hero/carrinho.jpg" alt="Carrinho de churros de madeira personalizado para empresa" decoding="async" fetchpriority="low" class="hero-slide" style="--pos:40% 50%;--pos-m:38% 50%" />
+        <div class="hero-shade absolute inset-0"></div>
+
+        <div class="absolute inset-x-0 bottom-0 p-6 text-white sm:p-10 md:p-14">
+          <p data-hero class="text-xs font-semibold uppercase tracking-[.2em] text-white/85">Eventos em João Pessoa e região</p>
+          <h1 data-hero class="mt-3 max-w-3xl font-display text-[2.4rem] font-extrabold leading-[1.02] tracking-[-.02em] sm:text-6xl lg:text-7xl">Churros fritos na hora para o seu evento.</h1>
+          <p data-hero class="mt-4 max-w-xl text-white/90 md:text-lg">Carrinho completo para casamentos, aniversários e eventos corporativos. Em casa, peça pelo iFood.</p>
+          <div data-hero class="mt-6 flex flex-col gap-3 sm:flex-row">
+            <a data-ifood href="#" target="_blank" rel="noopener" class="btn-ifood inline-flex items-center justify-center gap-2 rounded-full px-7 py-4 font-display text-base font-bold text-white">
+              Peça no iFood
+              <svg class="h-4 w-4" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><path d="M6 14L14 6M7 6h7v7"/></svg>
+            </a>
+            <a href="#orcamento" class="inline-flex items-center justify-center gap-2 rounded-full bg-white/15 px-7 py-4 font-display text-base font-semibold text-white ring-1 ring-white/40 backdrop-blur hover:bg-white/25">
+              Orçamento para eventos <span aria-hidden="true">→</span>
+            </a>
+          </div>
+        </div>
+
+        <!-- Indicadores -->
+        <div id="heroDots" class="absolute right-5 top-5 flex gap-1.5 md:bottom-14 md:right-14 md:top-auto"></div>
+      </div>
+    </section>
+
+    <!-- ============ O QUE NOS TORNA ÚNICOS: cards expansíveis (sanfona no hover, desktop) ============ -->
+    <section id="unicos" class="mx-auto max-w-6xl px-5 py-14 md:py-24">
+      <div data-reveal class="max-w-2xl">
+        <h2 class="font-display text-3xl font-bold tracking-tight sm:text-4xl">O que nos torna únicos</h2>
+        <p class="mt-4 text-ink-700">Passe o mouse (ou role, no celular) para conhecer cada detalhe.</p>
+      </div>
+      <div id="intentRow" data-reveal-group class="intent-row mt-8 md:mt-12"></div>
+    </section>
+
+    <!-- ============ DELIVERY / iFOOD: banners de ponta a ponta (renderizado a partir de CONFIG.highlights) ============ -->
+    <section id="delivery" aria-labelledby="deliveryTitle">
+      <!-- Faixa clara de respiro entre a foto da Hero e os banners -->
+      <div class="mx-auto max-w-6xl px-5 py-12 md:py-20">
+        <div data-reveal class="flex flex-col gap-6 md:flex-row md:items-end md:justify-between">
+          <div class="max-w-2xl">
+            <p class="text-xs font-semibold uppercase tracking-[.2em] text-caramel-600">Delivery</p>
+            <h2 id="deliveryTitle" class="mt-3 font-display text-3xl font-bold tracking-tight sm:text-5xl">Vontade de churros em casa?</h2>
+            <p class="mt-4 text-ink-700 md:text-lg">Os mesmos churros dos nossos eventos, entregues quentinhos pelo iFood.</p>
+          </div>
+          <a data-ifood href="#" target="_blank" rel="noopener" class="btn-ifood inline-flex shrink-0 items-center justify-center gap-2 rounded-full px-7 py-4 font-display font-bold text-white">
+            Pedir no iFood
             <svg class="h-4 w-4" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><path d="M6 14L14 6M7 6h7v7"/></svg>
-          </a>
-          <a href="#orcamento" class="inline-flex w-full items-center justify-center gap-2 rounded-full bg-caramel-500 px-7 py-4 font-display text-base font-semibold text-ink-900 sm:w-auto">
-            Orçamento para eventos <span aria-hidden="true">→</span>
           </a>
         </div>
       </div>
-      <!-- 4 blocos: 2x2 no celular, 4 lado a lado no desktop -->
-      <div class="mx-auto mt-10 grid max-w-[1400px] grid-cols-2 gap-3 md:mt-14 md:grid-cols-4 md:gap-4">
-        <figure class="hero-tile relative aspect-[4/5] overflow-hidden rounded-[24px] bg-sand-200 md:rounded-[32px]">
-          <img src="assets/eventos/evento-2.webp" alt="Jampa Churros em evento: Casamento" fetchpriority="high" decoding="async" class="h-full w-full object-cover" style="object-position:50% 65%" />
-          <figcaption class="absolute bottom-3 left-3 rounded-full bg-white/90 px-3 py-1.5 font-display text-sm font-semibold text-ink-900 backdrop-blur md:bottom-4 md:left-4 md:px-4 md:py-2">Casamento</figcaption>
-        </figure>
-        <figure class="hero-tile relative aspect-[4/5] overflow-hidden rounded-[24px] bg-sand-200 md:rounded-[32px]">
-          <img src="assets/eventos/evento-1.webp" alt="Jampa Churros em evento: Aniversário" loading="eager" decoding="async" class="h-full w-full object-cover" style="object-position:50% 35%" />
-          <figcaption class="absolute bottom-3 left-3 rounded-full bg-white/90 px-3 py-1.5 font-display text-sm font-semibold text-ink-900 backdrop-blur md:bottom-4 md:left-4 md:px-4 md:py-2">Aniversário</figcaption>
-        </figure>
-        <figure class="hero-tile relative aspect-[4/5] overflow-hidden rounded-[24px] bg-sand-200 md:rounded-[32px]">
-          <img src="assets/eventos/evento-3.webp" alt="Jampa Churros em evento: Corporativo" loading="eager" decoding="async" class="h-full w-full object-cover" style="object-position:50% 55%" />
-          <figcaption class="absolute bottom-3 left-3 rounded-full bg-white/90 px-3 py-1.5 font-display text-sm font-semibold text-ink-900 backdrop-blur md:bottom-4 md:left-4 md:px-4 md:py-2">Corporativo</figcaption>
-        </figure>
-        <figure class="hero-tile relative aspect-[4/5] overflow-hidden rounded-[24px] bg-sand-200 md:rounded-[32px]">
-          <img src="assets/destaques/tradicional.jpg" alt="Jampa Churros em evento: Seu evento" loading="eager" decoding="async" class="h-full w-full object-cover" style="object-position:40% 50%" />
-          <figcaption class="absolute bottom-3 left-3 rounded-full bg-white/90 px-3 py-1.5 font-display text-sm font-semibold text-ink-900 backdrop-blur md:bottom-4 md:left-4 md:px-4 md:py-2">Seu evento</figcaption>
-        </figure>
-      </div>
+      <!-- Desktop: banners lado a lado, sem espaço · Mobile: swipe horizontal com um banner e meio visível -->
+      <div id="highlightGrid" class="hscroll flex snap-x snap-mandatory overflow-x-auto md:overflow-hidden"></div>
     </section>
 
     <!-- ============ 2. PROPOSTA DE VALOR ============ -->
@@ -372,35 +406,6 @@
       </div>
     </section>
 
-    <!-- ============ DELIVERY / iFOOD: banners de ponta a ponta (renderizado a partir de CONFIG.highlights) ============ -->
-    <section id="delivery" aria-labelledby="deliveryTitle">
-      <!-- Faixa clara de respiro entre a foto da Hero e os banners -->
-      <div class="mx-auto max-w-6xl px-5 py-12 md:py-20">
-        <div data-reveal class="flex flex-col gap-6 md:flex-row md:items-end md:justify-between">
-          <div class="max-w-2xl">
-            <p class="text-xs font-semibold uppercase tracking-[.2em] text-caramel-600">Delivery</p>
-            <h2 id="deliveryTitle" class="mt-3 font-display text-3xl font-bold tracking-tight sm:text-5xl">Vontade de churros em casa?</h2>
-            <p class="mt-4 text-ink-700 md:text-lg">Os mesmos churros dos nossos eventos, entregues quentinhos pelo iFood.</p>
-          </div>
-          <a data-ifood href="#" target="_blank" rel="noopener" class="btn-ifood inline-flex shrink-0 items-center justify-center gap-2 rounded-full px-7 py-4 font-display font-bold text-white">
-            Pedir no iFood
-            <svg class="h-4 w-4" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><path d="M6 14L14 6M7 6h7v7"/></svg>
-          </a>
-        </div>
-      </div>
-      <!-- Desktop: banners lado a lado, sem espaço · Mobile: swipe horizontal com um banner e meio visível -->
-      <div id="highlightGrid" class="hscroll flex snap-x snap-mandatory overflow-x-auto md:overflow-hidden"></div>
-    </section>
-
-    <!-- ============ O QUE NOS TORNA ÚNICOS: cards expansíveis (sanfona no hover, desktop) ============ -->
-    <section id="unicos" class="mx-auto max-w-6xl px-5 py-14 md:py-28">
-      <div data-reveal class="max-w-2xl">
-        <h2 class="font-display text-3xl font-bold tracking-tight sm:text-4xl">O que nos torna únicos</h2>
-        <p class="mt-4 text-ink-700">Passe o mouse (ou role, no celular) para conhecer cada detalhe.</p>
-      </div>
-      <div id="intentRow" data-reveal-group class="intent-row mt-8 md:mt-12"></div>
-    </section>
-
     <!-- ============ 4. FAQ / REQUISITOS TÉCNICOS ============ -->
     <section id="faq" class="mx-auto max-w-3xl px-5 py-14 md:py-28">
       <div data-reveal>
@@ -509,7 +514,7 @@
   <footer class="bg-sand-100">
     <div class="mx-auto grid max-w-6xl gap-10 px-5 py-14 md:grid-cols-[1.4fr_1fr_1.2fr]">
       <div>
-        <a href="#topo" class="font-display text-2xl font-extrabold tracking-tight">Jampa Churros</a>
+        <a href="#topo" class="flex items-center gap-3 font-display text-2xl font-extrabold tracking-tight"><img src="assets/logo.svg" alt="" width="56" height="56" class="h-14 w-14" />Churros in Jampa</a>
         <p class="mt-3 max-w-xs text-sm leading-relaxed text-ink-700">O melhor carrinho de churros para o seu evento em João Pessoa e região.</p>
         <a data-ig-link href="https://www.instagram.com/churrosjampa/" target="_blank" rel="noopener" class="mt-5 inline-flex items-center gap-2 rounded-full border border-sand-300 bg-white px-4 py-2 text-sm font-semibold hover:border-ink-500">
           <svg class="h-4 w-4 text-caramel-600" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 8h3l1.5-2.5h7L17 8h3a1 1 0 011 1v9a1 1 0 01-1 1H4a1 1 0 01-1-1V9a1 1 0 011-1z"/><circle cx="12" cy="13" r="3.5"/></svg> <span data-ig-handle>@churrosjampa</span>
@@ -537,7 +542,7 @@
       </div>
     </div>
     <div class="border-t border-sand-200">
-      <p class="mx-auto max-w-6xl px-5 py-6 text-xs text-ink-500">© <span id="footYear"></span> Jampa Churros. Todos os direitos reservados. <span id="footLegal"></span></p>
+      <p class="mx-auto max-w-6xl px-5 py-6 text-xs text-ink-500">© <span id="footYear"></span> Churros in Jampa. Todos os direitos reservados. <span id="footLegal"></span></p>
     </div>
   </footer>
 
@@ -581,7 +586,7 @@
     ],
     /* O QUE NOS TORNA ÚNICOS: textos são sugestões, revisar com a cliente */
     unique: [
-      { title: 'Nosso carrinho',        text: 'Estrutura completa montada no seu evento, com equipe uniformizada e visual que aparece bem nas fotos.', img: 'assets/eventos/evento-2.webp', pos: '50% 70%' },
+      { title: 'Nosso carrinho',        text: 'Estrutura completa montada no seu evento, com equipe uniformizada e visual que aparece bem nas fotos.', img: 'assets/hero/carrinho.jpg', pos: '35% 50%' },
       { title: 'Massa de churros',      text: 'Frita na hora, crocante por fora e macia por dentro, passada no açúcar e canela.',                    img: 'assets/hero-desktop.webp',    pos: '58% 45%' },
       { title: 'Formas de servir',      text: 'Tradicional recheado, gourmet com toppings ou mini churros para dividir: escolha o formato da festa.', img: 'assets/destaques/mini.jpg',    pos: '50% 50%' },
       { title: 'Sessão festa infantil', text: 'Um momento pensado para a criançada, com churros no tamanho certo e atendimento que vira parte da festa.', img: 'assets/eventos/evento-1.webp', pos: '50% 40%' },
@@ -777,10 +782,28 @@
   function initFooter() {
     $$('[data-ig-link]').forEach(a => { a.href = `https://www.instagram.com/${CONFIG.instagram}/`; });
     $$('[data-ig-handle]').forEach(el => { el.textContent = `@${CONFIG.instagram}`; });
-    $('#floatWa').href = $('#footWa').href = `https://wa.me/${CONFIG.whatsapp}?text=${encodeURIComponent('Olá! Quero um orçamento da Jampa Churros para o meu evento.')}`;
+    $('#floatWa').href = $('#footWa').href = `https://wa.me/${CONFIG.whatsapp}?text=${encodeURIComponent('Olá! Quero um orçamento da Churros in Jampa para o meu evento.')}`;
     $('#footHours').textContent = CONFIG.hours;
     $('#footYear').textContent = new Date().getFullYear();
     $('#footLegal').textContent = CONFIG.legal;
+  }
+
+  /* ---------- HERO: slideshow automático (3 s por foto) ---------- */
+  function initHeroShow() {
+    const slides = $$('#heroShow .hero-slide'), dots = $('#heroDots');
+    const DELAY = 3000;
+    let i = 0, timer = null;
+    dots.innerHTML = slides.map((_, k) => `<button type="button" class="hero-dot" aria-label="Foto ${k + 1}" ${k === 0 ? 'aria-current="true"' : ''}></button>`).join('');
+    const dotEls = [...dots.children];
+    function go(n) {
+      slides[i].classList.remove('is-active'); dotEls[i].removeAttribute('aria-current');
+      i = (n + slides.length) % slides.length;
+      slides[i].classList.add('is-active'); dotEls[i].setAttribute('aria-current', 'true');
+    }
+    const start = () => { clearInterval(timer); timer = setInterval(() => go(i + 1), DELAY); };
+    dotEls.forEach((d, k) => d.addEventListener('click', () => { go(k); start(); }));
+    document.addEventListener('visibilitychange', () => document.hidden ? clearInterval(timer) : start());   // pausa com a aba oculta
+    start();
   }
 
   /* ---------- O QUE NOS TORNA ÚNICOS ---------- */
@@ -948,7 +971,7 @@
       const max = state.guests >= +guests.max;
       const p = max ? null : pkgFor(state.guests);
       const text = [
-        `Olá! Sou ${name.value.trim()} e quero verificar a disponibilidade da Jampa Churros.`,
+        `Olá! Sou ${name.value.trim()} e quero verificar a disponibilidade da Churros in Jampa.`,
         '',
         `• Evento: ${eventLabel()}`,
         `• Convidados: ${$('#guestsOut').textContent}`,
@@ -979,7 +1002,7 @@
 
       // Entrada da hero: título, depois sabores + CTA
       gsap.from('[data-hero]', { y: travel, autoAlpha: 0, duration: 0.8, stagger: 0.09, ease: 'power3.out', delay: 0.1 });
-      gsap.from('.hero-tile', { y: 36, autoAlpha: 0, scale: 0.97, duration: 0.9, stagger: 0.08, ease: 'power3.out', delay: 0.35 });
+      gsap.from('#heroShow', { scale: 0.97, autoAlpha: 0, duration: 1, ease: 'power3.out' });
 
 
       $$('[data-reveal]').forEach(el => gsap.from(el, { y: travel, autoAlpha: 0, duration: 0.75, ease: 'power3.out',
@@ -1005,6 +1028,7 @@
   /* ---------- BOOT ---------- */
   initHeader();
   initPackages();
+  initHeroShow();
   initHighlights();
   initUnique();
   initIfood();
