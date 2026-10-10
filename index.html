@@ -105,7 +105,7 @@
     .mix-bar { background: rgba(20,14,9,.55); border: 1px solid rgba(255,255,255,.18); -webkit-backdrop-filter: blur(10px); backdrop-filter: blur(10px); }
 
     /* Header: transparente sobre a foto, claro depois da hero */
-    #siteHeader { color: #231A12; transition: background-color .3s, color .3s, box-shadow .3s; }
+    #siteHeader { color: #fff; transition: background-color .3s, color .3s, box-shadow .3s; }
     #siteHeader.is-solid { background: rgba(251,247,240,.92); color: #231A12; box-shadow: 0 1px 0 rgba(35,26,18,.08);
                            -webkit-backdrop-filter: blur(12px); backdrop-filter: blur(12px); }
     #siteHeader .head-cta { border: 1px solid currentColor; }
@@ -164,7 +164,7 @@
     .hero-slide.is-active { opacity: 1; transform: scale(1); }
     @media (max-width: 767px) { .hero-slide { object-position: var(--pos-m); } }
     .hero-shade { background: linear-gradient(to top, rgba(0,0,0,.82) 0%, rgba(0,0,0,.45) 35%, rgba(0,0,0,0) 65%),
-                              linear-gradient(to bottom, rgba(0,0,0,.25) 0%, rgba(0,0,0,0) 20%); }
+                              linear-gradient(to bottom, rgba(0,0,0,.45) 0%, rgba(0,0,0,0) 22%); }
     .hero-dot { width: .5rem; height: .5rem; border-radius: 999px; background: rgba(255,255,255,.5); transition: width .4s, background-color .4s; }
     .hero-dot[aria-current="true"] { width: 1.6rem; background: #F59E0B; }
     @media (prefers-reduced-motion: reduce) { .hero-slide { transition: none; transform: none; } }
@@ -219,8 +219,8 @@
         <a href="#como" class="opacity-85 hover:opacity-100">Como funciona</a>
         <a href="#eventos" class="opacity-85 hover:opacity-100">Eventos</a>
         <a href="#pacotes" class="opacity-85 hover:opacity-100">Pacotes</a>
-        <a href="#delivery" class="opacity-85 hover:opacity-100">Delivery</a>
         <a href="#faq" class="opacity-85 hover:opacity-100">Dúvidas</a>
+        <a href="#delivery" class="opacity-85 hover:opacity-100">Delivery</a>
       </nav>
       <div class="flex items-center gap-2">
         <a href="#orcamento" class="head-cta rounded-full px-3 py-2 text-sm font-semibold sm:px-4">Pedir orçamento</a>
@@ -234,22 +234,22 @@
       <a href="#como" class="block rounded-2xl px-4 py-3 font-display font-semibold hover:bg-sand-100">Como funciona</a>
       <a href="#eventos" class="block rounded-2xl px-4 py-3 font-display font-semibold hover:bg-sand-100">Eventos</a>
       <a href="#pacotes" class="block rounded-2xl px-4 py-3 font-display font-semibold hover:bg-sand-100">Pacotes</a>
-      <a href="#delivery" class="block rounded-2xl px-4 py-3 font-display font-semibold hover:bg-sand-100">Delivery</a>
       <a href="#faq" class="block rounded-2xl px-4 py-3 font-display font-semibold hover:bg-sand-100">Dúvidas</a>
+      <a href="#delivery" class="block rounded-2xl px-4 py-3 font-display font-semibold hover:bg-sand-100">Delivery</a>
     </nav>
   </header>
 
   <main id="topo">
 
-    <!-- ============ 1. HERO: slideshow de eventos (troca a cada 3 s, crossfade), bloco flutuante arredondado ============ -->
-    <section id="hero" class="px-3 pb-4 pt-20 md:px-6 md:pb-8 md:pt-24">
-      <div id="heroShow" class="relative mx-auto h-[82svh] min-h-[32rem] max-w-[1400px] overflow-hidden rounded-[28px] bg-ink-900 md:h-[84vh] md:min-h-[36rem] md:rounded-[32px]" aria-roledescription="carrossel" aria-label="Fotos dos nossos eventos">
+    <!-- ============ 1. HERO: slideshow de eventos em tela cheia (troca a cada 3 s, crossfade) ============ -->
+    <section id="hero" class="relative">
+      <div id="heroShow" class="relative h-[100svh] min-h-[34rem] w-full overflow-hidden bg-ink-900" aria-roledescription="carrossel" aria-label="Fotos dos nossos eventos">
         <img src="assets/hero/evento.jpg" alt="Cartão Churros no seu Evento e carrinho em um evento ao ar livre" decoding="async" fetchpriority="high" class="hero-slide is-active" style="--pos:50% 50%;--pos-m:42% 50%" />
         <img src="assets/hero/festa.jpg" alt="Carrinho de churros decorado em festa com balões azuis e amarelos" decoding="async" fetchpriority="low" class="hero-slide" style="--pos:40% 50%;--pos-m:36% 50%" />
         <img src="assets/hero/carrinho.jpg" alt="Carrinho de churros de madeira personalizado para empresa" decoding="async" fetchpriority="low" class="hero-slide" style="--pos:40% 50%;--pos-m:38% 50%" />
         <div class="hero-shade absolute inset-0"></div>
 
-        <div class="absolute inset-x-0 bottom-0 p-6 text-white sm:p-10 md:p-14">
+        <div class="absolute inset-x-0 bottom-0 mx-auto max-w-6xl px-5 pb-10 text-white md:pb-16">
           <p data-hero class="text-xs font-semibold uppercase tracking-[.2em] text-white/85">Eventos em João Pessoa e região</p>
           <h1 data-hero class="mt-3 max-w-3xl font-display text-[2.4rem] font-extrabold leading-[1.02] tracking-[-.02em] sm:text-6xl lg:text-7xl">Churros fritos na hora para o seu evento.</h1>
           <p data-hero class="mt-4 max-w-xl text-white/90 md:text-lg">Carrinho completo para casamentos, aniversários e eventos corporativos. Em casa, peça pelo iFood.</p>
@@ -265,7 +265,7 @@
         </div>
 
         <!-- Indicadores -->
-        <div id="heroDots" class="absolute right-5 top-5 flex gap-1.5 md:bottom-14 md:right-14 md:top-auto"></div>
+        <div id="heroDots" class="absolute bottom-5 left-1/2 flex -translate-x-1/2 gap-1.5 md:bottom-8"></div>
       </div>
     </section>
 
@@ -276,26 +276,6 @@
         <p class="mt-4 text-ink-700">Passe o mouse (ou role, no celular) para conhecer cada detalhe.</p>
       </div>
       <div id="intentRow" data-reveal-group class="intent-row mt-8 md:mt-12"></div>
-    </section>
-
-    <!-- ============ DELIVERY / iFOOD: banners de ponta a ponta (renderizado a partir de CONFIG.highlights) ============ -->
-    <section id="delivery" aria-labelledby="deliveryTitle">
-      <!-- Faixa clara de respiro entre a foto da Hero e os banners -->
-      <div class="mx-auto max-w-6xl px-5 py-12 md:py-20">
-        <div data-reveal class="flex flex-col gap-6 md:flex-row md:items-end md:justify-between">
-          <div class="max-w-2xl">
-            <p class="text-xs font-semibold uppercase tracking-[.2em] text-caramel-600">Delivery</p>
-            <h2 id="deliveryTitle" class="mt-3 font-display text-3xl font-bold tracking-tight sm:text-5xl">Vontade de churros em casa?</h2>
-            <p class="mt-4 text-ink-700 md:text-lg">Os mesmos churros dos nossos eventos, entregues quentinhos pelo iFood.</p>
-          </div>
-          <a data-ifood href="#" target="_blank" rel="noopener" class="btn-ifood inline-flex shrink-0 items-center justify-center gap-2 rounded-full px-7 py-4 font-display font-bold text-white">
-            Pedir no iFood
-            <svg class="h-4 w-4" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><path d="M6 14L14 6M7 6h7v7"/></svg>
-          </a>
-        </div>
-      </div>
-      <!-- Desktop: banners lado a lado, sem espaço · Mobile: swipe horizontal com um banner e meio visível -->
-      <div id="highlightGrid" class="hscroll flex snap-x snap-mandatory overflow-x-auto md:overflow-hidden"></div>
     </section>
 
     <!-- ============ 2. PROPOSTA DE VALOR ============ -->
@@ -502,6 +482,26 @@
           </div>
         </form>
       </div>
+    </section>
+
+    <!-- ============ DELIVERY / iFOOD: banners de ponta a ponta (renderizado a partir de CONFIG.highlights) ============ -->
+    <section id="delivery" aria-labelledby="deliveryTitle">
+      <!-- Faixa clara de respiro entre a foto da Hero e os banners -->
+      <div class="mx-auto max-w-6xl px-5 py-12 md:py-20">
+        <div data-reveal class="flex flex-col gap-6 md:flex-row md:items-end md:justify-between">
+          <div class="max-w-2xl">
+            <p class="text-xs font-semibold uppercase tracking-[.2em] text-caramel-600">Delivery</p>
+            <h2 id="deliveryTitle" class="mt-3 font-display text-3xl font-bold tracking-tight sm:text-5xl">Vontade de churros em casa?</h2>
+            <p class="mt-4 text-ink-700 md:text-lg">Os mesmos churros dos nossos eventos, entregues quentinhos pelo iFood.</p>
+          </div>
+          <a data-ifood href="#" target="_blank" rel="noopener" class="btn-ifood inline-flex shrink-0 items-center justify-center gap-2 rounded-full px-7 py-4 font-display font-bold text-white">
+            Pedir no iFood
+            <svg class="h-4 w-4" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><path d="M6 14L14 6M7 6h7v7"/></svg>
+          </a>
+        </div>
+      </div>
+      <!-- Desktop: banners lado a lado, sem espaço · Mobile: swipe horizontal com um banner e meio visível -->
+      <div id="highlightGrid" class="hscroll flex snap-x snap-mandatory overflow-x-auto md:overflow-hidden"></div>
     </section>
   </main>
 
@@ -1002,7 +1002,7 @@
 
       // Entrada da hero: título, depois sabores + CTA
       gsap.from('[data-hero]', { y: travel, autoAlpha: 0, duration: 0.8, stagger: 0.09, ease: 'power3.out', delay: 0.1 });
-      gsap.from('#heroShow', { scale: 0.97, autoAlpha: 0, duration: 1, ease: 'power3.out' });
+
 
 
       $$('[data-reveal]').forEach(el => gsap.from(el, { y: travel, autoAlpha: 0, duration: 0.75, ease: 'power3.out',
