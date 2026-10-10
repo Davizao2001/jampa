@@ -65,6 +65,21 @@
     a, button { transition-property: color, background-color, border-color, opacity, box-shadow, transform; transition-duration: .3s; transition-timing-function: ease; }
     .btn-ifood:active, a.bg-caramel-500:active, button.bg-caramel-500:active, a.bg-ink-900:active, .head-cta:active,
     .float-wa.is-visible:active, .story-btn:active, .flavor:active { transform: scale(.97); }
+    /* Chips de recheios e toppings (seleção múltipla) */
+    .pick { display: inline-flex; align-items: center; gap: .5rem; min-height: 44px; padding: .55rem 1.1rem; border-radius: 999px;
+            border: 1.5px solid #E7DBC8; background: #fff; color: #231A12; font-weight: 600; font-size: .95rem; line-height: 1.2; text-align: left; }
+    .pick:hover { border-color: #F59E0B; background: #FFFBEB; }
+    .pick[aria-pressed="true"] { background: #F59E0B; border-color: #F59E0B; color: #1A120B; box-shadow: 0 8px 22px -10px rgba(245,158,11,.9); }
+    .pick .pick-ico { display: grid; place-items: center; width: 1.15rem; height: 1.15rem; border-radius: 999px; border: 1.5px solid currentColor; opacity: .45;
+                      transition: opacity .3s, background-color .3s, transform .3s; }
+    .pick .pick-ico svg { width: .7rem; height: .7rem; opacity: 0; transform: scale(.4); transition: opacity .3s, transform .3s; }
+    .pick[aria-pressed="true"] .pick-ico { opacity: 1; background: #1A120B; border-color: #1A120B; color: #F59E0B; }
+    .pick[aria-pressed="true"] .pick-ico svg { opacity: 1; transform: none; }
+    .pick-badge { border-radius: 999px; padding: .15rem .5rem; font-size: .65rem; font-weight: 700; letter-spacing: .04em; text-transform: uppercase;
+                  background: #FEF3C7; color: #92400E; white-space: nowrap; }
+    .pick[aria-pressed="true"] .pick-badge { background: #1A120B; color: #FBBF24; }
+    .pick:active { transform: scale(.96); }
+
     /* Alvos de toque de no mínimo 44×44 px */
     .tap { display: inline-flex; align-items: center; min-height: 44px; }
     .tap-sq { min-width: 44px; min-height: 44px; }
@@ -366,7 +381,7 @@
           <span class="w-8 shrink-0 font-display text-4xl font-extrabold leading-none text-caramel-500 md:text-5xl">1</span>
           <div>
             <h3 class="font-display text-lg font-semibold md:mt-4 md:text-xl">Você pede o orçamento</h3>
-            <p class="mt-1.5 text-sm leading-relaxed text-ink-700 md:mt-3">Responde quatro perguntas rápidas aqui no site e a conversa já abre no WhatsApp com os dados do seu evento.</p>
+            <p class="mt-1.5 text-sm leading-relaxed text-ink-700 md:mt-3">Responde cinco perguntas rápidas aqui no site e a conversa já abre no WhatsApp com os dados do seu evento.</p>
           </div>
         </li>
         <li class="flex gap-4 rounded-3xl bg-sand-100 p-5 md:block md:rounded-4xl md:p-7">
@@ -466,10 +481,10 @@
         <form id="funnel" novalidate class="rounded-3xl bg-white p-5 shadow-soft sm:p-8">
           <div class="mb-8">
             <div class="mb-2 flex justify-between text-xs text-ink-500">
-              <span id="stepLabel">Etapa 1 de 4</span><span id="stepName">Tipo de evento</span>
+              <span id="stepLabel">Etapa 1 de 5</span><span id="stepName">Tipo de evento</span>
             </div>
-            <div class="h-1.5 overflow-hidden rounded-full bg-sand-200" role="progressbar" aria-valuemin="1" aria-valuemax="4" aria-valuenow="1" id="progress">
-              <div id="progressBar" class="h-full w-full origin-left rounded-full bg-caramel-500" style="transform:scaleX(.25)"></div>
+            <div class="h-1.5 overflow-hidden rounded-full bg-sand-200" role="progressbar" aria-valuemin="1" aria-valuemax="5" aria-valuenow="1" id="progress">
+              <div id="progressBar" class="h-full w-full origin-left rounded-full bg-caramel-500" style="transform:scaleX(.2)"></div>
             </div>
           </div>
 
@@ -498,11 +513,22 @@
               <input id="date" type="date" required class="mt-2 w-full rounded-2xl border border-sand-300 bg-paper px-4 py-3" />
               <label class="mt-4 block text-sm text-ink-700" for="place">Bairro e cidade</label>
               <input id="place" type="text" required autocomplete="address-level2" placeholder="Ex.: Altiplano, João Pessoa" class="mt-2 w-full rounded-2xl border border-sand-300 bg-paper px-4 py-3 placeholder:text-ink-500" />
-              <label class="mt-4 block text-sm text-ink-700" for="flavorsWanted">Sabores desejados</label>
-              <input id="flavorsWanted" type="text" maxlength="120" placeholder="Ex.: doce de leite, chocolate, Nutella" class="mt-2 w-full rounded-2xl border border-sand-300 bg-paper px-4 py-3 placeholder:text-ink-500" />
             </fieldset>
 
-            <fieldset data-step="3" data-name="Orçamento base" hidden>
+            <fieldset data-step="3" data-name="Recheios e toppings" hidden>
+              <legend class="font-display text-xl font-semibold">Quais recheios e toppings você deseja?</legend>
+              <p class="mt-1 text-sm text-ink-700">Marque quantos quiser. Se ainda não decidiu, é só continuar.</p>
+              <div class="mt-5">
+                <h3 id="fillingsTitle" class="text-xs font-semibold uppercase tracking-widest text-ink-500">Recheios</h3>
+                <div id="fillingOptions" role="group" aria-labelledby="fillingsTitle" class="mt-3 flex flex-wrap gap-3"></div>
+              </div>
+              <div class="mt-6">
+                <h3 id="toppingsTitle" class="text-xs font-semibold uppercase tracking-widest text-ink-500">Toppings</h3>
+                <div id="toppingOptions" role="group" aria-labelledby="toppingsTitle" class="mt-3 flex flex-wrap gap-3"></div>
+              </div>
+            </fieldset>
+
+            <fieldset data-step="4" data-name="Orçamento base" hidden>
               <legend class="font-display text-xl font-semibold">Sua estimativa</legend>
               <div class="mt-5 rounded-2xl bg-sand-100 p-5">
                 <p class="text-xs uppercase tracking-widest text-ink-500">Pacote sugerido</p>
@@ -693,6 +719,9 @@
       { src: 'assets/stories/img_9551.mp4', poster: 'assets/galeria/img_9551-poster.jpg', caption: 'Recheios e toppings' },
     ],
     events: ['Aniversário Adulto', '15 Anos', 'Infantil', 'Casamento', 'Corporativo'],
+    // Etapa "Recheios e toppings" do formulário (extra: true mostra o selo "Valor adicional")
+    fillings: [{ name: 'Brigadeiro' }, { name: 'Doce de Leite' }, { name: 'Leite Ninho' }, { name: 'Nutella', extra: true }],
+    toppings: [{ name: 'Granulado' }, { name: 'Coco ralado' }, { name: 'Amendoim triturado' }, { name: 'Leite em pó' }],
     /* PACOTES: `price: null` mostra "Sob consulta". Festa e Grande Evento aguardam os valores da cliente (seguir o padrão do Essencial). */
     pricePerGuest: 19,                      // valor base por pessoa (estimativa do formulário)
     packages: [
@@ -717,7 +746,7 @@
   const hasGsap = () => !!window.gsap && !reduceMotion;
 
   /* Estado compartilhado entre Hero e Funil (sabor começa vazio) */
-  const state = { flavors: [], event: null, guests: 80 };
+  const state = { flavors: [], event: null, guests: 80, recheiosSelecionados: [], toppingsSelecionados: [] };
 
   /* Grupo de opções tipo "radio" com teclado (setas) — sabores e tipo de evento */
   function radioGroup(container, items, { className, onSelect, render = i => i.label }) {
@@ -1114,6 +1143,26 @@
       },
     });
 
+    // Recheios e toppings: chips de seleção múltipla, gravados em arrays no estado
+    const CHECK = '<svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2.5 6.2l2.3 2.3 4.7-4.9"/></svg>';
+    function multiPick(box, items, key) {
+      box.innerHTML = items.map(it => `
+        <button type="button" class="pick" aria-pressed="false" data-value="${it.name}">
+          <span class="pick-ico">${CHECK}</span>${it.name}${it.extra ? ' <span class="pick-badge">Valor adicional</span>' : ''}
+        </button>`).join('');
+      box.addEventListener('click', e => {
+        const b = e.target.closest('.pick'); if (!b) return;
+        const on = b.getAttribute('aria-pressed') !== 'true';
+        b.setAttribute('aria-pressed', String(on));
+        const v = b.dataset.value, list = state[key];
+        if (on) list.push(v); else list.splice(list.indexOf(v), 1);
+        state[key] = items.map(it => it.name).filter(n => list.includes(n));   // mantém a ordem da lista
+      });
+    }
+    multiPick($('#fillingOptions'), CONFIG.fillings, 'recheiosSelecionados');
+    multiPick($('#toppingOptions'), CONFIG.toppings, 'toppingsSelecionados');
+    const withExtra = n => CONFIG.fillings.find(f => f.name === n)?.extra ? `${n} (valor adicional)` : n;
+
     function syncGuests() {
       state.guests = +guests.value;
       const max = state.guests >= +guests.max;
@@ -1137,13 +1186,12 @@
         if (date.value < date.min) return 'Escolha uma data futura.';
         if (!place.value.trim()) return 'Informe o bairro ou a cidade.';
       }
-      if (i === 3 && !name.value.trim()) return 'Informe seu nome.';
+      if (i === 4 && !name.value.trim()) return 'Informe seu nome.';
       return '';
     }
 
     const fmtDate = iso => { const [y, m, d] = iso.split('-'); return `${d}/${m}/${y}`; };
     const eventLabel = () => state.event === 'Outro' ? $('#eventOther').value.trim() : state.event;
-    const flavorName = () => $('#flavorsWanted').value.trim();
     const estimate = p => Math.max(p?.price || 0, state.guests * CONFIG.pricePerGuest);
 
     function fillSummary() {
@@ -1152,7 +1200,8 @@
       $('#sumPkg').textContent = p ? `${p.name}${p.hours ? ` · ${p.hours} de serviço` : ''}` : 'Proposta sob medida';
       $('#sumPrice').textContent = p ? `a partir de ${brl(estimate(p))}` : 'Sob consulta';
       $('#sumDetails').textContent = [eventLabel(), `${$('#guestsOut').textContent} convidados`, fmtDate(date.value), place.value.trim(),
-        flavorName() && `sabores: ${flavorName()}`].filter(Boolean).join(' · ');
+        state.recheiosSelecionados.length && `recheios: ${state.recheiosSelecionados.map(withExtra).join(', ')}`,
+        state.toppingsSelecionados.length && `toppings: ${state.toppingsSelecionados.join(', ')}`].filter(Boolean).join(' · ');
     }
 
     function show(i, dir = 1) {
@@ -1164,10 +1213,10 @@
       prevBtn.classList.toggle('invisible', i === 0);
       nextBtn.textContent = i === steps.length - 1 ? 'Enviar no WhatsApp' : 'Continuar';
       error.textContent = '';
-      if (i === 3) fillSummary();
+      if (i === 4) fillSummary();
 
       const p = (i + 1) / steps.length;
-      const focus = () => (to.querySelector('[tabindex="0"], input') || to).focus({ preventScroll: true });
+      const focus = () => (to.querySelector('[tabindex="0"], input, .pick') || to).focus({ preventScroll: true });
       if (from === to) return;
       if (!hasGsap()) {
         $('#progressBar').style.transform = `scaleX(${p})`;
@@ -1201,8 +1250,13 @@
         `• *Convidados:* ${$('#guestsOut').textContent}`,
         `• *Data:* ${fmtDate(date.value)}`,
         `• *Bairro/Cidade:* ${place.value.trim()}`,
-        `• *Sabores desejados:* ${flavorName() || 'a definir'}`,
         `• *Estimativa do site:* ${p ? `${p.name}, a partir de ${brl(estimate(p))}` : 'sob medida'}`,
+        '',
+        '*Recheios:*',
+        ...(state.recheiosSelecionados.length ? state.recheiosSelecionados.map(r => `   - ${withExtra(r)}`) : ['   - a definir']),
+        '',
+        '*Toppings:*',
+        ...(state.toppingsSelecionados.length ? state.toppingsSelecionados.map(t => `   - ${t}`) : ['   - a definir']),
       ].join('\n');
       // Ponto de integração de analytics: window.dataLayer?.push({ event: 'lead_whatsapp', ... })
       window.open(`https://wa.me/${CONFIG.whatsapp}?text=${encodeURIComponent(text)}`, '_blank', 'noopener,noreferrer');
