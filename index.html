@@ -3,15 +3,15 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Churros in Jampa — Carrinho de churros para festas e eventos em João Pessoa</title>
-  <meta name="description" content="Churros fritos na hora para casamentos, aniversários e eventos corporativos em João Pessoa/PB. Estrutura completa por nossa conta. Verifique a disponibilidade da sua data." />
+  <title>Churros in Jampa — Carrinho de churros para festas e eventos em João Pessoa, PB, PE e RN</title>
+  <meta name="description" content="Churros fritos na hora para aniversários, casamentos e eventos corporativos em João Pessoa, interior da Paraíba, região de Recife (PE) e RN. Verifique a disponibilidade da sua data." />
   <!-- Prévia ao compartilhar o link (WhatsApp, Instagram, etc.).
        TROCAR "https://SEU-DOMINIO" pelo endereço real do site: og:image e og:url precisam de URL completa. -->
   <meta property="og:type" content="website" />
   <meta property="og:locale" content="pt_BR" />
   <meta property="og:site_name" content="Churros in Jampa" />
   <meta property="og:title" content="Churros in Jampa — Carrinho de churros para o seu evento" />
-  <meta property="og:description" content="Churros fritos na hora para casamentos, aniversários e eventos corporativos em João Pessoa e região. Peça seu orçamento pelo WhatsApp." />
+  <meta property="og:description" content="Churros fritos na hora para aniversários, casamentos e eventos corporativos em João Pessoa, interior da Paraíba, região de Recife (PE) e RN. Peça seu orçamento pelo WhatsApp." />
   <meta property="og:url" content="https://SEU-DOMINIO/" />
   <meta property="og:image" content="https://SEU-DOMINIO/assets/og.jpg" />
   <meta property="og:image:width" content="1200" />
@@ -238,6 +238,15 @@
     .story-icon { position: relative; z-index: 3; display: grid; place-items: center; width: 2.5rem; height: 2.5rem; border-radius: 999px; }
     .story-icon:hover { background: rgba(255,255,255,.15); }
     #storyPrev, #storyNext { z-index: 1; }
+    /* Controle de volume: trilha fina branca, preenchida até o nível atual */
+    .story-vol { position: relative; z-index: 3; width: 5.5rem; height: 1.5rem; background: transparent; cursor: pointer; -webkit-appearance: none; appearance: none; }
+    .story-vol::-webkit-slider-runnable-track { height: 3px; border-radius: 999px;
+      background: linear-gradient(to right, #fff var(--v, 80%), rgba(255,255,255,.35) var(--v, 80%)); }
+    .story-vol::-webkit-slider-thumb { -webkit-appearance: none; width: 13px; height: 13px; margin-top: -5px; border-radius: 999px; background: #fff; }
+    .story-vol::-moz-range-track { height: 3px; border-radius: 999px; background: rgba(255,255,255,.35); }
+    .story-vol::-moz-range-progress { height: 3px; border-radius: 999px; background: #fff; }
+    .story-vol::-moz-range-thumb { width: 13px; height: 13px; border: 0; border-radius: 999px; background: #fff; }
+    @media (max-width: 380px) { .story-vol { width: 4rem; } }
 
     /* Funil */
     .opt { transition: border-color .2s, background-color .2s; }
@@ -296,9 +305,9 @@
         <div class="hero-shade absolute inset-0"></div>
 
         <div class="absolute bottom-0 left-0 w-full max-w-[40rem] px-6 pb-12 text-white md:px-12 md:pb-16 lg:px-16">
-          <p data-hero class="text-xs font-semibold uppercase tracking-[.2em] text-white/85">Eventos em João Pessoa e região</p>
-          <h1 data-hero class="mt-3 font-display text-[2.4rem] font-extrabold leading-[1.02] tracking-[-.02em] sm:text-5xl lg:text-6xl">Churros fritos na hora para o seu evento.</h1>
-          <p data-hero class="mt-4 max-w-xl text-white/90 md:text-lg">Carrinho completo para casamentos, aniversários e eventos corporativos. Em casa, peça pelo iFood.</p>
+          <p data-hero class="text-xs font-semibold uppercase tracking-[.2em] text-white/85">João Pessoa · Interior da PB · Recife (PE) · RN</p>
+          <h1 data-hero class="mt-3 font-display text-[2.4rem] font-extrabold leading-[1.02] tracking-[-.02em] sm:text-5xl lg:text-6xl">Nossos churros no seu evento</h1>
+          <p data-hero class="mt-4 max-w-xl text-white/90 md:text-lg">Aniversários, Casamentos e eventos corporativos em João Pessoa, RN e PE</p>
           <div data-hero class="mt-6 flex flex-col gap-3 sm:flex-row">
             <a data-ifood href="#" target="_blank" rel="noopener" class="btn-ifood inline-flex items-center justify-center gap-2 rounded-full px-7 py-4 font-display text-base font-bold text-white">
               Peça no iFood
@@ -322,6 +331,10 @@
         <p class="mt-4 text-ink-700">Passe o mouse (ou role, no celular) para conhecer cada detalhe.</p>
       </div>
       <div id="intentRow" data-reveal-group class="intent-row mt-8 md:mt-12"></div>
+      <p data-reveal class="mt-6 flex items-start gap-3 rounded-3xl bg-sand-100 p-5 text-ink-700 md:mt-8 md:items-center md:p-6">
+        <span class="grid h-10 w-10 shrink-0 place-items-center rounded-full bg-caramel-500 text-lg" aria-hidden="true">🎁</span>
+        <span><strong class="text-ink-900">Chegamos com antecedência e montamos a nossa estrutura.</strong> Preparamos uma box de churros especial para o contratante!</span>
+      </p>
     </section>
 
     <!-- ============ COMO FUNCIONA ============ -->
@@ -360,7 +373,7 @@
       <div data-reveal class="flex flex-wrap items-end justify-between gap-4">
         <div class="max-w-2xl">
           <h2 class="font-display text-3xl font-bold tracking-tight sm:text-4xl">Eventos que já adoçamos</h2>
-          <p class="mt-4 text-ink-700">Casamentos, aniversários e eventos de empresa em João Pessoa e região.</p>
+          <p class="mt-4 text-ink-700">Aniversários, casamentos e eventos corporativos em João Pessoa, interior da Paraíba, região de Recife (PE) e RN.</p>
         </div>
         <a href="#orcamento" class="rounded-full bg-ink-900 px-5 py-3 font-display text-sm font-semibold text-white transition-transform hover:scale-[1.02]">Quero no meu evento</a>
       </div>
@@ -386,8 +399,8 @@
     <section id="pacotes" class="bg-sand-100">
       <div class="mx-auto max-w-6xl px-5 py-14 md:py-28">
         <div data-reveal class="max-w-2xl">
-          <h2 class="font-display text-3xl font-bold tracking-tight sm:text-4xl">Pacotes por tamanho de evento</h2>
-          <p class="mt-4 text-ink-700">Churros à vontade durante todo o tempo de serviço. Montagem e desmontagem incluídas.</p>
+          <h2 class="font-display text-3xl font-bold tracking-tight sm:text-4xl">Pacotes por evento</h2>
+          <p class="mt-4 text-ink-700"><strong class="text-ink-900">Valor base: R$ 19,00 por pessoa.</strong> Personalização à parte.</p>
         </div>
         <div id="packageGrid" data-reveal-group class="hscroll -mx-5 mt-8 flex snap-x snap-mandatory gap-4 overflow-x-auto px-5 py-2 md:mx-0 md:mt-12 md:grid md:grid-cols-3 md:gap-5 md:overflow-visible md:p-0"></div>
         <p class="mt-3 text-center text-xs text-ink-500 md:hidden">Deslize para ver os outros pacotes →</p>
@@ -399,7 +412,6 @@
     <section id="faq" class="mx-auto max-w-3xl px-5 py-14 md:py-28">
       <div data-reveal>
         <h2 class="font-display text-3xl font-bold tracking-tight sm:text-4xl">O que precisamos no local</h2>
-        <p class="mt-4 text-ink-700">As dúvidas de logística que todo mundo tem antes de fechar.</p>
       </div>
       <div id="faqList" data-reveal class="mt-10 divide-y divide-sand-200 rounded-4xl border border-sand-200 bg-white px-6 shadow-soft"></div>
     </section>
@@ -456,8 +468,9 @@
             <fieldset data-step="1" data-name="Convidados" hidden>
               <legend class="font-display text-xl font-semibold">Quantos convidados?</legend>
               <p class="mt-6 font-display text-5xl font-bold"><output id="guestsOut" for="guests">80</output><span class="ml-2 text-base font-normal text-ink-500">pessoas</span></p>
-              <input id="guests" type="range" min="20" max="300" step="10" value="80" class="mt-6 w-full" aria-label="Número de convidados" />
-              <div class="mt-2 flex justify-between text-xs text-ink-500"><span>20</span><span>300+</span></div>
+              <input id="guests" type="range" min="30" max="300" step="10" value="80" class="mt-6 w-full" aria-label="Número de convidados" />
+              <div class="mt-2 flex justify-between text-xs text-ink-500"><span>Mínimo de 30 pessoas</span><span>300+</span></div>
+              <p class="mt-3 text-sm text-ink-700">Informe o número aproximado de convidados: é ele que define o tempo de serviço e a quantidade de churros.</p>
               <p id="guestsPkg" class="mt-5 text-sm text-ink-700"></p>
             </fieldset>
 
@@ -465,8 +478,10 @@
               <legend class="font-display text-xl font-semibold">Quando e onde?</legend>
               <label class="mt-5 block text-sm text-ink-700" for="date">Data do evento</label>
               <input id="date" type="date" required class="mt-2 w-full rounded-2xl border border-sand-300 bg-paper px-4 py-3" />
-              <label class="mt-4 block text-sm text-ink-700" for="place">Bairro ou cidade</label>
+              <label class="mt-4 block text-sm text-ink-700" for="place">Bairro e cidade</label>
               <input id="place" type="text" required autocomplete="address-level2" placeholder="Ex.: Altiplano, João Pessoa" class="mt-2 w-full rounded-2xl border border-sand-300 bg-paper px-4 py-3 placeholder:text-ink-500" />
+              <label class="mt-4 block text-sm text-ink-700" for="flavorsWanted">Sabores desejados</label>
+              <input id="flavorsWanted" type="text" maxlength="120" placeholder="Ex.: doce de leite, chocolate, Nutella" class="mt-2 w-full rounded-2xl border border-sand-300 bg-paper px-4 py-3 placeholder:text-ink-500" />
             </fieldset>
 
             <fieldset data-step="3" data-name="Orçamento base" hidden>
@@ -479,7 +494,8 @@
               </div>
               <label class="mt-4 block text-sm text-ink-700" for="name">Seu nome</label>
               <input id="name" type="text" required autocomplete="given-name" class="mt-2 w-full rounded-2xl border border-sand-300 bg-paper px-4 py-3" />
-              <p class="mt-3 text-xs text-ink-500">Valor de referência. A confirmação da data e do valor final é feita no WhatsApp.</p>
+              <p class="mt-4 text-sm font-semibold text-ink-900">Verifique a disponibilidade.</p>
+              <p class="mt-1 text-xs text-ink-500">O valor apresentado é uma estimativa do valor real. Confirmaremos todos os detalhes e o valor final no WhatsApp.</p>
             </fieldset>
           </div>
 
@@ -529,8 +545,9 @@
         <div class="mt-3 flex items-center gap-2.5">
           <img src="assets/logo.svg" alt="" width="32" height="32" class="h-8 w-8 rounded-full ring-2 ring-white/80" />
           <span class="font-display text-sm font-semibold">Churros in Jampa</span>
-          <span id="storyCaption" class="truncate text-sm text-white/75"></span>
-          <button type="button" id="storyMute" class="story-icon ml-auto" aria-label="Desativar som">
+          <span id="storyCaption" class="hidden truncate text-sm text-white/75 sm:inline"></span>
+          <input type="range" id="storyVol" class="story-vol ml-auto" min="0" max="1" step="0.05" value="0.8" aria-label="Volume" />
+          <button type="button" id="storyMute" class="story-icon" aria-label="Desativar som">
             <svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M11 5L6 9H3v6h3l5 4V5z"/><path id="storyWave" d="M15.5 8.5a5 5 0 010 7M18.5 5.5a9 9 0 010 13"/><path id="storyX" d="M16 9l5 6M21 9l-5 6" style="display:none"/></svg>
           </button>
           <button type="button" id="storyClose" class="story-icon" aria-label="Fechar stories">
@@ -554,7 +571,7 @@
     <div class="mx-auto grid max-w-6xl gap-10 px-5 py-14 md:grid-cols-[1.4fr_1fr_1.2fr]">
       <div>
         <a href="#topo" class="flex items-center gap-3 font-display text-2xl font-extrabold tracking-tight"><img src="assets/logo.svg" alt="" width="56" height="56" class="h-14 w-14" />Churros in Jampa</a>
-        <p class="mt-3 max-w-xs text-sm leading-relaxed text-ink-700">O melhor carrinho de churros para o seu evento em João Pessoa e região.</p>
+        <p class="mt-3 max-w-xs text-sm leading-relaxed text-ink-700">O melhor carrinho de churros para o seu evento em João Pessoa, interior da Paraíba, região de Recife (PE) e RN.</p>
         <a data-ig-link href="https://www.instagram.com/churrosjampa/" target="_blank" rel="noopener" class="mt-5 inline-flex items-center gap-2 rounded-full border border-sand-300 bg-white px-4 py-2 text-sm font-semibold hover:border-ink-500">
           <svg class="h-4 w-4 text-caramel-600" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 8h3l1.5-2.5h7L17 8h3a1 1 0 011 1v9a1 1 0 01-1 1H4a1 1 0 01-1-1V9a1 1 0 011-1z"/><circle cx="12" cy="13" r="3.5"/></svg> <span data-ig-handle>@churrosjampa</span>
         </a>
@@ -576,7 +593,8 @@
         </a>
         <dl class="mt-5 space-y-2 text-sm text-ink-700">
           <div class="flex gap-2"><dt class="font-semibold text-ink-900">Atendimento:</dt><dd id="footHours"></dd></div>
-          <div class="flex gap-2"><dt class="font-semibold text-ink-900">Local:</dt><dd>João Pessoa - PB</dd></div>
+          <div class="flex gap-2"><dt class="font-semibold text-ink-900">Atendemos:</dt><dd>João Pessoa, interior da Paraíba, região de Recife (PE) e RN</dd></div>
+          <div class="flex gap-2"><dt class="font-semibold text-ink-900">Endereço:</dt><dd><a id="footAddr" href="#" target="_blank" rel="noopener" class="underline underline-offset-4 hover:text-caramel-600"></a></dd></div>
         </dl>
       </div>
     </div>
@@ -597,6 +615,7 @@
     whatsapp: '5583999999999',
     instagram: 'churrosjampa',
     ifood: '#',                             // TROCAR pelo link da loja no iFood
+    address: { label: 'Endereço a definir', maps: '#' },   // TROCAR: endereço da base e link do Google Maps
     hours: 'Seg a Sáb, 9h às 18h',          // PLACEHOLDER
     legal: '',                              // ex.: 'CNPJ 00.000.000/0001-00' (vazio = não aparece)
     defaultCta: 'Quero um orçamento',
@@ -635,16 +654,17 @@
     unique: [
       { title: 'Nosso carrinho', text: 'Carrinho montado no seu evento, com equipe uniformizada e visual que aparece bem nas fotos.',
         img: 'assets/galeria/img_0228.webp', pos: '50% 60%',
-        more: { title: 'Estrutura completa por nossa conta:', text: 'carrinho, fritadeira, insumos, embalagens e equipe uniformizada. Você só indica onde montar.' } },
-      { title: 'Massa de churros', text: 'Crocante por fora, macia por dentro, passada no açúcar e canela.',
+        more: { title: 'Estrutura completa por nossa conta:', text: 'carrinho, fritadeira, insumos e equipe uniformizada.' } },
+      { title: 'Massa de churros', text: 'Cada churros sai da fritadeira, é recheado na hora e vai direto para a mão do convidado.',
         img: 'assets/galeria/img_9963.webp', pos: '50% 45%',
-        more: { title: 'Fritos na hora, crocantes de verdade:', text: 'cada churros sai da fritadeira direto para a mão do convidado e é recheado na hora.' } },
-      { title: 'Formas de servir', text: 'Tradicional recheado, bandejas para a mesa ou churros com toppings: escolha o formato da festa.',
+        more: { title: 'Fritos na hora, crocantes de verdade.', text: '' } },
+      // TODO: completar a frase "Cada projeto é pensado para criar ..." com o texto da cliente
+      { title: 'Formas de servir', text: 'Cada projeto é pensado para criar uma experiência única para os seus convidados.',
         img: 'assets/galeria/img_9528.webp', pos: '50% 55%',
-        more: { title: 'Visual elegante para o seu evento:', text: 'carrinho e embalagens pensados para aparecer bem nas fotos e combinar com a decoração.' } },
+        more: { title: 'Visual elegante para o seu evento:', text: 'carrinho pensado para aparecer bem nas fotos e combinar com a decoração.' } },
       { title: 'Sessão festa infantil', text: 'Um momento pensado para a criançada, com churros no tamanho certo e atendimento que vira parte da festa.',
         img: 'assets/galeria/img_0255.webp', pos: '50% 35%', cta: { label: 'Quero na festa do meu filho', href: '#orcamento' } },
-      { title: 'Kit Degustação', dark: true, text: 'Prove nossos churros e recheios antes de fechar o seu evento.',
+      { title: 'Kit Degustação', dark: true, text: 'Prove nossos churros e recheios antes de fechar o seu evento.', price: 'Valor: R$ 25,00',
         img: 'assets/galeria/img_0395.webp', pos: '50% 60%', cta: { label: 'Quero provar', href: '#orcamento' } },
     ],
     /* STORIES: vídeos com som exibidos no botão flutuante (ordem = ordem de exibição) */
@@ -654,18 +674,21 @@
       { src: 'assets/stories/img_9165.mp4', poster: 'assets/galeria/img_9165-poster.jpg', caption: 'Evento corporativo' },
       { src: 'assets/stories/img_9551.mp4', poster: 'assets/galeria/img_9551-poster.jpg', caption: 'Recheios e toppings' },
     ],
-    events: ['Casamento', 'Aniversário', 'Corporativo', 'Outro'],
+    events: ['Aniversário Adulto', '15 Anos', 'Infantil', 'Casamento', 'Corporativo'],
+    /* PACOTES: `price: null` mostra "Sob consulta". Festa e Grande Evento aguardam os valores da cliente (seguir o padrão do Essencial). */
+    pricePerGuest: 19,                      // valor base por pessoa (estimativa do formulário)
     packages: [
-      { id: 'essencial', name: 'Essencial',     maxGuests: 50,  hours: '1h30', price: 690,  features: ['1 atendente', '2 sabores de recheio', 'Embalagens personalizadas'] },
-      { id: 'festa',     name: 'Festa',         maxGuests: 100, hours: '2h',   price: 1190, features: ['2 atendentes', '3 sabores de recheio', 'Embalagens personalizadas'], featured: true },
-      { id: 'grande',    name: 'Grande Evento', maxGuests: 200, hours: '3h',   price: 1990, features: ['3 atendentes', 'Todos os sabores', 'Embalagens personalizadas'] },
+      { id: 'essencial', name: 'Essencial',     guestsLabel: '50 convidados', maxGuests: 50,  hours: '3h', price: 1100, features: ['1 atendente', '3 sabores', '3 toppings'] },
+      { id: 'festa',     name: 'Festa',         guestsLabel: '',              maxGuests: 100, hours: '',   price: null, features: ['Atendentes: a definir', 'Sabores: a definir', 'Toppings: a definir'], featured: true },
+      { id: 'grande',    name: 'Grande Evento', guestsLabel: '',              maxGuests: 200, hours: '',   price: null, features: ['Atendentes: a definir', 'Sabores: a definir', 'Toppings: a definir'] },
     ],
     faq: [
       { q: 'Quanto espaço o carrinho ocupa?', a: 'Precisamos de uma área plana de aproximadamente 2 m × 2 m, de preferência coberta.' },
-      { q: 'Precisa de ponto de energia?',    a: 'Sim, uma tomada 220 V a até 10 metros do local de montagem. Se não houver, avise antes para avaliarmos alternativas.' },
-      { q: 'Com quanta antecedência vocês chegam?', a: 'Chegamos cerca de 1 hora antes do início do serviço para montar e aquecer o óleo.' },
-      { q: 'Pode montar em área interna?',    a: 'Pode, desde que o ambiente seja ventilado. Em salões fechados, combinamos o melhor ponto com o cerimonial.' },
-      { q: 'Vocês atendem fora de João Pessoa?', a: 'Atendemos a região metropolitana. Para outras cidades, consultamos a taxa de deslocamento no orçamento.' },
+      { q: 'Precisa de ponto de energia?',    a: 'Precisamos de uma extensão de 20m no local.' },
+      { q: 'Quando inicia a montagem?',       a: 'Chegamos 1 hora antes do horário contratado para montar toda a estrutura.' },
+      { q: 'Pode montar em área interna?',    a: 'Sim, mas em um ambiente que seja ventilado ou próximo a janelas. Em salões fechados, combinamos as melhores alternativas.' },
+      { q: 'Vocês atendem fora de João Pessoa?', a: 'Atendemos o interior da Paraíba, região de Recife (PE) e RN. Consultar disponibilidade e taxas de deslocamento.' },
+      { q: 'Os churros são à vontade?',       a: 'Servimos de maneira limitada, conforme o número de pessoas e o tempo contratado para o evento.' },
     ],
   };
 
@@ -748,9 +771,9 @@
       <article class="relative flex shrink-0 basis-[84%] snap-center flex-col rounded-4xl bg-white p-6 shadow-soft md:basis-auto md:p-7 ${hot ? 'ring-2 ring-caramel-500' : 'border border-sand-200'}">
         ${hot ? '<span class="absolute right-6 top-6 rounded-full bg-caramel-100 px-3 py-1 text-xs font-semibold text-caramel-600">Mais pedido</span>' : ''}
         <h3 class="font-display text-xl font-semibold">${p.name}</h3>
-        <p class="mt-1 text-sm text-ink-700">${min ? `${min} a ${p.maxGuests}` : `Até ${p.maxGuests}`} convidados · ${p.hours} de serviço</p>
-        <p class="mt-6 text-xs uppercase tracking-widest text-ink-500">A partir de</p>
-        <p class="font-display text-4xl font-bold">${brl(p.price)}</p>
+        <p class="mt-1 text-sm text-ink-700">${p.guestsLabel || (min ? `${min} a ${p.maxGuests} convidados` : `Até ${p.maxGuests} convidados`)}${p.hours ? ` · ${p.hours} de serviço` : ''}</p>
+        <p class="mt-6 text-xs uppercase tracking-widest text-ink-500">${p.price ? 'A partir de' : 'Valor'}</p>
+        <p class="font-display text-4xl font-bold">${p.price ? brl(p.price) : 'Sob consulta'}</p>
         <ul class="mt-6 flex-1 space-y-2 text-sm text-ink-700">
           ${p.features.map(f => `<li class="flex gap-2"><span class="text-caramel-600">✓</span>${f}</li>`).join('')}
         </ul>
@@ -860,6 +883,7 @@
     $$('[data-ig-handle]').forEach(el => { el.textContent = `@${CONFIG.instagram}`; });
     $('#floatWa').href = $('#footWa').href = `https://wa.me/${CONFIG.whatsapp}?text=${encodeURIComponent('Olá! Quero um orçamento da Churros in Jampa para o meu evento.')}`;
     $('#footHours').textContent = CONFIG.hours;
+    $('#footAddr').textContent = CONFIG.address.label; $('#footAddr').href = CONFIG.address.maps;
     $('#footYear').textContent = new Date().getFullYear();
     $('#footLegal').textContent = CONFIG.legal;
   }
@@ -893,10 +917,11 @@
         <div class="intent-body mt-4">
           <img src="${u.img}" alt="" loading="lazy" decoding="async" style="object-position:${u.pos}" />
           <p class="intent-text mt-3 max-w-md text-sm leading-relaxed text-ink-900/85 lg:text-[15px]">${u.text}</p>
+          ${u.price ? `<p class="mt-2 font-display text-lg font-bold ${u.dark ? 'text-caramel-500' : ''}">${u.price}</p>` : ''}
           ${u.more ? `
           <div class="intent-more mt-4 flex items-start gap-3 text-sm leading-relaxed text-ink-900/85">
             <span class="intent-arrow shrink-0" aria-hidden="true"><svg class="h-4 w-4" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M10 4v12M5 11l5 5 5-5"/></svg></span>
-            <p><strong class="font-semibold">${u.more.title}</strong> ${u.more.text}</p>
+            <p><strong class="font-semibold">${u.more.title}</strong>${u.more.text ? ' ' + u.more.text : ''}</p>
           </div>` : ''}
           ${u.cta ? `
           <a href="${u.cta.href}" class="intent-more mt-5 inline-flex items-center gap-2 rounded-full ${u.dark ? 'bg-caramel-500 text-ink-900' : 'bg-ink-900 text-white'} px-5 py-3 font-display text-sm font-semibold">
@@ -914,10 +939,28 @@
     bars.innerHTML = list.map(() => '<span class="story-bar"><i></i></span>').join('');
     const fills = $$('i', bars);
 
+    const vol = $('#storyVol');
+    // Volume lembrado entre visitas (só neste navegador); padrão 80%
+    let level = 0.8;
+    try { const saved = parseFloat(localStorage.getItem('storyVolume')); if (saved >= 0 && saved <= 1) level = saved; } catch {}
+    // iPhone/iPad não deixam o site mudar o volume (só os botões do aparelho): lá o controle some e fica só o mudo
+    const probe = document.createElement('video'); probe.volume = 0.5;
+    if (probe.volume !== 0.5) vol.hidden = true;
+
     const setMuteIcon = () => {
-      wave.style.display = video.muted ? 'none' : ''; xMark.style.display = video.muted ? '' : 'none';
-      mute.setAttribute('aria-label', video.muted ? 'Ativar som' : 'Desativar som');
+      const silent = video.muted || video.volume === 0;
+      wave.style.display = silent ? 'none' : ''; xMark.style.display = silent ? '' : 'none';
+      mute.setAttribute('aria-label', silent ? 'Ativar som' : 'Desativar som');
+      const shown = video.muted ? 0 : video.volume;
+      vol.value = shown; vol.style.setProperty('--v', `${shown * 100}%`);
     };
+    function setVolume(v) {
+      level = Math.min(1, Math.max(0, v));
+      video.volume = level; video.muted = level === 0;
+      try { localStorage.setItem('storyVolume', String(level)); } catch {}
+      setMuteIcon();
+    }
+    vol.addEventListener('input', () => setVolume(parseFloat(vol.value)));
     function tick() {                                              // barra de progresso do story atual
       if (video.duration) fills[i].style.width = `${(video.currentTime / video.duration) * 100}%`;
       raf = requestAnimationFrame(tick);
@@ -933,7 +976,7 @@
       video.play().catch(() => { video.muted = true; setMuteIcon(); video.play().catch(() => {}); });   // navegador bloqueou o som
     }
     function open() {
-      video.muted = false; setMuteIcon();
+      video.volume = level || 0.8; video.muted = false; setMuteIcon();
       box.showModal(); document.documentElement.style.overflow = 'hidden';
       show(0); cancelAnimationFrame(raf); tick();
     }
@@ -947,12 +990,19 @@
     $('#storyNext').addEventListener('click', () => show(i + 1));
     $('#storyPrev').addEventListener('click', () => show(i - 1));
     $('#storyClose').addEventListener('click', close);
-    mute.addEventListener('click', () => { video.muted = !video.muted; setMuteIcon(); });
+    mute.addEventListener('click', () => {
+      if (video.muted || video.volume === 0) { video.muted = false; if (video.volume === 0) video.volume = level || 0.8; }
+      else video.muted = true;
+      setMuteIcon();
+    });
     box.addEventListener('close', close);                          // Esc também fecha
     box.addEventListener('click', e => { if (e.target === box) close(); });   // clique fora do vídeo (desktop)
     box.addEventListener('keydown', e => {
+      if (e.target === vol) return;                                // setas no controle mudam o volume
       if (e.key === 'ArrowRight') show(i + 1);
       if (e.key === 'ArrowLeft') show(i - 1);
+      if (e.key === 'ArrowUp') { e.preventDefault(); setVolume(video.volume + 0.1); }
+      if (e.key === 'ArrowDown') { e.preventDefault(); setVolume(video.volume - 0.1); }
     });
   }
 
@@ -1031,7 +1081,7 @@
       const max = state.guests >= +guests.max;
       $('#guestsOut').textContent = max ? `${guests.value}+` : guests.value;
       const p = pkgFor(state.guests);
-      $('#guestsPkg').textContent = p && !max ? `Pacote indicado: ${p.name} (${p.hours} de serviço)` : 'Para esse porte montamos uma proposta sob medida.';
+      $('#guestsPkg').textContent = p && !max ? `Pacote indicado: ${p.name}${p.hours ? ` (${p.hours} de serviço)` : ''}` : 'Para esse porte montamos uma proposta sob medida.';
     }
     guests.addEventListener('input', syncGuests); syncGuests();
 
@@ -1055,13 +1105,14 @@
 
     const fmtDate = iso => { const [y, m, d] = iso.split('-'); return `${d}/${m}/${y}`; };
     const eventLabel = () => state.event === 'Outro' ? $('#eventOther').value.trim() : state.event;
-    const flavorName = () => state.flavors.map(f => f.name).join(' + ');
+    const flavorName = () => $('#flavorsWanted').value.trim();
+    const estimate = p => Math.max(p?.price || 0, state.guests * CONFIG.pricePerGuest);
 
     function fillSummary() {
       const max = state.guests >= +guests.max;
       const p = max ? null : pkgFor(state.guests);
-      $('#sumPkg').textContent = p ? `${p.name} · ${p.hours} de serviço` : 'Proposta sob medida';
-      $('#sumPrice').textContent = p ? `a partir de ${brl(p.price)}` : 'Sob consulta';
+      $('#sumPkg').textContent = p ? `${p.name}${p.hours ? ` · ${p.hours} de serviço` : ''}` : 'Proposta sob medida';
+      $('#sumPrice').textContent = p ? `a partir de ${brl(estimate(p))}` : 'Sob consulta';
       $('#sumDetails').textContent = [eventLabel(), `${$('#guestsOut').textContent} convidados`, fmtDate(date.value), place.value.trim(),
         flavorName() && `sabores: ${flavorName()}`].filter(Boolean).join(' · ');
     }
@@ -1112,8 +1163,8 @@
         `• Convidados: ${$('#guestsOut').textContent}`,
         `• Data: ${fmtDate(date.value)}`,
         `• Local: ${place.value.trim()}`,
-        flavorName() && `• Sabores que não podem faltar: ${flavorName()}`,
-        `• Pacote sugerido no site: ${p ? `${p.name} (a partir de ${brl(p.price)})` : 'sob medida'}`,
+        flavorName() && `• Sabores desejados: ${flavorName()}`,
+        `• Estimativa do site: ${p ? `${p.name}, a partir de ${brl(estimate(p))}` : 'sob medida'}`,
       ].filter(l => l !== undefined && l !== null && l !== false).join('\n');
       // Ponto de integração de analytics: window.dataLayer?.push({ event: 'lead_whatsapp', ... })
       window.open(`https://wa.me/${CONFIG.whatsapp}?text=${encodeURIComponent(text)}`, '_blank', 'noopener');
