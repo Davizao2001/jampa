@@ -163,7 +163,8 @@
                   opacity: 0; transition: opacity 1.4s ease; }
     .hero-slide.is-active { opacity: 1; }
     @media (max-width: 767px) { .hero-slide { object-position: var(--pos-m); } }
-    .hero-shade { background: linear-gradient(to top, rgba(0,0,0,.82) 0%, rgba(0,0,0,.45) 35%, rgba(0,0,0,0) 65%),
+    .hero-shade { background: linear-gradient(to right, rgba(0,0,0,.55) 0%, rgba(0,0,0,.2) 38%, rgba(0,0,0,0) 55%),
+                              linear-gradient(to top, rgba(0,0,0,.7) 0%, rgba(0,0,0,.25) 30%, rgba(0,0,0,0) 55%),
                               linear-gradient(to bottom, rgba(0,0,0,.45) 0%, rgba(0,0,0,0) 22%); }
     .hero-dot { width: .5rem; height: .5rem; border-radius: 999px; background: rgba(255,255,255,.5); transition: width .4s, background-color .4s; }
     .hero-dot[aria-current="true"] { width: 1.6rem; background: #F59E0B; }
@@ -175,22 +176,37 @@
 
     /* Cards expansíveis "O que nos torna únicos" */
     .intent-row { display: grid; gap: .75rem; }                 /* celular: cards empilhados, conteúdo aberto */
-    .intent-card { position: relative; overflow: hidden; display: flex; flex-direction: column; justify-content: space-between;
-                   min-height: 15rem; padding: 1.5rem; border-radius: 28px; color: #231A12; }
-    .intent-card { background: #F59E0B; }
+    .intent-card { position: relative; overflow: hidden; display: flex; flex-direction: column; gap: 1rem;
+                   min-height: 15rem; padding: 1.5rem; border-radius: 28px; color: #231A12; background: #F59E0B; transition: background-color .6s; }
     .intent-card:hover { background: #FBA91E; }
-    .intent-card img { width: 100%; height: 11rem; object-fit: cover; border-radius: 18px; }
+    .intent-card.is-dark { background: #3A1A0D; color: #fff; }
+    .intent-card.is-dark:hover { background: #4A2312; }
+    .intent-card.is-dark .intent-title, .intent-card.is-dark .intent-num { color: #F59E0B; }
+    .intent-card.is-dark .intent-text, .intent-card.is-dark .intent-more { color: rgba(255,255,255,.85); }
+    .intent-card img { width: 100%; height: 12rem; object-fit: cover; border-radius: 18px; }
+    .intent-more { border-top: 1px solid currentColor; border-color: rgba(35,26,18,.2); padding-top: .9rem; }
+    .intent-card.is-dark .intent-more { border-color: rgba(255,255,255,.2); }
+    .intent-arrow { display: inline-grid; place-items: center; width: 2rem; height: 2rem; border-radius: 999px; background: rgba(35,26,18,.12); animation: nudge 1.6s ease-in-out infinite; }
+    .intent-card.is-dark .intent-arrow { background: rgba(245,158,11,.2); color: #F59E0B; }
+    @keyframes nudge { 0%,100% { transform: translateY(0); } 50% { transform: translateY(4px); } }
+    @media (prefers-reduced-motion: reduce) { .intent-arrow { animation: none; } }
     @media (min-width: 1024px) {
-      .intent-row { display: flex; gap: 1rem; height: 34rem; }
-      .intent-card { flex: 1 1 0; min-width: 0; min-height: 0; padding: 2rem; transition: flex-grow .9s cubic-bezier(.22,.61,.36,1), background-color .6s; }
-      .intent-row:hover .intent-card { flex-grow: .8; }
+      .intent-row { display: flex; gap: .9rem; height: 36rem; }
+      .intent-card { flex: 1 1 0; min-width: 0; min-height: 0; padding: 1.5rem 1.25rem; gap: 0; justify-content: flex-start;
+                     transition: flex-grow .9s cubic-bezier(.22,.61,.36,1), background-color .6s; }
+      .intent-row:hover .intent-card { flex-grow: .85; }
       .intent-row .intent-card:hover { flex-grow: 2.1; }
-      /* fechado, o corpo não ocupa altura: o título fica na base do card; no hover ele abre */
-      .intent-card .intent-body { max-height: 0; opacity: 0; transform: translateY(12px); overflow: hidden;
-                                  transition: max-height .8s cubic-bezier(.22,.61,.36,1), opacity .6s .15s, transform .8s .15s cubic-bezier(.22,.61,.36,1); }
-      .intent-card:hover .intent-body, .intent-card:focus-within .intent-body { max-height: 26rem; opacity: 1; transform: none; }
-      .intent-card img { height: 13rem; }
-      .intent-card .intent-body p { min-width: 18rem; }          /* o texto não se espreme durante a abertura */
+      /* fechado: só número e título (título na base); aberto: tudo sobe e preenche o card */
+      .intent-head { flex: 1 1 auto; display: flex; flex-direction: column; justify-content: space-between; transition: flex-grow .8s cubic-bezier(.22,.61,.36,1); }
+      .intent-card:hover .intent-head, .intent-card:focus-within .intent-head { flex-grow: 0; }
+      .intent-title { margin-top: 1.25rem; font-size: 1.35rem; }
+      .intent-card:hover .intent-title, .intent-card:focus-within .intent-title { font-size: 1.75rem; }
+      .intent-card .intent-body { max-height: 0; opacity: 0; transform: translateY(14px); overflow: hidden;
+                                  transition: max-height .8s cubic-bezier(.22,.61,.36,1), opacity .5s .2s, transform .8s .2s cubic-bezier(.22,.61,.36,1); }
+      .intent-card:hover .intent-body, .intent-card:focus-within .intent-body { max-height: 30rem; opacity: 1; transform: none; }
+      .intent-card .intent-body > :not(a) { min-width: 20rem; }  /* o conteúdo não se espreme durante a abertura */
+      .intent-more { opacity: 0; transform: translateY(8px); transition: opacity .6s .55s, transform .7s .55s cubic-bezier(.22,.61,.36,1); }
+      .intent-card:hover .intent-more, .intent-card:focus-within .intent-more { opacity: 1; transform: none; }
     }
 
     /* Funil */
@@ -215,7 +231,7 @@
         <span class="hidden sm:inline">Churros in Jampa</span>
       </a>
       <nav class="hidden items-center gap-8 text-sm font-medium md:flex" aria-label="Principal">
-        <a href="#porque" class="opacity-85 hover:opacity-100">Por que nós</a>
+        <a href="#unicos" class="opacity-85 hover:opacity-100">Diferenciais</a>
         <a href="#como" class="opacity-85 hover:opacity-100">Como funciona</a>
         <a href="#eventos" class="opacity-85 hover:opacity-100">Eventos</a>
         <a href="#pacotes" class="opacity-85 hover:opacity-100">Pacotes</a>
@@ -230,7 +246,7 @@
       </div>
     </div>
     <nav id="mobileMenu" hidden aria-label="Menu" class="mx-3 rounded-3xl border border-sand-200 bg-white p-2 text-ink-900 shadow-soft md:hidden">
-      <a href="#porque" class="block rounded-2xl px-4 py-3 font-display font-semibold hover:bg-sand-100">Por que nós</a>
+      <a href="#unicos" class="block rounded-2xl px-4 py-3 font-display font-semibold hover:bg-sand-100">Diferenciais</a>
       <a href="#como" class="block rounded-2xl px-4 py-3 font-display font-semibold hover:bg-sand-100">Como funciona</a>
       <a href="#eventos" class="block rounded-2xl px-4 py-3 font-display font-semibold hover:bg-sand-100">Eventos</a>
       <a href="#pacotes" class="block rounded-2xl px-4 py-3 font-display font-semibold hover:bg-sand-100">Pacotes</a>
@@ -249,9 +265,9 @@
         <img src="assets/hero/carrinho.jpg" alt="Carrinho de churros de madeira personalizado para empresa" decoding="async" fetchpriority="low" class="hero-slide" style="--pos:40% 50%;--pos-m:38% 50%" />
         <div class="hero-shade absolute inset-0"></div>
 
-        <div class="absolute inset-x-0 bottom-0 mx-auto max-w-6xl px-5 pb-10 text-white md:pb-16">
+        <div class="absolute bottom-0 left-0 w-full max-w-[40rem] px-6 pb-12 text-white md:px-12 md:pb-16 lg:px-16">
           <p data-hero class="text-xs font-semibold uppercase tracking-[.2em] text-white/85">Eventos em João Pessoa e região</p>
-          <h1 data-hero class="mt-3 max-w-3xl font-display text-[2.4rem] font-extrabold leading-[1.02] tracking-[-.02em] sm:text-6xl lg:text-7xl">Churros fritos na hora para o seu evento.</h1>
+          <h1 data-hero class="mt-3 font-display text-[2.4rem] font-extrabold leading-[1.02] tracking-[-.02em] sm:text-5xl lg:text-6xl">Churros fritos na hora para o seu evento.</h1>
           <p data-hero class="mt-4 max-w-xl text-white/90 md:text-lg">Carrinho completo para casamentos, aniversários e eventos corporativos. Em casa, peça pelo iFood.</p>
           <div data-hero class="mt-6 flex flex-col gap-3 sm:flex-row">
             <a data-ifood href="#" target="_blank" rel="noopener" class="btn-ifood inline-flex items-center justify-center gap-2 rounded-full px-7 py-4 font-display text-base font-bold text-white">
@@ -276,43 +292,6 @@
         <p class="mt-4 text-ink-700">Passe o mouse (ou role, no celular) para conhecer cada detalhe.</p>
       </div>
       <div id="intentRow" data-reveal-group class="intent-row mt-8 md:mt-12"></div>
-    </section>
-
-    <!-- ============ 2. PROPOSTA DE VALOR ============ -->
-    <section id="porque" class="mx-auto max-w-6xl px-5 py-14 md:py-28">
-      <div data-reveal class="max-w-2xl">
-        <h2 class="font-display text-3xl font-bold tracking-tight sm:text-4xl">Você recebe os convidados. A gente cuida dos churros.</h2>
-        <p class="mt-4 text-ink-700">Nada de improviso no dia do evento: chegamos antes, montamos tudo e deixamos o espaço como encontramos.</p>
-      </div>
-      <div data-reveal-group class="mt-8 grid gap-3 md:mt-12 md:grid-cols-3 md:gap-5">
-        <article class="flex gap-4 rounded-3xl border border-sand-200 bg-white p-5 shadow-soft md:block md:rounded-4xl md:p-7">
-          <div class="shrink-0 md:mb-6 flex h-12 w-12 items-center justify-center rounded-2xl bg-caramel-100 text-caramel-600">
-            <svg class="h-6 w-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M3 9h18l-1.5 9h-15L3 9zM7 9V6a5 5 0 0110 0v3"/></svg>
-          </div>
-          <div>
-            <h3 class="font-display text-lg font-semibold md:text-xl">Estrutura completa por nossa conta</h3>
-            <p class="mt-1.5 text-sm leading-relaxed text-ink-700 md:mt-3">Carrinho, fritadeira, insumos, embalagens e equipe uniformizada. Você só indica onde montar.</p>
-          </div>
-        </article>
-        <article class="flex gap-4 rounded-3xl border border-sand-200 bg-white p-5 shadow-soft md:block md:rounded-4xl md:p-7">
-          <div class="shrink-0 md:mb-6 flex h-12 w-12 items-center justify-center rounded-2xl bg-caramel-100 text-caramel-600">
-            <svg class="h-6 w-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M12 3c1 3 4 4.5 4 8a4 4 0 11-8 0c0-1.5.7-2.5 1.5-3.5C10 9 11 6 12 3zM6 21h12"/></svg>
-          </div>
-          <div>
-            <h3 class="font-display text-lg font-semibold md:text-xl">Fritos na hora, crocantes de verdade</h3>
-            <p class="mt-1.5 text-sm leading-relaxed text-ink-700 md:mt-3">Cada churros sai da fritadeira direto para a mão do convidado e é recheado na hora, do jeito que ele pedir.</p>
-          </div>
-        </article>
-        <article class="flex gap-4 rounded-3xl border border-sand-200 bg-white p-5 shadow-soft md:block md:rounded-4xl md:p-7">
-          <div class="shrink-0 md:mb-6 flex h-12 w-12 items-center justify-center rounded-2xl bg-caramel-100 text-caramel-600">
-            <svg class="h-6 w-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M12 3l2.2 5.6L20 9.3l-4.4 3.9 1.3 5.8L12 16l-4.9 3 1.3-5.8L4 9.3l5.8-.7L12 3z"/></svg>
-          </div>
-          <div>
-            <h3 class="font-display text-lg font-semibold md:text-xl">Visual elegante para o seu evento</h3>
-            <p class="mt-1.5 text-sm leading-relaxed text-ink-700 md:mt-3">Carrinho e embalagens pensados para aparecer bem nas fotos e combinar com a decoração.</p>
-          </div>
-        </article>
-      </div>
     </section>
 
     <!-- ============ COMO FUNCIONA ============ -->
@@ -523,7 +502,7 @@
       <nav aria-label="Links rápidos">
         <p class="font-display text-sm font-semibold uppercase tracking-widest text-ink-500">Links rápidos</p>
         <ul class="mt-2 text-sm font-medium md:mt-4 md:space-y-3">
-          <li><a href="#porque" class="inline-block py-2 hover:text-caramel-600 md:py-0">Por que nós</a></li>
+          <li><a href="#unicos" class="inline-block py-2 hover:text-caramel-600 md:py-0">Diferenciais</a></li>
           <li><a href="#eventos" class="inline-block py-2 hover:text-caramel-600 md:py-0">Eventos</a></li>
           <li><a href="#pacotes" class="inline-block py-2 hover:text-caramel-600 md:py-0">Pacotes</a></li>
           <li><a href="#faq" class="inline-block py-2 hover:text-caramel-600 md:py-0">Dúvidas</a></li>
@@ -567,16 +546,24 @@
       { id: 'nutella',       name: 'Nutella',       emoji: '🌰' },
       { id: 'leite-ninho',   name: 'Leite Ninho',   emoji: '🥛' },
     ],
-    /* GALERIA (carrossel): coloque as fotos em assets/eventos/ e preencha `src` e `caption`.
-       Item sem `src` aparece como espaço reservado. Legendas abaixo são EXEMPLOS. */
+    /* GALERIA (carrossel): fotos e vídeos reais dos eventos. Legendas descrevem a cena; revisar com a cliente. */
     gallery: [
-      { src: 'assets/eventos/evento-1.webp', caption: 'Churros servidos na hora em festa temática' },
-      { src: 'assets/eventos/evento-2.webp', caption: 'Mesa de churros recheados no evento' },
-      { src: 'assets/eventos/evento-3.webp', caption: 'Churros de brigadeiro com embalagem personalizada' },
-      // DUPLICADAS só para demonstrar o carrossel: trocar pelas fotos definitivas
-      { src: 'assets/eventos/evento-1.webp', caption: 'Churros servidos na hora em festa temática' },
-      { src: 'assets/eventos/evento-2.webp', caption: 'Mesa de churros recheados no evento' },
-      { src: 'assets/eventos/evento-3.webp', caption: 'Churros de brigadeiro com embalagem personalizada' },
+      { type: 'video', src: 'assets/galeria/img_0259.mp4', poster: 'assets/galeria/img_0259-poster.jpg', caption: 'Festa infantil temática' },
+      { src: 'assets/galeria/img_0222.webp', caption: 'Carrinho na decoração de balões' },
+      { src: 'assets/galeria/img_0255.webp', caption: 'Personagens provando churros' },
+      { src: 'assets/galeria/img_0388.webp', caption: 'Churros com toppers personalizados' },
+      { src: 'assets/galeria/img_0395.webp', caption: 'Caixa de churros recheados' },
+      { type: 'video', src: 'assets/galeria/img_9165.mp4', poster: 'assets/galeria/img_9165-poster.jpg', caption: 'Carrinho personalizado para empresa' },
+      { src: 'assets/galeria/img_9156.webp', caption: 'Carrinho de madeira em evento corporativo' },
+      { src: 'assets/galeria/img_9166.webp', caption: 'Carrinho com a marca do cliente' },
+      { src: 'assets/galeria/img_9247.webp', caption: 'Convidados se servindo' },
+      { type: 'video', src: 'assets/galeria/img_9551.mp4', poster: 'assets/galeria/img_9551-poster.jpg', caption: 'Mesa de recheios e toppings' },
+      { src: 'assets/galeria/img_9528.webp', caption: 'Bandeja de churros para a mesa' },
+      { src: 'assets/galeria/img_9539.webp', caption: 'Churros em copinho com menu do evento' },
+      { src: 'assets/galeria/img_9565.webp', caption: 'Churros com recheios variados' },
+      { type: 'video', src: 'assets/galeria/img_0226.mp4', poster: 'assets/galeria/img_0226-poster.jpg', caption: 'Carrinho montado na festa' },
+      { src: 'assets/galeria/img_9945.webp', caption: 'Churros no seu evento' },
+      { src: 'assets/galeria/img_9963.webp', caption: 'Recheio de chocolate na hora' },
     ],
     /* DESTAQUES: banners full-width logo abaixo da Hero. `pos` = ponto focal da foto (background-position). */
     highlights: [
@@ -586,10 +573,19 @@
     ],
     /* O QUE NOS TORNA ÚNICOS: textos são sugestões, revisar com a cliente */
     unique: [
-      { title: 'Nosso carrinho',        text: 'Estrutura completa montada no seu evento, com equipe uniformizada e visual que aparece bem nas fotos.', img: 'assets/hero/carrinho.jpg', pos: '35% 50%' },
-      { title: 'Massa de churros',      text: 'Frita na hora, crocante por fora e macia por dentro, passada no açúcar e canela.',                    img: 'assets/hero-desktop.webp',    pos: '58% 45%' },
-      { title: 'Formas de servir',      text: 'Tradicional recheado, gourmet com toppings ou mini churros para dividir: escolha o formato da festa.', img: 'assets/destaques/mini.jpg',    pos: '50% 50%' },
-      { title: 'Sessão festa infantil', text: 'Um momento pensado para a criançada, com churros no tamanho certo e atendimento que vira parte da festa.', img: 'assets/eventos/evento-1.webp', pos: '50% 40%' },
+      { title: 'Nosso carrinho', text: 'Carrinho montado no seu evento, com equipe uniformizada e visual que aparece bem nas fotos.',
+        img: 'assets/galeria/img_0228.webp', pos: '50% 60%',
+        more: { title: 'Estrutura completa por nossa conta:', text: 'carrinho, fritadeira, insumos, embalagens e equipe uniformizada. Você só indica onde montar.' } },
+      { title: 'Massa de churros', text: 'Crocante por fora, macia por dentro, passada no açúcar e canela.',
+        img: 'assets/galeria/img_9963.webp', pos: '50% 45%',
+        more: { title: 'Fritos na hora, crocantes de verdade:', text: 'cada churros sai da fritadeira direto para a mão do convidado e é recheado na hora.' } },
+      { title: 'Formas de servir', text: 'Tradicional recheado, bandejas para a mesa ou churros com toppings: escolha o formato da festa.',
+        img: 'assets/galeria/img_9528.webp', pos: '50% 55%',
+        more: { title: 'Visual elegante para o seu evento:', text: 'carrinho e embalagens pensados para aparecer bem nas fotos e combinar com a decoração.' } },
+      { title: 'Sessão festa infantil', text: 'Um momento pensado para a criançada, com churros no tamanho certo e atendimento que vira parte da festa.',
+        img: 'assets/galeria/img_0255.webp', pos: '50% 35%', cta: { label: 'Quero na festa do meu filho', href: '#orcamento' } },
+      { title: 'Kit Degustação', dark: true, text: 'Prove nossos churros e recheios antes de fechar o seu evento.',
+        img: 'assets/galeria/img_0395.webp', pos: '50% 60%', cta: { label: 'Quero provar', href: '#orcamento' } },
     ],
     events: ['Casamento', 'Aniversário', 'Corporativo', 'Outro'],
     packages: [
@@ -701,7 +697,7 @@
   function initGallery() {
     const track = $('#carousel'), prev = $('#carPrev'), next = $('#carNext');
     const box = $('#lightbox'), img = $('#lbImg'), cap = $('#lbCap');
-    const photos = CONFIG.gallery.filter(g => g.src);
+    const photos = CONFIG.gallery.filter(g => g.src && g.type !== 'video');
 
     track.innerHTML = CONFIG.gallery.map(g => {
       const base = 'slide relative overflow-hidden rounded-4xl';
@@ -710,12 +706,25 @@
           <svg class="h-7 w-7" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="3"/><circle cx="9" cy="10" r="1.6"/><path d="M4 17l5-4 4 3 3-2 4 3"/></svg>
           <span class="text-xs font-medium">Foto do evento</span><span class="text-sm">${g.caption}</span>
         </div>`;
+      if (g.type === 'video') return `
+        <div class="${base} bg-ink-900">
+          <video data-src="${g.src}" poster="${g.poster}" muted loop playsinline preload="none" aria-label="${g.caption}" class="h-full w-full object-cover"></video>
+          <span class="pointer-events-none absolute right-4 top-4 rounded-full bg-black/50 px-2.5 py-1 text-xs font-semibold text-white">▶ vídeo</span>
+          <span class="tile-cap absolute inset-x-0 bottom-0 px-5 pb-4 pt-14 text-sm font-medium text-white">${g.caption}</span>
+        </div>`;
       return `
         <button type="button" data-photo="${photos.indexOf(g)}" class="${base} bg-sand-200 text-left" aria-label="Ampliar foto: ${g.caption}">
           <img src="${g.src}" alt="${g.alt || g.caption}" loading="lazy" decoding="async" draggable="false" class="h-full w-full object-cover" />
           <span class="tile-cap absolute inset-x-0 bottom-0 px-5 pb-4 pt-14 text-sm font-medium text-white">${g.caption}</span>
         </button>`;
     }).join('');
+
+    // Vídeos: só baixam e tocam quando o slide está visível; pausam fora da tela
+    const vio = new IntersectionObserver(entries => entries.forEach(({ target: v, isIntersecting }) => {
+      if (isIntersecting) { if (!v.src) v.src = v.dataset.src; if (!reduceMotion) v.play().catch(() => {}); }
+      else v.pause();
+    }), { threshold: 0.6 });                     // viewport: considera o recorte do carrossel e a rolagem da página
+    $$('video', track).forEach(v => vio.observe(v));
 
     // Setas: avançam um slide e somem nas pontas
     const step = () => (track.firstElementChild?.getBoundingClientRect().width || 0) + parseFloat(getComputedStyle(track).columnGap || 0);
@@ -809,14 +818,23 @@
   /* ---------- O QUE NOS TORNA ÚNICOS ---------- */
   function initUnique() {
     $('#intentRow').innerHTML = CONFIG.unique.map((u, i) => `
-      <article class="intent-card" tabindex="0">
-        <span class="font-display text-sm font-bold tracking-widest">0${i + 1}</span>
-        <div>
+      <article class="intent-card${u.dark ? ' is-dark' : ''}" tabindex="0">
+        <div class="intent-head">
+          <span class="intent-num font-display text-sm font-bold tracking-widest">0${i + 1}</span>
           <h3 class="intent-title font-display text-2xl font-extrabold leading-tight tracking-tight lg:text-3xl">${u.title}</h3>
-          <div class="intent-body mt-4">
-            <img src="${u.img}" alt="" loading="lazy" decoding="async" style="object-position:${u.pos}" />
-            <p class="mt-4 max-w-sm text-sm leading-relaxed text-ink-900/85 lg:text-base">${u.text}</p>
-          </div>
+        </div>
+        <div class="intent-body mt-4">
+          <img src="${u.img}" alt="" loading="lazy" decoding="async" style="object-position:${u.pos}" />
+          <p class="intent-text mt-3 max-w-md text-sm leading-relaxed text-ink-900/85 lg:text-[15px]">${u.text}</p>
+          ${u.more ? `
+          <div class="intent-more mt-4 flex items-start gap-3 text-sm leading-relaxed text-ink-900/85">
+            <span class="intent-arrow shrink-0" aria-hidden="true"><svg class="h-4 w-4" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M10 4v12M5 11l5 5 5-5"/></svg></span>
+            <p><strong class="font-semibold">${u.more.title}</strong> ${u.more.text}</p>
+          </div>` : ''}
+          ${u.cta ? `
+          <a href="${u.cta.href}" class="intent-more mt-5 inline-flex items-center gap-2 rounded-full ${u.dark ? 'bg-caramel-500 text-ink-900' : 'bg-ink-900 text-white'} px-5 py-3 font-display text-sm font-semibold">
+            ${u.cta.label} <span aria-hidden="true">→</span>
+          </a>` : ''}
         </div>
       </article>`).join('');
   }
