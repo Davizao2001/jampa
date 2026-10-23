@@ -673,8 +673,6 @@
     ],
     /* SEÇÃO 6 — OPÇÕES DA TRIAGEM */
     events: ['Aniversário Adulto', '15 Anos', 'Infantil', 'Casamento', 'Corporativo'],
-    fillings: [{ name: 'Doce de Leite' }, { name: 'Brigadeiro' }, { name: 'Leite Ninho' }, { name: 'Nutella', extra: true }],
-    toppings: [{ name: 'Granulado' }, { name: 'Coco ralado' }, { name: 'Amendoim triturado' }, { name: 'Leite em pó' }],
     /* SEÇÃO 7 — DÚVIDAS FREQUENTES OFICIAIS */
     faq: [
       {
@@ -730,7 +728,7 @@
   const reduceMotion = matchMedia('(prefers-reduced-motion: reduce)').matches;
   const hasGsap = () => !!window.gsap && !reduceMotion;
 
-  const state = { event: null, guests: 80, recheiosSelecionados: [], toppingsSelecionados: [] };
+  const state = { event: null, guests: 80 };
 
   function radioGroup(container, items, { className, onSelect, render = i => i.label }) {
     container.innerHTML = '';
