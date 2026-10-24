@@ -945,14 +945,8 @@
 
   /* ---------- O QUE NOS TORNA ÚNICOS ---------- */
   function initUnique() {
-    $('#intentRow').innerHTML = CONFIG.unique.map((u, i) => `
+    $('#intentRow').innerHTML = CONFIG.unique.map(u => `
       <article class="intent-card" tabindex="0">
-        <div class="intent-top">
-          <span class="intent-num">0${i + 1}</span>
-          <span class="intent-plus" aria-hidden="true">
-            <svg class="h-4 w-4" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M10 4v12M4 10h12"/></svg>
-          </span>
-        </div>
         <div class="intent-head">
           <h3 class="intent-title font-display font-extrabold tracking-tight">${u.text}</h3>
         </div>
