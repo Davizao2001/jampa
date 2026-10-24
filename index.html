@@ -204,41 +204,16 @@
     .btn-ifood { background: #EA1D2C; transition: transform .3s, box-shadow .3s, background-color .3s; }
     .btn-ifood:hover { background: #F2303E; transform: scale(1.02); box-shadow: 0 0 0 4px rgba(234,29,44,.18), 0 12px 30px -8px rgba(234,29,44,.6); }
 
-    /* Cards expansíveis "O que nos torna únicos" */
-    .intent-row { display: grid; gap: .75rem; }                 /* celular: cards empilhados, conteúdo aberto */
-    .intent-card { position: relative; overflow: hidden; display: flex; flex-direction: column; gap: 1rem;
-                   min-height: 15rem; padding: 1.5rem; border-radius: 28px; color: #231A12; background: #F59E0B; transition: background-color .6s; }
-    .intent-card.is-dark { background: #3A1A0D; color: #fff; }
-    @media (min-width: 640px) and (max-width: 1023px) { .intent-row { grid-template-columns: repeat(2, minmax(0, 1fr)); } .intent-card.is-dark { grid-column: 1 / -1; } }
-    .intent-card.is-dark .intent-title { color: #F59E0B; }
-    .intent-card.is-dark .intent-text, .intent-card.is-dark .intent-more { color: rgba(255,255,255,.85); }
-    .intent-card img { width: 100%; height: 12rem; object-fit: cover; border-radius: 18px; }
-    .intent-more { border-top: 1px solid currentColor; border-color: rgba(35,26,18,.2); padding-top: .9rem; }
-    .intent-card.is-dark .intent-more { border-color: rgba(255,255,255,.2); }
-    .intent-arrow { display: inline-grid; place-items: center; width: 2rem; height: 2rem; border-radius: 999px; background: rgba(35,26,18,.12); animation: nudge 1.6s ease-in-out infinite; }
-    .intent-card.is-dark .intent-arrow { background: rgba(245,158,11,.2); color: #F59E0B; }
-    @keyframes nudge { 0%,100% { transform: translateY(0); } 50% { transform: translateY(4px); } }
-    @media (prefers-reduced-motion: reduce) { .intent-arrow { animation: none; } }
-    @media (min-width: 1024px) {
-      .intent-card:hover { background: #FBA91E; }
-      .intent-card.is-dark:hover { background: #4A2312; }
-      .intent-row { display: flex; gap: .9rem; height: 36rem; }
-      .intent-card { flex: 1 1 0; min-width: 0; min-height: 0; padding: 1.5rem 1.25rem; gap: 0; justify-content: flex-start;
-                     transition: flex-grow .9s cubic-bezier(.22,.61,.36,1), background-color .6s; }
-      .intent-row:hover .intent-card { flex-grow: .85; }
-      .intent-row .intent-card:hover { flex-grow: 2.1; }
-      /* fechado: só número e título (título na base); aberto: tudo sobe e preenche o card */
-      .intent-head { flex: 1 1 auto; display: flex; flex-direction: column; justify-content: flex-end; transition: flex-grow .8s cubic-bezier(.22,.61,.36,1); }
-      .intent-card:hover .intent-head, .intent-card:focus-within .intent-head { flex-grow: 0; }
-      .intent-title { margin-top: 1.25rem; font-size: 1.35rem; }
-      .intent-card:hover .intent-title, .intent-card:focus-within .intent-title { font-size: 1.75rem; }
-      .intent-row:hover .intent-card:not(:hover) .intent-title { font-size: 1.15rem; line-height: 1.15; }   /* card encolhido: título inteiro, sem cortar */
-      .intent-card .intent-body { max-height: 0; opacity: 0; transform: translateY(14px); overflow: hidden;
-                                  transition: max-height .8s cubic-bezier(.22,.61,.36,1), opacity .5s .2s, transform .8s .2s cubic-bezier(.22,.61,.36,1); }
-      .intent-card:hover .intent-body, .intent-card:focus-within .intent-body { max-height: 30rem; opacity: 1; transform: none; }
-      .intent-card .intent-body > :not(a) { min-width: 20rem; }  /* o conteúdo não se espreme durante a abertura */
-      .intent-more { opacity: 0; transform: translateY(8px); transition: opacity .6s .55s, transform .7s .55s cubic-bezier(.22,.61,.36,1); }
-      .intent-card:hover .intent-more, .intent-card:focus-within .intent-more { opacity: 1; transform: none; }
+    /* Cards "O que nos torna únicos" (3 cards com foto + texto direto) */
+    .intent-row { display: grid; gap: 1rem; }
+    .intent-card { position: relative; overflow: hidden; display: flex; flex-direction: column; gap: 1.1rem;
+                   padding: 1.25rem; border-radius: 28px; color: #231A12; background: #F59E0B; transition: transform .3s ease, background-color .3s ease; }
+    .intent-card:hover { background: #FBA91E; transform: translateY(-2px); }
+    .intent-card img { width: 100%; height: 15rem; object-fit: cover; border-radius: 18px; }
+    @media (min-width: 768px) {
+      .intent-row { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 1.25rem; }
+      .intent-card { padding: 1.5rem; }
+      .intent-card img { height: 16rem; }
     }
 
     /* Botão de Stories: logo dentro do aro em gradiente do Instagram, girando devagar */
@@ -335,6 +310,9 @@
         <img src="assets/hero/IMG_0848.jpg" alt="Atendente no carrinho da Churros in Jampa em evento ao ar livre" decoding="async" fetchpriority="low" class="hero-slide" style="--pos:50% 50%;--pos-m:50% 45%" />
         <img src="assets/hero/IMG_0972.jpg" alt="Carrinho iluminado da Churros in Jampa em festa" decoding="async" fetchpriority="low" class="hero-slide" style="--pos:50% 50%;--pos-m:50% 45%" />
         <img src="assets/hero/IMG_0909.jpg" alt="Churros recheados na hora com o carrinho ao fundo" decoding="async" fetchpriority="low" class="hero-slide" style="--pos:50% 50%;--pos-m:50% 45%" />
+        <img src="assets/hero/IMG_0879.jpg" alt="Churros recheados na hora no evento" decoding="async" fetchpriority="low" class="hero-slide" style="--pos:50% 50%;--pos-m:50% 45%" />
+        <img src="assets/hero/IMG_0932.jpg" alt="Estrutura do carrinho da Churros in Jampa" decoding="async" fetchpriority="low" class="hero-slide" style="--pos:50% 50%;--pos-m:50% 45%" />
+        <img src="assets/hero/IMG_0947.jpg" alt="Carrinho da Churros in Jampa pronto para servir" decoding="async" fetchpriority="low" class="hero-slide" style="--pos:50% 50%;--pos-m:50% 45%" />
         <div class="hero-shade absolute inset-0"></div>
 
         <div class="absolute bottom-0 left-0 w-full max-w-[42rem] px-5 pb-16 text-white sm:px-6 md:px-12 md:pb-20 lg:px-16">
@@ -352,17 +330,12 @@
       </div>
     </section>
 
-    <!-- ============ O QUE NOS TORNA ÚNICOS: cards expansíveis (sanfona no hover, desktop) ============ -->
+    <!-- ============ O QUE NOS TORNA ÚNICOS ============ -->
     <section id="unicos" class="mx-auto max-w-6xl px-5 py-16 md:py-24">
       <div data-reveal class="max-w-2xl">
         <h2 class="font-display text-3xl font-bold tracking-tight sm:text-4xl">O que nos torna únicos</h2>
-        <p class="mt-4 text-ink-700">Passe o mouse (ou role, no celular) para conhecer cada detalhe.</p>
       </div>
-      <div id="intentRow" data-reveal-group class="intent-row mt-8 md:mt-12"></div>
-      <p data-reveal class="mt-6 flex items-start gap-3 rounded-3xl bg-sand-100 p-5 text-ink-700 md:mt-8 md:items-center md:p-6">
-        <span class="grid h-10 w-10 shrink-0 place-items-center rounded-full bg-caramel-500 text-lg" aria-hidden="true">🎁</span>
-        <span><strong class="block text-ink-900">Chegamos com antecedência e montamos a nossa estrutura.</strong><span class="mt-1 block">Reservamos uma box de churros para o contratante ao final da festa!</span></span>
-      </p>
+      <div id="intentRow" data-reveal-group class="intent-row mt-8 md:mt-10"></div>
     </section>
 
     <!-- ============ COMO FUNCIONA ============ -->
@@ -689,22 +662,14 @@
       { tag: 'Gourmet',    title: 'Churros Gourmet',      text: 'Com toppings: creme de avelã e morangos frescos.',  img: 'assets/destaques/gourmet.jpg',     pos: '50% 50%' },
       { tag: 'Para dividir', title: 'Mini Churros',       text: 'Crocantes, com potinho de doce de leite à parte.',   img: 'assets/destaques/mini.jpg',        pos: '52% 50%' },
     ],
-    /* O QUE NOS TORNA ÚNICOS: textos são sugestões, revisar com a cliente */
+    /* O QUE NOS TORNA ÚNICOS: 3 cards oficiais */
     unique: [
-      { title: 'Nosso carrinho', text: 'Carrinho montado no seu evento, com equipe uniformizada e visual que aparece bem nas fotos.',
-        img: 'assets/galeria/img_0228.webp', pos: '50% 60%',
-        more: { title: 'Estrutura completa por nossa conta:', text: 'carrinho, fritadeira, insumos e equipe uniformizada.' } },
-      { title: 'Massa de churros', text: 'Cada churros sai da fritadeira, é recheado na hora e vai direto para a mão do convidado.',
-        img: 'assets/galeria/img_9963.webp', pos: '50% 45%',
-        more: { title: 'Fritos na hora, crocantes de verdade.', text: '' } },
-      // TODO: completar a frase "Cada projeto é pensado para criar ..." com o texto da cliente
-      { title: 'Formas de servir', text: 'Cada projeto é pensado para criar uma experiência única para os seus convidados.',
-        img: 'assets/galeria/img_9528.webp', pos: '50% 55%',
-        more: { title: 'Visual elegante para o seu evento:', text: 'carrinho pensado para aparecer bem nas fotos e combinar com a decoração.' } },
-      { title: 'Sessão festa infantil', text: 'Um momento pensado para a criançada, com churros no tamanho certo e atendimento que vira parte da festa.',
-        img: 'assets/galeria/img_0255.webp', pos: '50% 35%', cta: { label: 'Quero na festa do meu filho', href: '#orcamento' } },
-      { title: 'Kit Degustação', dark: true, text: 'Prove nossos churros e recheios antes de fechar o seu evento.', price: 'Valor: R$ 25,00',
-        img: 'assets/galeria/img_0395.webp', pos: '50% 60%', cta: { label: 'Quero provar', href: '#orcamento' } },
+      { text: 'Massa fresca e totalmente artesanal, produzida todos os dias',
+        img: 'assets/galeria/img_9964.jpg', pos: '50% 50%' },
+      { text: 'Fritos na hora garantindo leveza e crocância',
+        img: 'assets/galeria/img_0868.jpg', pos: '50% 50%' },
+      { text: 'Personalizamos nosso carrinho de acordo com a identidade visual do seu evento',
+        img: 'assets/galeria/img_9168.jpg', pos: '50% 45%' },
     ],
     /* STORIES: vídeos com som exibidos no botão flutuante (ordem = ordem de exibição) */
     stories: [
@@ -961,25 +926,10 @@
 
   /* ---------- O QUE NOS TORNA ÚNICOS ---------- */
   function initUnique() {
-    $('#intentRow').innerHTML = CONFIG.unique.map((u, i) => `
-      <article class="intent-card${u.dark ? ' is-dark' : ''}" tabindex="0">
-        <div class="intent-head">
-          <h3 class="intent-title font-display text-2xl font-extrabold leading-tight tracking-tight lg:text-3xl">${u.title}</h3>
-        </div>
-        <div class="intent-body mt-4">
-          <img src="${u.img}" alt="" loading="lazy" decoding="async" style="object-position:${u.pos}" />
-          <p class="intent-text mt-3 max-w-md text-sm leading-relaxed text-ink-900/85 lg:text-[15px]">${u.text}</p>
-          ${u.price ? `<p class="mt-2 font-display text-lg font-bold ${u.dark ? 'text-caramel-500' : ''}">${u.price}</p>` : ''}
-          ${u.more ? `
-          <div class="intent-more mt-4 flex items-start gap-3 text-sm leading-relaxed text-ink-900/85">
-            <span class="intent-arrow shrink-0" aria-hidden="true"><svg class="h-4 w-4" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M10 4v12M5 11l5 5 5-5"/></svg></span>
-            <p><strong class="font-semibold">${u.more.title}</strong>${u.more.text ? ' ' + u.more.text : ''}</p>
-          </div>` : ''}
-          ${u.cta ? `
-          <a href="${u.cta.href}" class="intent-more mt-5 inline-flex items-center gap-2 rounded-full ${u.dark ? 'bg-caramel-500 text-ink-900' : 'bg-ink-900 text-white'} px-5 py-3 font-display text-sm font-semibold">
-            ${u.cta.label} <span aria-hidden="true">→</span>
-          </a>` : ''}
-        </div>
+    $('#intentRow').innerHTML = CONFIG.unique.map(u => `
+      <article class="intent-card">
+        <img src="${u.img}" alt="${u.text}" loading="lazy" decoding="async" style="object-position:${u.pos}" />
+        <p class="font-display text-lg font-bold leading-snug text-ink-900 md:text-xl">${u.text}</p>
       </article>`).join('');
   }
 
