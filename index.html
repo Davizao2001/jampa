@@ -303,7 +303,7 @@
         <a href="#unicos" class="tap opacity-85 hover:opacity-100">Diferenciais</a>
         <a href="#eventos" class="tap opacity-85 hover:opacity-100">Eventos</a>
         <a href="#como" class="tap opacity-85 hover:opacity-100">Como funciona</a>
-        <a href="#pacotes" class="tap opacity-85 hover:opacity-100">Pacotes</a>
+        <a href="#pacotes" class="tap opacity-85 hover:opacity-100">Estrutura</a>
         <a href="#faq" class="tap opacity-85 hover:opacity-100">Dúvidas</a>
         <a href="#delivery" class="tap opacity-85 hover:opacity-100">Delivery</a>
       </nav>
@@ -318,7 +318,7 @@
       <a href="#unicos" class="block rounded-2xl px-4 py-3 font-display font-semibold hover:bg-sand-100">Diferenciais</a>
       <a href="#eventos" class="block rounded-2xl px-4 py-3 font-display font-semibold hover:bg-sand-100">Eventos</a>
       <a href="#como" class="block rounded-2xl px-4 py-3 font-display font-semibold hover:bg-sand-100">Como funciona</a>
-      <a href="#pacotes" class="block rounded-2xl px-4 py-3 font-display font-semibold hover:bg-sand-100">Pacotes</a>
+      <a href="#pacotes" class="block rounded-2xl px-4 py-3 font-display font-semibold hover:bg-sand-100">Estrutura</a>
       <a href="#faq" class="block rounded-2xl px-4 py-3 font-display font-semibold hover:bg-sand-100">Dúvidas</a>
       <a href="#delivery" class="block rounded-2xl px-4 py-3 font-display font-semibold hover:bg-sand-100">Delivery</a>
     </nav>
@@ -415,16 +415,15 @@
       </ol>
     </section>
 
-    <!-- ============ 3. PACOTES (renderizado a partir de CONFIG.packages) ============ -->
+    <!-- ============ TÓPICO 5: NOSSA ESTRUTURA PARA O SEU EVENTO ============ -->
     <section id="pacotes" class="bg-sand-100">
       <div class="mx-auto max-w-6xl px-5 py-16 md:py-24">
         <div data-reveal class="max-w-2xl">
-          <h2 class="font-display text-3xl font-bold tracking-tight sm:text-4xl">Pacotes por evento</h2>
-          <p class="mt-4 text-ink-700"><strong class="text-ink-900">Valor base: R$ 19,00 por pessoa.</strong> Personalização à parte.</p>
+          <h2 class="font-display text-3xl font-bold tracking-tight sm:text-4xl">Nossa estrutura para o seu evento</h2>
+          <p class="mt-4 text-ink-700">Levamos estrutura completa, insumos selecionados e equipe uniformizada para encantar os seus convidados.</p>
         </div>
         <div id="packageGrid" data-reveal-group class="hscroll -mx-5 mt-8 flex snap-x snap-mandatory gap-4 overflow-x-auto px-5 py-2 md:mx-0 md:mt-12 md:grid md:grid-cols-3 md:gap-5 md:overflow-visible md:p-0"></div>
-        <p class="mt-3 text-center text-xs text-ink-500 md:hidden">Deslize para ver os outros pacotes →</p>
-        <p class="mt-8 text-sm text-ink-700">Mais de 200 convidados ou formato diferente? <a href="#orcamento" class="inline-block py-3 font-semibold underline underline-offset-4 hover:text-caramel-600">Montamos uma proposta sob medida.</a></p>
+        <p class="mt-3 text-center text-xs text-ink-500 md:hidden">Deslize para conhecer nossa estrutura →</p>
       </div>
     </section>
 
@@ -612,7 +611,7 @@
         <ul class="mt-2 text-sm font-medium md:mt-3">
           <li><a href="#unicos" class="tap hover:text-caramel-600">Diferenciais</a></li>
           <li><a href="#eventos" class="tap hover:text-caramel-600">Eventos</a></li>
-          <li><a href="#pacotes" class="tap hover:text-caramel-600">Pacotes</a></li>
+          <li><a href="#pacotes" class="tap hover:text-caramel-600">Estrutura</a></li>
           <li><a href="#faq" class="tap hover:text-caramel-600">Dúvidas</a></li>
         </ul>
       </nav>
@@ -701,12 +700,43 @@
     // Etapa "Recheios e toppings" do formulário (extra: true mostra o selo "Valor adicional")
     fillings: [{ name: 'Brigadeiro' }, { name: 'Doce de Leite' }, { name: 'Leite Ninho' }, { name: 'Nutella', extra: true }],
     toppings: [{ name: 'Granulado' }, { name: 'Coco ralado' }, { name: 'Amendoim triturado' }, { name: 'Leite em pó' }],
-    /* PACOTES: `price: null` mostra "Sob consulta". Festa e Grande Evento aguardam os valores da cliente (seguir o padrão do Essencial). */
-    pricePerGuest: 19,                      // valor base por pessoa (estimativa do formulário)
+    /* ESTRUTURA PARA O SEU EVENTO (sem preços no site) */
+    pricePerGuest: 19,
     packages: [
-      { id: 'essencial', name: 'Essencial',     guestsLabel: '50 convidados', maxGuests: 50,  hours: '3h', price: 1100, features: ['1 atendente', '3 sabores', '3 toppings'] },
-      { id: 'festa',     name: 'Festa',         guestsLabel: '',              maxGuests: 100, hours: '',   price: null, features: ['Atendentes: a definir', 'Sabores: a definir', 'Toppings: a definir'], featured: true },
-      { id: 'grande',    name: 'Grande Evento', guestsLabel: '',              maxGuests: 200, hours: '',   price: null, features: ['Atendentes: a definir', 'Sabores: a definir', 'Toppings: a definir'] },
+      {
+        id: 'clean',
+        name: 'Carrinho Clean',
+        badge: 'Eventos com mais de 50 pessoas',
+        maxGuests: 80,
+        img: 'assets/hero/IMG_0814.jpg',
+        pos: '50% 55%',
+        desc: 'Estrutura ampla, elegante e iluminada, ideal para atender festas e celebrações maiores com agilidade e charme.',
+        features: ['Para eventos acima de 50 convidados', 'Estrutura completa e equipe uniformizada', 'Até 3 recheios e 3 toppings à escolha'],
+        cta: 'Solicitar orçamento',
+        featured: true,
+      },
+      {
+        id: 'rustico',
+        name: 'Carrinho Rústico',
+        badge: 'Eventos com até 50 pessoas',
+        maxGuests: 50,
+        img: 'assets/galeria/img_9156.webp',
+        pos: '50% 45%',
+        desc: 'Acabamento em madeira aconchegante e compacto, na medida certa para comemorações intimistas e eventos corporativos.',
+        features: ['Para eventos de até 50 convidados', 'Churros fritos e recheados na hora', 'Até 3 recheios e 3 toppings à escolha'],
+        cta: 'Solicitar orçamento',
+      },
+      {
+        id: 'personalizacao',
+        name: 'Opção de personalização',
+        badge: 'Identidade visual do seu evento',
+        maxGuests: 80,
+        img: 'assets/galeria/img_0388.webp',
+        pos: '50% 65%',
+        desc: 'Personalizamos nosso carrinho, embalagens, toppers e menu de acordo com o tema da festa ou a marca da sua empresa.',
+        features: ['Placa ou adesivagem com sua marca/tema', 'Toppers e embalagens personalizadas', 'Menu exclusivo na bancada do carrinho'],
+        cta: 'Quero personalizar',
+      },
     ],
     faq: [
       { q: 'Quanto espaço o carrinho ocupa?', a: 'Precisamos de uma área plana de aproximadamente 2 m × 2 m, de preferência coberta.' },
@@ -790,20 +820,20 @@
   const pkgFor = guests => CONFIG.packages.find(p => guests <= p.maxGuests) || null;
 
   function initPackages() {
-    $('#packageGrid').innerHTML = CONFIG.packages.map((p, i) => {
-      const min = i ? CONFIG.packages[i - 1].maxGuests + 1 : null;
+    $('#packageGrid').innerHTML = CONFIG.packages.map(p => {
       const hot = p.featured;
       return `
-      <article class="relative flex shrink-0 basis-[84%] snap-center flex-col rounded-4xl bg-white p-6 shadow-soft md:basis-auto md:p-7 ${hot ? 'ring-2 ring-caramel-500' : 'border border-sand-200'}">
-        ${hot ? '<span class="absolute right-6 top-6 rounded-full bg-caramel-100 px-3 py-1 text-xs font-semibold text-caramel-600">Mais pedido</span>' : ''}
-        <h3 class="font-display text-xl font-semibold">${p.name}</h3>
-        <p class="mt-1 text-sm text-ink-700">${p.guestsLabel || (min ? `${min} a ${p.maxGuests} convidados` : `Até ${p.maxGuests} convidados`)}${p.hours ? ` · ${p.hours} de serviço` : ''}</p>
-        <p class="mt-6 text-xs uppercase tracking-widest text-ink-500">${p.price ? 'A partir de' : 'Valor'}</p>
-        <p class="font-display text-4xl font-bold">${p.price ? brl(p.price) : 'Sob consulta'}</p>
-        <ul class="mt-6 flex-1 space-y-2 text-sm text-ink-700">
-          ${p.features.map(f => `<li class="flex gap-2"><span class="text-caramel-600">✓</span>${f}</li>`).join('')}
+      <article class="relative flex shrink-0 basis-[84%] snap-center flex-col overflow-hidden rounded-4xl bg-white p-5 shadow-soft md:basis-auto md:p-6 ${hot ? 'ring-2 ring-caramel-500' : 'border border-sand-200'}">
+        <div class="relative overflow-hidden rounded-3xl bg-sand-200">
+          <img src="${p.img}" alt="${p.name}" loading="lazy" decoding="async" style="object-position:${p.pos}" class="h-56 w-full object-cover transition-transform duration-500 hover:scale-[1.03]" />
+          <span class="absolute left-3 top-3 rounded-full bg-ink-900/85 px-3.5 py-1.5 text-xs font-semibold text-white backdrop-blur-sm">${p.badge}</span>
+        </div>
+        <h3 class="mt-5 font-display text-2xl font-bold tracking-tight text-ink-900">${p.name}</h3>
+        <p class="mt-2 text-sm leading-relaxed text-ink-700">${p.desc}</p>
+        <ul class="mt-5 flex-1 space-y-2 border-t border-sand-200 pt-4 text-sm text-ink-700">
+          ${p.features.map(f => `<li class="flex items-start gap-2"><span class="font-bold text-caramel-600">✓</span><span>${f}</span></li>`).join('')}
         </ul>
-        <a href="#orcamento" data-guests="${p.maxGuests}" class="mt-8 rounded-full px-5 py-3 text-center font-display font-semibold hover:scale-[1.02] ${hot ? 'bg-caramel-500 text-ink-900' : 'bg-ink-900 text-white'}">Quero este pacote</a>
+        <a href="#orcamento" data-guests="${p.maxGuests}" class="mt-6 rounded-full px-5 py-3.5 text-center font-display text-sm font-semibold transition-transform hover:scale-[1.02] ${hot ? 'bg-caramel-500 text-ink-900' : 'bg-ink-900 text-white'}">${p.cta} →</a>
       </article>`;
     }).join('');
   }
