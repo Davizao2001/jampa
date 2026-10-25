@@ -617,7 +617,7 @@
         </div>
 
         <!-- Grade com 6 cards de alto destaque (3 colunas no desktop, 2 no mobile/tablet) -->
-        <div id="productGrid" data-reveal-group class="mt-12 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3 sm:gap-7 lg:gap-8"></div>
+        <div id="productGrid" class="mt-12 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3 sm:gap-7 lg:gap-8"></div>
       </div>
     </section>
   </main>
@@ -1451,8 +1451,8 @@
 
       $$('[data-reveal]').forEach(el => gsap.from(el, { y: travel, autoAlpha: 0, duration: 0.75, ease: 'power3.out',
         scrollTrigger: { trigger: el, start: 'top 82%', once: true } }));
-      $$('[data-reveal-group]').forEach(group => gsap.from(group.children, { y: travel, autoAlpha: 0, duration: 0.7, stagger: 0.1, ease: 'power3.out',
-        scrollTrigger: { trigger: group, start: 'top 80%', once: true } }));
+      $$('[data-reveal-group]').forEach(group => gsap.from(group.children, { y: travel, autoAlpha: 0, duration: 0.6, stagger: 0.08, ease: 'power2.out', onComplete: () => gsap.set(group.children, { clearProps: 'all' }),
+        scrollTrigger: { trigger: group, start: 'top 85%', once: true } }));
     });
 
     // As posições dos gatilhos são medidas na criação. Se a página mudar de altura depois (CSS do Tailwind
@@ -1462,11 +1462,10 @@
     document.fonts?.ready.then(refresh);
     addEventListener('load', refresh);
     new ResizeObserver(() => { const h = document.body.scrollHeight; if (h !== lastH) { lastH = h; refresh(); } }).observe(document.body);
-    // Rede de segurança: nada fica invisível se o gatilho falhar
-    setTimeout(() => $$('[data-reveal], [data-reveal-group] > *').forEach(el => {
-      const r = el.getBoundingClientRect();
-      if (r.top < innerHeight && r.bottom > 0 && getComputedStyle(el).opacity === '0') gsap.to(el, { y: 0, autoAlpha: 1, duration: 0.4 });
-    }), 2500);
+    // Rede de segurança: garante que todos os elementos e cards fiquem 100% visíveis e limpos
+    setTimeout(() => $$('[data-reveal], [data-reveal-group] > *, #productGrid > *').forEach(el => {
+      gsap.set(el, { clearProps: 'all' });
+    }), 1000);
   }
 
   /* ---------- BOOT ---------- */
