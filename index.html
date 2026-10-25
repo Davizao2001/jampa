@@ -345,7 +345,6 @@
       <nav class="hidden items-center gap-7 text-sm font-medium lg:flex" aria-label="Principal">
         <a href="#unicos" class="tap opacity-85 hover:opacity-100">Diferenciais</a>
         <a href="#eventos" class="tap opacity-85 hover:opacity-100">Eventos</a>
-        <a href="#como" class="tap opacity-85 hover:opacity-100">Como funciona</a>
         <a href="#pacotes" class="tap opacity-85 hover:opacity-100">Estrutura</a>
         <a href="#faq" class="tap opacity-85 hover:opacity-100">Dúvidas</a>
         <a href="#delivery" class="tap opacity-85 hover:opacity-100">Delivery</a>
@@ -360,7 +359,6 @@
     <nav id="mobileMenu" hidden aria-label="Menu" class="mx-3 rounded-3xl border border-sand-200 bg-white p-2 text-ink-900 shadow-soft lg:hidden">
       <a href="#unicos" class="block rounded-2xl px-4 py-3 font-display font-semibold hover:bg-sand-100">Diferenciais</a>
       <a href="#eventos" class="block rounded-2xl px-4 py-3 font-display font-semibold hover:bg-sand-100">Eventos</a>
-      <a href="#como" class="block rounded-2xl px-4 py-3 font-display font-semibold hover:bg-sand-100">Como funciona</a>
       <a href="#pacotes" class="block rounded-2xl px-4 py-3 font-display font-semibold hover:bg-sand-100">Estrutura</a>
       <a href="#faq" class="block rounded-2xl px-4 py-3 font-display font-semibold hover:bg-sand-100">Dúvidas</a>
       <a href="#delivery" class="block rounded-2xl px-4 py-3 font-display font-semibold hover:bg-sand-100">Delivery</a>
@@ -485,28 +483,28 @@
 
     <!-- ============ TÓPICO 7 (= TÓPICO 4 + 7): SOLICITE SEU ORÇAMENTO PERSONALIZADO ============ -->
     <section id="orcamento" class="mx-auto max-w-6xl scroll-mt-20 px-3 pb-16 sm:px-5 md:pb-24">
-      <div class="grid gap-10 rounded-4xl bg-sand-100 p-4 sm:p-10 lg:grid-cols-[1.05fr_1.15fr] lg:items-start">
-        <div data-reveal class="px-2 pt-3 sm:p-0">
+      <div class="grid gap-8 rounded-4xl bg-sand-100 p-4 sm:p-10 lg:grid-cols-2 lg:items-stretch lg:gap-10">
+        <div data-reveal class="flex flex-col px-2 pt-3 sm:p-0">
           <h2 class="font-display text-3xl font-bold tracking-tight sm:text-4xl">Solicite seu orçamento personalizado</h2>
           <p class="mt-3 text-base leading-relaxed text-ink-700">Nós cuidamos de cada detalhe para que você aproveite cada momento.</p>
 
-          <ol class="mt-8 space-y-4">
-            <li class="flex items-start gap-4 rounded-3xl bg-white/85 p-4 shadow-sm sm:p-5">
-              <span class="grid h-10 w-10 shrink-0 place-items-center rounded-2xl bg-caramel-500 font-display text-xl font-extrabold text-ink-900">1</span>
+          <ol class="mt-8 flex flex-1 flex-col justify-between gap-3">
+            <li class="flex flex-1 items-center gap-4 rounded-3xl bg-white p-4 shadow-soft sm:p-5">
+              <span class="w-8 shrink-0 text-center font-display text-4xl font-extrabold leading-none text-caramel-500">1</span>
               <div>
                 <h3 class="font-display text-base font-bold text-ink-900 sm:text-lg">Solicite seu orçamento</h3>
                 <p class="mt-1 text-sm leading-relaxed text-ink-700">Preencha as 4 etapas ao lado com os dados do seu evento e encaminhe diretamente para o nosso WhatsApp.</p>
               </div>
             </li>
-            <li class="flex items-start gap-4 rounded-3xl bg-white/85 p-4 shadow-sm sm:p-5">
-              <span class="grid h-10 w-10 shrink-0 place-items-center rounded-2xl bg-caramel-500 font-display text-xl font-extrabold text-ink-900">2</span>
+            <li class="flex flex-1 items-center gap-4 rounded-3xl bg-white p-4 shadow-soft sm:p-5">
+              <span class="w-8 shrink-0 text-center font-display text-4xl font-extrabold leading-none text-caramel-500">2</span>
               <div>
                 <h3 class="font-display text-base font-bold text-ink-900 sm:text-lg">Personalizamos a sua experiência</h3>
                 <p class="mt-1 text-sm leading-relaxed text-ink-700">Verificamos a disponibilidade da data, enviamos a proposta personalizada e alinhamos sabores e detalhes.</p>
               </div>
             </li>
-            <li class="flex items-start gap-4 rounded-3xl bg-white/85 p-4 shadow-sm sm:p-5">
-              <span class="grid h-10 w-10 shrink-0 place-items-center rounded-2xl bg-caramel-500 font-display text-xl font-extrabold text-ink-900">3</span>
+            <li class="flex flex-1 items-center gap-4 rounded-3xl bg-white p-4 shadow-soft sm:p-5">
+              <span class="w-8 shrink-0 text-center font-display text-4xl font-extrabold leading-none text-caramel-500">3</span>
               <div>
                 <h3 class="font-display text-base font-bold text-ink-900 sm:text-lg">No dia do seu evento, é só aproveitar!</h3>
                 <p class="mt-1 text-sm leading-relaxed text-ink-700">Chegamos com antecedência, montamos toda a estrutura e servimos os churros quentinhos e recheados na hora.</p>
@@ -515,7 +513,7 @@
           </ol>
         </div>
 
-        <form id="funnel" novalidate class="rounded-3xl bg-white p-5 shadow-soft sm:p-8">
+        <form id="funnel" novalidate class="flex flex-col rounded-3xl bg-white p-5 shadow-soft sm:p-8">
           <div class="mb-8">
             <div class="mb-2 flex justify-between text-xs text-ink-500">
               <span id="stepLabel">Etapa 1 de 4</span><span id="stepName">Tipo de evento</span>
@@ -525,7 +523,7 @@
             </div>
           </div>
 
-          <div id="steps" class="min-h-[17rem]">
+          <div id="steps" class="min-h-[17rem] flex-1">
             <fieldset data-step="0" data-name="Tipo de evento">
               <legend class="font-display text-xl font-semibold">Qual é o evento?</legend>
               <div id="eventOptions" role="radiogroup" class="mt-5 grid grid-cols-2 gap-3"></div>
@@ -570,7 +568,7 @@
 
           <p id="formError" class="mt-4 min-h-[1.25rem] text-sm text-red-700" role="alert"></p>
 
-          <div class="mt-2 flex items-center justify-between gap-3">
+          <div class="mt-auto flex items-center justify-between gap-3 pt-2">
             <button type="button" id="prevBtn" class="invisible rounded-full px-4 py-3 text-sm text-ink-700 hover:text-ink-900">← Voltar</button>
             <button type="submit" id="nextBtn" class="rounded-full bg-caramel-500 px-6 py-3 font-display font-semibold text-ink-900 hover:scale-[1.02] active:scale-[.98]">Continuar</button>
           </div>
