@@ -568,8 +568,14 @@
 
             <fieldset data-step="1" data-name="Convidados" hidden>
               <legend class="font-display text-xl font-semibold">Quantos convidados?</legend>
-              <p class="mt-6 font-display text-5xl font-bold"><output id="guestsOut" for="guests">80</output><span class="ml-2 text-base font-normal text-ink-500">pessoas</span></p>
-              <input id="guests" type="range" min="30" max="300" step="10" value="80" class="mt-6 w-full" aria-label="Número de convidados" />
+              <div class="mt-6 flex items-center justify-between">
+                <p class="font-display text-5xl font-bold"><output id="guestsOut" for="guests">80</output><span class="ml-2 text-base font-normal text-ink-500">pessoas</span></p>
+                <div class="flex items-center gap-1.5">
+                  <button type="button" id="guestDec" aria-label="Diminuir 1 pessoa" class="flex h-10 w-10 items-center justify-center rounded-full border border-sand-300 bg-white font-display text-xl font-bold text-ink-800 shadow-sm transition-all hover:border-caramel-400 hover:bg-caramel-50 hover:text-caramel-600 active:scale-95">−</button>
+                  <button type="button" id="guestInc" aria-label="Aumentar 1 pessoa" class="flex h-10 w-10 items-center justify-center rounded-full border border-sand-300 bg-white font-display text-xl font-bold text-ink-800 shadow-sm transition-all hover:border-caramel-400 hover:bg-caramel-50 hover:text-caramel-600 active:scale-95">+</button>
+                </div>
+              </div>
+              <input id="guests" type="range" min="30" max="300" step="1" value="80" class="mt-6 w-full" aria-label="Número de convidados" />
               <div class="mt-2 flex justify-between text-xs text-ink-500"><span>Mínimo de 30 pessoas</span><span>300+</span></div>
               <p class="mt-4 text-sm leading-relaxed text-ink-700">Informe o número aproximado de convidados. <strong class="font-semibold text-ink-900">Nosso orçamento é calculado por pessoa.</strong></p>
             </fieldset>
@@ -1416,7 +1422,11 @@
       const max = state.guests >= +guests.max;
       $('#guestsOut').textContent = max ? `${guests.value}+` : guests.value;
     }
-    guests.addEventListener('input', syncGuests); syncGuests();
+    guests.addEventListener('input', syncGuests);
+    const guestDec = $('#guestDec'), guestInc = $('#guestInc');
+    if (guestDec) guestDec.addEventListener('click', () => { guests.value = Math.max(+guests.min, +guests.value - 1); syncGuests(); });
+    if (guestInc) guestInc.addEventListener('click', () => { guests.value = Math.min(+guests.max, +guests.value + 1); syncGuests(); });
+    syncGuests();
 
     // "Solicitar orçamento" na estrutura já pré-preenche os convidados
     $('#packageGrid').addEventListener('click', e => {
