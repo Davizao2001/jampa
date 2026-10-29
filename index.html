@@ -63,9 +63,14 @@
     a, button { transition-property: color, background-color, border-color, opacity, box-shadow, transform; transition-duration: .3s; transition-timing-function: ease; }
     .btn-ifood:active, a.bg-caramel-500:active, button.bg-caramel-500:active, a.bg-ink-900:active, .head-cta:active,
     .float-wa.is-visible:active, .story-btn:active, .flavor:active { transform: scale(.97); }
-    /* Chips de recheios e toppings (seleção múltipla) */
-    .pick { display: inline-flex; align-items: center; gap: .5rem; min-height: 44px; padding: .55rem 1.1rem; border-radius: 999px;
+    /* Chips de recheios e toppings (seleção múltipla, responsivos para mobile) */
+    .pick { display: inline-flex; align-items: center; gap: .5rem; min-height: 44px; max-width: 100%; padding: .55rem 1.1rem; border-radius: 999px;
             border: 1.5px solid #E7DBC8; background: #fff; color: #231A12; font-weight: 600; font-size: .95rem; line-height: 1.2; text-align: left; }
+    @media (max-width: 640px) {
+      .pick { padding: .45rem .85rem; font-size: .86rem; gap: .4rem; min-height: 40px; }
+      .pick .pick-ico { width: 1.05rem; height: 1.05rem; }
+      .pick-badge { font-size: .6rem; padding: .12rem .4rem; }
+    }
     .pick:hover { border-color: #F59E0B; background: #FFFBEB; }
     .pick[aria-pressed="true"] { background: #F59E0B; border-color: #F59E0B; color: #1A120B; box-shadow: 0 8px 22px -10px rgba(245,158,11,.9); }
     .pick .pick-ico { display: grid; place-items: center; width: 1.15rem; height: 1.15rem; border-radius: 999px; border: 1.5px solid currentColor; opacity: .45;
@@ -322,9 +327,37 @@
     }
 
     /* Funil */
-    .opt { transition: border-color .2s, background-color .2s; }
-    .opt[aria-checked="true"] { border-color: #F59E0B; background: #FEF3C7; }
-    input[type="range"] { accent-color: #F59E0B; }
+    .opt {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      min-height: 4.25rem;
+      border-radius: 1rem;
+      border: 1.5px solid #E5D5BC;
+      background: #FDFBF7;
+      padding: .75rem .9rem;
+      text-align: left;
+      font-family: 'Cabinet Grotesk', system-ui, sans-serif;
+      font-size: .88rem;
+      font-weight: 700;
+      line-height: 1.25;
+      color: #231A12;
+      transition: border-color .2s, background-color .2s, transform .2s, box-shadow .2s;
+    }
+    @media (min-width: 640px) {
+      .opt { min-height: 4.75rem; padding: 1rem 1.2rem; font-size: 1rem; }
+    }
+    .opt:hover { border-color: #F59E0B; background: #FFFBEB; }
+    .opt[aria-checked="true"] {
+      border-color: #F59E0B;
+      background: #FEF3C7;
+      box-shadow: 0 0 0 2px #F59E0B;
+    }
+    /* Quando o número de opções for ímpar (5 opções), o último card ocupa a largura total com harmonia */
+    .opt:last-child:nth-child(odd) {
+      grid-column: span 2 / span 2;
+    }
+    input[type="range"] { accent-color: #F59E0B; height: 28px; cursor: pointer; }
 
     @media (prefers-reduced-motion: reduce) {
       html { scroll-behavior: auto; }
@@ -462,7 +495,7 @@
           <!-- Pílulas dos sabores da caixa -->
           <div class="mt-5 flex flex-wrap gap-2">
             <span class="rounded-full border border-white/15 bg-white/10 px-3.5 py-1.5 text-xs font-semibold text-white/95">✓ Doce de Leite</span>
-            <span class="rounded-full border border-white/15 bg-white/10 px-3.5 py-1.5 text-xs font-semibold text-white/95">✓ Brigadeiro</span>
+            <span class="rounded-full border border-white/15 bg-white/10 px-3.5 py-1.5 text-xs font-semibold text-white/95">✓ Chocolate</span>
             <span class="rounded-full border border-white/15 bg-white/10 px-3.5 py-1.5 text-xs font-semibold text-white/95">✓ Leite Ninho</span>
           </div>
 
@@ -489,22 +522,22 @@
           <p class="mt-3 text-base leading-relaxed text-ink-700">Nós cuidamos de cada detalhe para que você aproveite cada momento.</p>
 
           <ol class="mt-8 flex flex-1 flex-col justify-between gap-3">
-            <li class="flex flex-1 items-center gap-4 rounded-3xl bg-white p-4 shadow-soft sm:p-5">
-              <span class="w-8 shrink-0 text-center font-display text-4xl font-extrabold leading-none text-caramel-500">1</span>
+            <li class="flex flex-1 items-start sm:items-center gap-3.5 sm:gap-4 rounded-2xl sm:rounded-3xl bg-white p-4 shadow-soft sm:p-5">
+              <span class="w-8 shrink-0 text-center font-display text-3xl sm:text-4xl font-extrabold leading-none text-caramel-500 pt-0.5 sm:pt-0">1</span>
               <div>
                 <h3 class="font-display text-base font-bold text-ink-900 sm:text-lg">Solicite seu orçamento</h3>
-                <p class="mt-1 text-sm leading-relaxed text-ink-700">Preencha as 4 etapas ao lado com os dados do seu evento e encaminhe diretamente para o nosso WhatsApp.</p>
+                <p class="mt-1 text-sm leading-relaxed text-ink-700">Preencha as 4 etapas com os dados do seu evento e encaminhe diretamente para o nosso WhatsApp.</p>
               </div>
             </li>
-            <li class="flex flex-1 items-center gap-4 rounded-3xl bg-white p-4 shadow-soft sm:p-5">
-              <span class="w-8 shrink-0 text-center font-display text-4xl font-extrabold leading-none text-caramel-500">2</span>
+            <li class="flex flex-1 items-start sm:items-center gap-3.5 sm:gap-4 rounded-2xl sm:rounded-3xl bg-white p-4 shadow-soft sm:p-5">
+              <span class="w-8 shrink-0 text-center font-display text-3xl sm:text-4xl font-extrabold leading-none text-caramel-500 pt-0.5 sm:pt-0">2</span>
               <div>
                 <h3 class="font-display text-base font-bold text-ink-900 sm:text-lg">Personalizamos a sua experiência</h3>
                 <p class="mt-1 text-sm leading-relaxed text-ink-700">Verificamos a disponibilidade da data, enviamos a proposta personalizada e alinhamos sabores e detalhes.</p>
               </div>
             </li>
-            <li class="flex flex-1 items-center gap-4 rounded-3xl bg-white p-4 shadow-soft sm:p-5">
-              <span class="w-8 shrink-0 text-center font-display text-4xl font-extrabold leading-none text-caramel-500">3</span>
+            <li class="flex flex-1 items-start sm:items-center gap-3.5 sm:gap-4 rounded-2xl sm:rounded-3xl bg-white p-4 shadow-soft sm:p-5">
+              <span class="w-8 shrink-0 text-center font-display text-3xl sm:text-4xl font-extrabold leading-none text-caramel-500 pt-0.5 sm:pt-0">3</span>
               <div>
                 <h3 class="font-display text-base font-bold text-ink-900 sm:text-lg">No dia do seu evento, é só aproveitar!</h3>
                 <p class="mt-1 text-sm leading-relaxed text-ink-700">Chegamos com antecedência, montamos toda a estrutura e servimos os churros quentinhos e recheados na hora.</p>
@@ -811,7 +844,7 @@
     defaultCta: 'Quero um orçamento',
     flavors: [
       { id: 'doce-de-leite', name: 'Doce de Leite', emoji: '🍯' },
-      { id: 'brigadeiro',    name: 'Brigadeiro',    emoji: '🍫' },
+      { id: 'chocolate',     name: 'Chocolate',     emoji: '🍫' },
       { id: 'nutella',       name: 'Nutella',       emoji: '🌰' },
       { id: 'leite-ninho',   name: 'Leite Ninho',   emoji: '🥛' },
     ],
@@ -895,11 +928,11 @@
       { src: 'assets/stories/img_0493.mp4', poster: 'assets/stories/img_0493-poster.jpg', caption: 'Festa infantil temática' },
       { src: 'assets/stories/img_1012.mp4', poster: 'assets/stories/img_1012-poster.jpg', caption: 'Churros no seu casamento' },
     ],
-    events: ['Aniversário Adulto', '15 Anos', 'Infantil', 'Casamento', 'Corporativo'],
+    events: ['Aniversário Adulto', '15 Anos', 'Aniversário Infantil', 'Casamento', 'Corporativo'],
     // Etapa "Recheios e toppings" do formulário (máx. 3 de cada; extra: true mostra o selo "Valor adicional")
     fillings: [
       { name: 'Doce de Leite' },
-      { name: 'Brigadeiro' },
+      { name: 'Chocolate' },
       { name: 'Leite Ninho' },
       { name: 'Paçoquita' },
       { name: 'Goiabada' },
@@ -1343,7 +1376,7 @@
     date.min = new Date(Date.now() - new Date().getTimezoneOffset() * 6e4).toISOString().slice(0, 10);
 
     radioGroup($('#eventOptions'), CONFIG.events.map(e => ({ label: e, value: e })), {
-      className: 'opt rounded-2xl border border-sand-300 bg-paper px-4 py-5 text-left font-medium hover:border-ink-500',
+      className: 'opt',
       onSelect: v => {
         state.event = v; error.textContent = '';
         const other = v === 'Outro';
