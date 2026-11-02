@@ -405,7 +405,7 @@
       <div id="heroShow" class="relative h-[100svh] min-h-[34rem] w-full overflow-hidden bg-ink-900" aria-roledescription="carrossel" aria-label="Fotos dos nossos eventos">
         <img src="assets/hero/churros-servido.webp" alt="Churros douradinhos servidos na hora em frente ao carrinho" decoding="async" fetchpriority="high" class="hero-slide is-active" style="--pos:55% 42%;--pos-m:48% 30%" />
         <img src="assets/hero/carrinho.jpg" alt="Carrinho de churros rústico de madeira personalizado" decoding="async" fetchpriority="low" class="hero-slide" style="--pos:40% 50%;--pos-m:38% 50%" />
-        <img src="assets/hero/bandeja-churros.webp" alt="Bandeja artesanal com churros coração e sabores gourmet" decoding="async" fetchpriority="low" class="hero-slide" style="--pos:56% 48%;--pos-m:50% 32%" />
+        <img src="assets/hero/bandeja-churros.webp" srcset="assets/hero/bandeja-churros-m.webp 768w, assets/hero/bandeja-churros.webp 1920w" sizes="100vw" alt="Bandeja artesanal com churros coração e sabores gourmet" decoding="async" fetchpriority="low" class="hero-slide" style="--pos:50% 50%;--pos-m:50% 36%" />
         <div class="hero-shade absolute inset-0"></div>
 
         <div class="absolute bottom-0 left-0 w-full max-w-[42rem] px-5 pb-16 text-white sm:px-6 md:px-12 md:pb-20 lg:px-16">
@@ -561,7 +561,7 @@
               <legend class="font-display text-xl font-semibold">Qual é o evento?</legend>
               <div id="eventOptions" role="radiogroup" class="mt-5 grid grid-cols-2 gap-3"></div>
               <div id="eventOtherWrap" hidden>
-                <label class="mt-4 block text-sm text-ink-700" for="eventOther">Qual é o evento?</label>
+                <label class="mt-4 block text-sm text-ink-700" for="eventOther">Especifique o evento (opcional):</label>
                 <input id="eventOther" type="text" maxlength="60" placeholder="Ex.: chá de bebê, formatura, feira" class="mt-2 w-full rounded-2xl border border-sand-300 bg-paper px-4 py-3 placeholder:text-ink-500" />
               </div>
             </fieldset>
@@ -777,7 +777,7 @@
               <span class="text-caramel-400 font-bold shrink-0">🚚</span>
               <div>
                 <strong class="text-white">Região atendida:</strong>
-                <p class="mt-0.5 text-xs text-sand-300">João Pessoa e interior da Paraíba (consulte deslocamento para sua cidade).</p>
+                <p class="mt-0.5 text-xs text-sand-300">João Pessoa, interior da Paraíba, região de Recife (PE) e RN (consulte deslocamento).</p>
               </div>
             </li>
             <li class="flex items-start gap-2.5">
@@ -903,14 +903,14 @@
         id: 'espanhol',
         name: 'Churros espanhol',
         tag: 'Para Compartilhar',
-        desc: '5 palitos crocantes e sequinhos acompanhados de um pote de 50ml de doce de leite artesanal para mergulhar à vontade.',
+        desc: '5 palitos crocantes e sequinhos acompanhados de um pote de 50ml de doce de leite para mergulhar à vontade.',
         img: 'assets/cardapio/espanhol.jpg',
       },
       {
         id: 'tropical',
         name: 'Churros tropical',
         tag: 'Morangos Frescos',
-        desc: 'Porção especial de churros fatiados cobertos com calda de chocolate cremoso e pedaços de morangos frescos selecionados.',
+        desc: 'Porção especial de churros fatiados cobertos com o doce de sua escolha e pedaços de morangos frescos selecionados.',
         img: 'assets/cardapio/tropical.jpg',
       },
       {
@@ -924,7 +924,7 @@
         id: 'coracao',
         name: 'Churros coração',
         tag: 'Edição Especial',
-        desc: '2 churros em charmoso formato de coração, crocantes e açucarados, servidos no copinho com calda especial à parte.',
+        desc: '2 churros em charmoso formato de coração, crocantes e açucarados, servidos no copinho com calda especial.',
         img: 'assets/cardapio/coracao.jpg',
       },
     ],
@@ -943,7 +943,7 @@
       { src: 'assets/stories/img_0493.mp4', poster: 'assets/stories/img_0493-poster.jpg', caption: 'Festa infantil temática' },
       { src: 'assets/stories/img_1012.mp4', poster: 'assets/stories/img_1012-poster.jpg', caption: 'Churros no seu casamento' },
     ],
-    events: ['Aniversário Adulto', '15 Anos', 'Aniversário Infantil', 'Casamento', 'Corporativo'],
+    events: ['Aniversário Adulto', '15 Anos', 'Aniversário Infantil', 'Casamento', 'Corporativo', 'Outros'],
     // Etapa "Recheios e toppings" do formulário (máx. 3 de cada; extra: true mostra o selo "Valor adicional")
     fillings: [
       { name: 'Doce de Leite' },
@@ -993,18 +993,36 @@
         maxGuests: 80,
         img: 'assets/galeria/estrutura_personalizacao.jpg',
         pos: '50% 50%',
-        desc: 'Personalizamos nosso carrinho, embalagens, toppers e menu de acordo com o tema da festa ou a marca da sua empresa.',
-        features: ['Placa ou adesivagem com sua marca/tema', 'Toppers e embalagens personalizadas', 'Menu exclusivo na bancada do carrinho'],
+        desc: 'Personalizamos nosso carrinho, toppers e menu de acordo com o tema da festa ou a marca da sua empresa.',
+        features: ['Placa ou adesivagem com sua marca/tema', 'Toppers', 'Menu exclusivo na bancada do carrinho'],
         cta: 'Solicitar orçamento',
       },
     ],
     faq: [
-      { q: 'Quanto espaço o carrinho ocupa?', a: 'Precisamos de uma área plana de aproximadamente 2 m × 2 m, de preferência coberta.' },
-      { q: 'Precisa de ponto de energia?',    a: 'Precisamos de uma extensão de 20m no local.' },
-      { q: 'Quando inicia a montagem?',       a: 'Chegamos 1 hora antes do horário contratado para montar toda a estrutura.' },
-      { q: 'Pode montar em área interna?',    a: 'Sim, mas em um ambiente que seja ventilado ou próximo a janelas. Em salões fechados, combinamos as melhores alternativas.' },
-      { q: 'Vocês atendem fora de João Pessoa?', a: 'Atendemos João Pessoa e o interior da Paraíba. Consulte se atendemos a sua cidade e taxas de deslocamento.' },
-      { q: 'Os churros são à vontade?',       a: 'Servimos de maneira limitada, conforme o número de pessoas e o tempo contratado para o evento.' },
+      {
+        q: 'Quanto espaço o carrinho ocupa?',
+        a: 'Para a montagem, precisamos de uma área plana de aproximadamente 2m x 2m, garantindo espaço adequado para a instalação e o funcionamento do nosso carrinho.'
+      },
+      {
+        q: 'É necessário disponibilizar energia elétrica?',
+        a: 'Sim. Para o funcionamento dos equipamentos, precisamos de um ponto de energia elétrica e de uma extensão de 20m no local.'
+      },
+      {
+        q: 'Com quanto tempo de antecedência é realizada a montagem?',
+        a: 'Nossa equipe chega aproximadamente 1 hora antes do início do serviço contratado para realizar a montagem e preparar todos os detalhes.'
+      },
+      {
+        q: 'O carrinho pode ser instalado em ambientes internos?',
+        a: 'Sim! Nosso carrinho pode ser instalado em ambientes internos, desde que o espaço seja ventilado ou próximo a janelas. Para locais fechados, avaliamos previamente as condições de instalação.'
+      },
+      {
+        q: 'Vocês atendem eventos fora de João Pessoa?',
+        a: 'Sim! Além de João Pessoa, atendemos outras cidades da Paraíba, a região de Recife (PE) e o Rio Grande do Norte. Consulte nossa equipe para verificar a disponibilidade e eventuais taxas de deslocamento.'
+      },
+      {
+        q: 'Os churros são servidos à vontade?',
+        a: 'Servimos de maneira ilimitada, conforme a quantidade de convidados e o período contratado, respeitando as condições estabelecidas em contrato.'
+      },
     ],
   };
 
@@ -1394,7 +1412,7 @@
       className: 'opt',
       onSelect: v => {
         state.event = v; error.textContent = '';
-        const other = v === 'Outro';
+        const other = v === 'Outros' || v === 'Outro';
         $('#eventOtherWrap').hidden = !other;
         if (other) $('#eventOther').focus({ preventScroll: true });
       },
@@ -1445,7 +1463,6 @@
 
     function validate(i) {
       if (i === 0 && !state.event) return 'Escolha o tipo de evento.';
-      if (i === 0 && state.event === 'Outro' && !$('#eventOther').value.trim()) return 'Conte qual é o evento.';
       if (i === 2) {
         if (!date.value) return 'Informe a data do evento.';
         if (date.value < date.min) return 'Escolha uma data futura.';
@@ -1455,7 +1472,13 @@
     }
 
     const fmtDate = iso => { const [y, m, d] = iso.split('-'); return `${d}/${m}/${y}`; };
-    const eventLabel = () => state.event === 'Outro' ? $('#eventOther').value.trim() : state.event;
+    const eventLabel = () => {
+      if (state.event === 'Outros' || state.event === 'Outro') {
+        const extra = $('#eventOther') ? $('#eventOther').value.trim() : '';
+        return extra ? `Outros (${extra})` : 'Outros';
+      }
+      return state.event;
+    };
 
     function show(i, dir = 1) {
       const from = steps[current], to = steps[i];
