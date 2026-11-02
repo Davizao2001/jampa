@@ -54,7 +54,7 @@
   </script>
 
   <style>
-    body { background: #FBF7F0; overflow-x: clip; -webkit-tap-highlight-color: transparent; }
+    html, body { background: #FBF7F0; overflow-x: hidden; max-width: 100%; width: 100%; -webkit-tap-highlight-color: transparent; }
     [hidden] { display: none !important; }                      /* `hidden` vence classes de display do Tailwind */
     a, button { touch-action: manipulation; }                   /* sem atraso de toque duplo */
     @media (hover: none) { .car-btn { display: none; } }        /* no toque, o carrossel é por deslize */
@@ -245,9 +245,14 @@
     }
 
     /* Botão de Stories: logo dentro do aro em gradiente do Instagram, girando devagar */
-    .story-btn { position: fixed; right: 1rem; bottom: 5.25rem; z-index: 45; width: 3.75rem; height: 3.75rem; border-radius: 999px;
-                 display: grid; place-items: center; box-shadow: 0 10px 28px -8px rgba(35,26,18,.45); transition: transform .3s; }
+    .story-btn { position: fixed; right: 1rem; bottom: 5rem; z-index: 45; width: 3.25rem; height: 3.25rem; border-radius: 999px;
+                 display: grid; place-items: center; box-shadow: 0 10px 28px -8px rgba(35,26,18,.45);
+                 transition: transform .3s ease, bottom .3s ease, opacity .3s ease, visibility .3s ease; }
     .story-btn:hover { transform: scale(1.06); }
+    /* Na Hero mobile (quando o WhatsApp ainda não apareceu), fica no canto inferior sem brigar com o botão CTA */
+    .story-btn.is-on-hero { bottom: 1.25rem; }
+    /* Sobre o formulário de orçamento, esconde completamente para não obstruir o card ou o botão "Continuar" */
+    .story-btn.is-on-form { opacity: 0; pointer-events: none; visibility: hidden; transform: scale(0.8); }
     .story-ring { position: absolute; inset: 0; border-radius: 999px;
                   background: conic-gradient(from 0deg, #FACC15, #F97316, #EC4899, #A855F7, #F97316, #FACC15);
                   animation: storySpin 4s linear infinite; }
@@ -258,7 +263,10 @@
     .story-logo img { width: 100%; height: 100%; }
     @keyframes storySpin { to { transform: rotate(360deg); } }
     @keyframes storyPulse { from { transform: scale(1); opacity: .9; } to { transform: scale(1.25); opacity: 0; } }
-    @media (min-width: 640px) { .story-btn { right: 1.5rem; bottom: 5.75rem; } }
+    @media (min-width: 640px) {
+      .story-btn { width: 3.75rem; height: 3.75rem; right: 1.5rem; bottom: 5.75rem; }
+      .story-btn.is-on-hero { bottom: 1.5rem; }
+    }
     @media (prefers-reduced-motion: reduce) { .story-ring, .story-ring::after { animation: none; } }
 
     /* Visualizador de Stories: tela cheia no celular, 9:16 centralizado no desktop */
@@ -331,33 +339,81 @@
       display: flex;
       flex-direction: column;
       justify-content: center;
-      min-height: 4.25rem;
+      min-height: 4rem;
       border-radius: 1rem;
       border: 1.5px solid #E5D5BC;
       background: #FDFBF7;
-      padding: .75rem .9rem;
+      padding: .65rem .75rem;
       text-align: left;
       font-family: 'Cabinet Grotesk', system-ui, sans-serif;
-      font-size: .88rem;
+      font-size: .85rem;
       font-weight: 700;
       line-height: 1.25;
       color: #231A12;
+      word-break: break-word;
       transition: border-color .2s, background-color .2s, transform .2s, box-shadow .2s;
+      touch-action: manipulation;
     }
     @media (min-width: 640px) {
       .opt { min-height: 4.75rem; padding: 1rem 1.2rem; font-size: 1rem; }
     }
     .opt:hover { border-color: #F59E0B; background: #FFFBEB; }
+    .opt:active { transform: scale(.98); }
     .opt[aria-checked="true"] {
       border-color: #F59E0B;
       background: #FEF3C7;
       box-shadow: 0 0 0 2px #F59E0B;
     }
-    /* Quando o número de opções for ímpar (5 opções), o último card ocupa a largura total com harmonia */
+    /* Quando o número de opções for ímpar, o último card ocupa a largura total com harmonia */
     .opt:last-child:nth-child(odd) {
       grid-column: span 2 / span 2;
     }
     input[type="range"] { accent-color: #F59E0B; height: 28px; cursor: pointer; }
+
+    /* Funil - Regras de Usabilidade e Responsividade Mobile Rigorosa */
+    #funnel {
+      overflow: hidden;
+      max-width: 100%;
+      width: 100%;
+      box-sizing: border-box;
+    }
+    #funnel fieldset {
+      min-width: 0 !important;
+      max-width: 100% !important;
+      width: 100% !important;
+      border: 0 !important;
+      padding: 0 !important;
+      margin: 0 !important;
+      box-sizing: border-box !important;
+    }
+    #funnel input[type="text"],
+    #funnel input[type="date"] {
+      width: 100% !important;
+      max-width: 100% !important;
+      min-width: 0 !important;
+      box-sizing: border-box !important;
+      font-size: 16px !important; /* Previne auto-zoom indesejado no iOS Safari */
+      min-height: 48px !important;
+      border-radius: 1rem;
+      -webkit-tap-highlight-color: transparent;
+    }
+    #funnel input[type="date"] {
+      -webkit-appearance: none;
+      -moz-appearance: none;
+      appearance: none;
+      display: block;
+      background-color: #FDFBF7;
+    }
+    #funnel input[type="date"]::-webkit-date-and-time-value {
+      text-align: left;
+      min-height: 1.5em;
+    }
+    #funnel input:focus {
+      outline: none;
+      border-color: #F59E0B;
+      background-color: #FFFFFF;
+      box-shadow: 0 0 0 3px rgba(245, 158, 11, 0.2);
+    }
 
     @media (prefers-reduced-motion: reduce) {
       html { scroll-behavior: auto; }
@@ -383,8 +439,10 @@
         <a href="#delivery" class="tap opacity-85 hover:opacity-100">Delivery</a>
       </nav>
       <div class="flex items-center gap-2">
-        <a href="#orcamento" class="head-cta whitespace-nowrap rounded-full px-3 py-2 text-sm font-semibold sm:px-4">Solicite seu orçamento</a>
-        <button type="button" id="menuBtn" aria-label="Abrir menu" aria-expanded="false" aria-controls="mobileMenu" class="grid h-11 w-11 place-items-center rounded-full lg:hidden">
+        <a href="#orcamento" class="head-cta whitespace-nowrap rounded-full px-3.5 py-1.5 text-xs font-bold sm:px-4 sm:py-2 sm:text-sm">
+          <span class="hidden sm:inline">Solicite seu </span>Orçamento
+        </a>
+        <button type="button" id="menuBtn" aria-label="Abrir menu" aria-expanded="false" aria-controls="mobileMenu" class="grid h-10 w-10 sm:h-11 sm:w-11 place-items-center rounded-full lg:hidden">
           <svg class="h-6 w-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path id="menuIcon" d="M4 7h16M4 12h16M4 17h16"/></svg>
         </button>
       </div>
@@ -411,7 +469,7 @@
         <div class="absolute bottom-0 left-0 w-full max-w-[42rem] px-5 pb-16 text-white sm:px-6 md:px-12 md:pb-20 lg:px-16">
           <h1 data-hero class="font-display text-[2.1rem] font-extrabold leading-[1.02] min-[380px]:text-[2.4rem] tracking-[-.02em] sm:text-5xl lg:text-6xl">Nosso churros no seu evento</h1>
           <p data-hero class="mt-3 max-w-xl text-[15px] text-white/90 sm:mt-4 sm:text-base md:text-lg">Uma experiência exclusiva, deliciosa e inesquecível para encantar seus convidados</p>
-          <div data-hero class="mt-5 flex flex-col gap-2.5 pr-[4.5rem] sm:mt-6 sm:flex-row sm:gap-3 sm:pr-0">
+          <div data-hero class="mt-5 flex flex-col gap-2.5 sm:mt-6 sm:flex-row sm:gap-3">
             <a href="#orcamento" class="inline-flex items-center justify-center gap-2 rounded-full bg-caramel-500 px-8 py-3.5 font-display text-base font-bold text-ink-900 shadow-soft sm:py-4">
               Solicite seu orçamento <span aria-hidden="true">→</span>
             </a>
@@ -516,100 +574,100 @@
 
     <!-- ============ TÓPICO 7 (= TÓPICO 4 + 7): SOLICITE SEU ORÇAMENTO PERSONALIZADO ============ -->
     <section id="orcamento" class="mx-auto max-w-6xl scroll-mt-20 px-3 pb-16 sm:px-5 md:pb-24">
-      <div class="grid gap-8 rounded-4xl bg-sand-100 p-4 sm:p-10 lg:grid-cols-2 lg:items-stretch lg:gap-10">
-        <div data-reveal class="flex flex-col px-2 pt-3 sm:p-0">
-          <h2 class="font-display text-3xl font-bold tracking-tight sm:text-4xl">Solicite seu orçamento personalizado</h2>
-          <p class="mt-3 text-base leading-relaxed text-ink-700">Nós cuidamos de cada detalhe para que você aproveite cada momento.</p>
+      <div class="grid gap-6 rounded-3xl bg-sand-100 p-3.5 sm:gap-10 sm:rounded-4xl sm:p-10 lg:grid-cols-2 lg:items-stretch lg:gap-10">
+        <div data-reveal class="flex flex-col px-1.5 pt-2 sm:p-0">
+          <h2 class="font-display text-2xl font-bold tracking-tight text-ink-900 sm:text-4xl">Solicite seu orçamento personalizado</h2>
+          <p class="mt-2 text-sm leading-relaxed text-ink-700 sm:mt-3 sm:text-base">Nós cuidamos de cada detalhe para que você aproveite cada momento.</p>
 
-          <ol class="mt-8 flex flex-1 flex-col justify-between gap-3">
-            <li class="flex flex-1 items-start sm:items-center gap-3.5 sm:gap-4 rounded-2xl sm:rounded-3xl bg-white p-4 shadow-soft sm:p-5">
-              <span class="w-8 shrink-0 text-center font-display text-3xl sm:text-4xl font-extrabold leading-none text-caramel-500 pt-0.5 sm:pt-0">1</span>
+          <ol class="mt-6 flex flex-1 flex-col justify-between gap-3 sm:mt-8">
+            <li class="flex flex-1 items-start sm:items-center gap-3.5 sm:gap-4 rounded-2xl sm:rounded-3xl bg-white p-3.5 shadow-soft sm:p-5">
+              <span class="w-8 shrink-0 text-center font-display text-2xl sm:text-4xl font-extrabold leading-none text-caramel-500 pt-0.5 sm:pt-0">1</span>
               <div>
-                <h3 class="font-display text-base font-bold text-ink-900 sm:text-lg">Solicite seu orçamento</h3>
-                <p class="mt-1 text-sm leading-relaxed text-ink-700">Preencha as 4 etapas com os dados do seu evento e encaminhe diretamente para o nosso WhatsApp.</p>
+                <h3 class="font-display text-sm font-bold text-ink-900 sm:text-lg">Solicite seu orçamento</h3>
+                <p class="mt-1 text-xs leading-relaxed text-ink-700 sm:text-sm">Preencha as 4 etapas com os dados do seu evento e encaminhe diretamente para o nosso WhatsApp.</p>
               </div>
             </li>
-            <li class="flex flex-1 items-start sm:items-center gap-3.5 sm:gap-4 rounded-2xl sm:rounded-3xl bg-white p-4 shadow-soft sm:p-5">
-              <span class="w-8 shrink-0 text-center font-display text-3xl sm:text-4xl font-extrabold leading-none text-caramel-500 pt-0.5 sm:pt-0">2</span>
+            <li class="flex flex-1 items-start sm:items-center gap-3.5 sm:gap-4 rounded-2xl sm:rounded-3xl bg-white p-3.5 shadow-soft sm:p-5">
+              <span class="w-8 shrink-0 text-center font-display text-2xl sm:text-4xl font-extrabold leading-none text-caramel-500 pt-0.5 sm:pt-0">2</span>
               <div>
-                <h3 class="font-display text-base font-bold text-ink-900 sm:text-lg">Personalizamos a sua experiência</h3>
-                <p class="mt-1 text-sm leading-relaxed text-ink-700">Verificamos a disponibilidade da data, enviamos a proposta personalizada e alinhamos sabores e detalhes.</p>
+                <h3 class="font-display text-sm font-bold text-ink-900 sm:text-lg">Personalizamos a sua experiência</h3>
+                <p class="mt-1 text-xs leading-relaxed text-ink-700 sm:text-sm">Verificamos a disponibilidade da data, enviamos a proposta personalizada e alinhamos sabores e detalhes.</p>
               </div>
             </li>
-            <li class="flex flex-1 items-start sm:items-center gap-3.5 sm:gap-4 rounded-2xl sm:rounded-3xl bg-white p-4 shadow-soft sm:p-5">
-              <span class="w-8 shrink-0 text-center font-display text-3xl sm:text-4xl font-extrabold leading-none text-caramel-500 pt-0.5 sm:pt-0">3</span>
+            <li class="flex flex-1 items-start sm:items-center gap-3.5 sm:gap-4 rounded-2xl sm:rounded-3xl bg-white p-3.5 shadow-soft sm:p-5">
+              <span class="w-8 shrink-0 text-center font-display text-2xl sm:text-4xl font-extrabold leading-none text-caramel-500 pt-0.5 sm:pt-0">3</span>
               <div>
-                <h3 class="font-display text-base font-bold text-ink-900 sm:text-lg">No dia do seu evento, é só aproveitar!</h3>
-                <p class="mt-1 text-sm leading-relaxed text-ink-700">Chegamos com antecedência, montamos toda a estrutura e servimos os churros quentinhos e recheados na hora.</p>
+                <h3 class="font-display text-sm font-bold text-ink-900 sm:text-lg">No dia do seu evento, é só aproveitar!</h3>
+                <p class="mt-1 text-xs leading-relaxed text-ink-700 sm:text-sm">Chegamos com antecedência, montamos toda a estrutura e servimos os churros quentinhos e recheados na hora.</p>
               </div>
             </li>
           </ol>
         </div>
 
-        <form id="funnel" novalidate class="flex flex-col rounded-3xl bg-white p-5 shadow-soft sm:p-8">
-          <div class="mb-8">
-            <div class="mb-2 flex justify-between text-xs text-ink-500">
-              <span id="stepLabel">Etapa 1 de 4</span><span id="stepName">Tipo de evento</span>
+        <form id="funnel" novalidate class="flex flex-col rounded-2xl bg-white p-4 shadow-soft sm:rounded-3xl sm:p-8 w-full max-w-full overflow-hidden box-border">
+          <div class="mb-6 sm:mb-8">
+            <div class="mb-2 flex justify-between text-xs font-medium text-ink-600">
+              <span id="stepLabel">Etapa 1 de 4</span><span id="stepName" class="font-semibold text-ink-900">Tipo de evento</span>
             </div>
-            <div class="h-1.5 overflow-hidden rounded-full bg-sand-200" role="progressbar" aria-valuemin="1" aria-valuemax="4" aria-valuenow="1" id="progress">
-              <div id="progressBar" class="h-full w-full origin-left rounded-full bg-caramel-500" style="transform:scaleX(.25)"></div>
+            <div class="h-2 overflow-hidden rounded-full bg-sand-200" role="progressbar" aria-valuemin="1" aria-valuemax="4" aria-valuenow="1" id="progress">
+              <div id="progressBar" class="h-full w-full origin-left rounded-full bg-caramel-500 transition-transform duration-300" style="transform:scaleX(.25)"></div>
             </div>
           </div>
 
-          <div id="steps" class="min-h-[17rem] flex-1">
-            <fieldset data-step="0" data-name="Tipo de evento">
-              <legend class="font-display text-xl font-semibold">Qual é o evento?</legend>
-              <div id="eventOptions" role="radiogroup" class="mt-5 grid grid-cols-2 gap-3"></div>
-              <div id="eventOtherWrap" hidden>
-                <label class="mt-4 block text-sm text-ink-700" for="eventOther">Especifique o evento (opcional):</label>
-                <input id="eventOther" type="text" maxlength="60" placeholder="Ex.: chá de bebê, formatura, feira" class="mt-2 w-full rounded-2xl border border-sand-300 bg-paper px-4 py-3 placeholder:text-ink-500" />
+          <div id="steps" class="min-h-[17rem] flex-1 w-full max-w-full overflow-hidden box-border">
+            <fieldset data-step="0" data-name="Tipo de evento" class="w-full min-w-0 max-w-full m-0 p-0 border-0 box-border">
+              <legend class="font-display text-lg font-bold text-ink-900 sm:text-xl">Qual é o evento?</legend>
+              <div id="eventOptions" role="radiogroup" class="mt-4 grid grid-cols-2 gap-2.5 sm:gap-3"></div>
+              <div id="eventOtherWrap" hidden class="mt-3">
+                <label class="block text-sm font-medium text-ink-700" for="eventOther">Especifique o evento (opcional):</label>
+                <input id="eventOther" type="text" maxlength="60" placeholder="Ex.: chá de bebê, formatura, feira" class="mt-1.5 block w-full max-w-full rounded-2xl border border-sand-300 bg-[#FDFBF7] px-4 py-3 text-base text-ink-900 placeholder:text-ink-500 shadow-sm transition-all focus:border-caramel-500 focus:bg-white focus:outline-none focus:ring-2 focus:ring-caramel-500/20 box-border" />
               </div>
             </fieldset>
 
-            <fieldset data-step="1" data-name="Convidados" hidden>
-              <legend class="font-display text-xl font-semibold">Quantos convidados?</legend>
-              <div class="mt-6 flex items-center justify-between">
-                <p class="font-display text-5xl font-bold"><output id="guestsOut" for="guests">80</output><span class="ml-2 text-base font-normal text-ink-500">pessoas</span></p>
-                <div class="flex items-center gap-1.5">
-                  <button type="button" id="guestDec" aria-label="Diminuir 1 pessoa" class="flex h-10 w-10 items-center justify-center rounded-full border border-sand-300 bg-white font-display text-xl font-bold text-ink-800 shadow-sm transition-all hover:border-caramel-400 hover:bg-caramel-50 hover:text-caramel-600 active:scale-95">−</button>
-                  <button type="button" id="guestInc" aria-label="Aumentar 1 pessoa" class="flex h-10 w-10 items-center justify-center rounded-full border border-sand-300 bg-white font-display text-xl font-bold text-ink-800 shadow-sm transition-all hover:border-caramel-400 hover:bg-caramel-50 hover:text-caramel-600 active:scale-95">+</button>
+            <fieldset data-step="1" data-name="Convidados" class="w-full min-w-0 max-w-full m-0 p-0 border-0 box-border" hidden>
+              <legend class="font-display text-lg font-bold text-ink-900 sm:text-xl">Quantos convidados?</legend>
+              <div class="mt-5 flex items-center justify-between">
+                <p class="font-display text-4xl font-extrabold sm:text-5xl"><output id="guestsOut" for="guests">80</output><span class="ml-2 text-base font-normal text-ink-500">pessoas</span></p>
+                <div class="flex items-center gap-2">
+                  <button type="button" id="guestDec" aria-label="Diminuir 1 pessoa" class="flex h-11 w-11 items-center justify-center rounded-full border border-sand-300 bg-white font-display text-xl font-bold text-ink-800 shadow-sm transition-all hover:border-caramel-400 hover:bg-caramel-50 hover:text-caramel-600 active:scale-95 touch-manipulation">−</button>
+                  <button type="button" id="guestInc" aria-label="Aumentar 1 pessoa" class="flex h-11 w-11 items-center justify-center rounded-full border border-sand-300 bg-white font-display text-xl font-bold text-ink-800 shadow-sm transition-all hover:border-caramel-400 hover:bg-caramel-50 hover:text-caramel-600 active:scale-95 touch-manipulation">+</button>
                 </div>
               </div>
-              <input id="guests" type="range" min="30" max="300" step="1" value="80" class="mt-6 w-full" aria-label="Número de convidados" />
+              <input id="guests" type="range" min="30" max="300" step="1" value="80" class="mt-5 w-full" aria-label="Número de convidados" />
               <div class="mt-2 flex justify-between text-xs text-ink-500"><span>Mínimo de 30 pessoas</span><span>300+</span></div>
-              <p class="mt-4 text-sm leading-relaxed text-ink-700">Informe o número aproximado de convidados. <strong class="font-semibold text-ink-900">Nosso orçamento é calculado por pessoa.</strong></p>
+              <p class="mt-4 text-xs leading-relaxed text-ink-700 sm:text-sm">Informe o número aproximado de convidados. <strong class="font-semibold text-ink-900">Nosso orçamento é calculado por pessoa.</strong></p>
             </fieldset>
 
-            <fieldset data-step="2" data-name="Data e local" hidden>
-              <legend class="font-display text-xl font-semibold">Qual a data e local do evento?</legend>
-              <label class="mt-5 block text-sm text-ink-700" for="date">Data do evento</label>
-              <input id="date" type="date" required class="mt-2 w-full rounded-2xl border border-sand-300 bg-paper px-4 py-3" />
-              <label class="mt-4 block text-sm text-ink-700" for="place">Bairro e cidade ou nome do Buffet / espaço</label>
-              <input id="place" type="text" required autocomplete="address-level2" placeholder="Ex.: Altiplano, João Pessoa ou nome do espaço" class="mt-2 w-full rounded-2xl border border-sand-300 bg-paper px-4 py-3 placeholder:text-ink-500" />
+            <fieldset data-step="2" data-name="Data e local" class="w-full min-w-0 max-w-full m-0 p-0 border-0 box-border" hidden>
+              <legend class="font-display text-lg font-bold text-ink-900 sm:text-xl">Qual a data e local do evento?</legend>
+              <label class="mt-4 block text-sm font-medium text-ink-700" for="date">Data do evento</label>
+              <input id="date" type="date" required class="mt-1.5 block w-full max-w-full rounded-2xl border border-sand-300 bg-[#FDFBF7] px-4 py-3 text-base text-ink-900 shadow-sm transition-all focus:border-caramel-500 focus:bg-white focus:outline-none focus:ring-2 focus:ring-caramel-500/20 box-border" />
+              <label class="mt-4 block text-sm font-medium text-ink-700" for="place">Bairro e cidade ou nome do Buffet / espaço</label>
+              <input id="place" type="text" required autocomplete="address-level2" placeholder="Bairro, cidade ou buffet (ex: Altiplano)" class="mt-1.5 block w-full max-w-full rounded-2xl border border-sand-300 bg-[#FDFBF7] px-4 py-3 text-base text-ink-900 placeholder:text-ink-500 shadow-sm transition-all focus:border-caramel-500 focus:bg-white focus:outline-none focus:ring-2 focus:ring-caramel-500/20 box-border" />
             </fieldset>
 
-            <fieldset data-step="3" data-name="Recheios e toppings" hidden>
-              <legend class="font-display text-xl font-semibold">Quais recheios e toppings você deseja?</legend>
-              <p class="mt-1 text-sm text-ink-700">Escolha até 3 opções de cada. Se ainda não decidiu, é só enviar.</p>
-              <div class="mt-5">
+            <fieldset data-step="3" data-name="Recheios e toppings" class="w-full min-w-0 max-w-full m-0 p-0 border-0 box-border" hidden>
+              <legend class="font-display text-lg font-bold text-ink-900 sm:text-xl">Quais recheios e toppings você deseja?</legend>
+              <p class="mt-1 text-xs text-ink-700 sm:text-sm">Escolha até 3 opções de cada. Se ainda não decidiu, é só enviar.</p>
+              <div class="mt-4">
                 <h3 id="fillingsTitle" class="text-xs font-semibold uppercase tracking-widest text-ink-500">Recheios <span class="text-caramel-600">(máx. 3 opções)</span></h3>
-                <div id="fillingOptions" role="group" aria-labelledby="fillingsTitle" class="mt-3 flex flex-wrap gap-2.5"></div>
+                <div id="fillingOptions" role="group" aria-labelledby="fillingsTitle" class="mt-2.5 flex flex-wrap gap-2"></div>
               </div>
-              <div class="mt-6">
+              <div class="mt-5">
                 <h3 id="toppingsTitle" class="text-xs font-semibold uppercase tracking-widest text-ink-500">Toppings <span class="text-caramel-600">(máx. 3 opções)</span></h3>
-                <div id="toppingOptions" role="group" aria-labelledby="toppingsTitle" class="mt-3 flex flex-wrap gap-2.5"></div>
+                <div id="toppingOptions" role="group" aria-labelledby="toppingsTitle" class="mt-2.5 flex flex-wrap gap-2"></div>
               </div>
-              <p class="mt-6 rounded-2xl bg-sand-100 px-4 py-3.5 text-xs leading-relaxed text-ink-700">
+              <p class="mt-5 rounded-2xl bg-sand-100 p-3.5 text-xs leading-relaxed text-ink-700">
                 Ao clicar em <strong class="font-semibold text-ink-900">Enviar no WhatsApp</strong>, receberemos as especificações do seu evento e enviaremos o seu orçamento personalizado pelo WhatsApp.
               </p>
             </fieldset>
           </div>
 
-          <p id="formError" class="mt-4 min-h-[1.25rem] text-sm text-red-700" role="alert"></p>
+          <p id="formError" class="mt-3 min-h-[1.25rem] text-sm font-medium text-red-600" role="alert"></p>
 
-          <div class="mt-auto flex items-center justify-between gap-3 pt-2">
-            <button type="button" id="prevBtn" class="invisible rounded-full px-4 py-3 text-sm text-ink-700 hover:text-ink-900">← Voltar</button>
-            <button type="submit" id="nextBtn" class="rounded-full bg-caramel-500 px-6 py-3 font-display font-semibold text-ink-900 hover:scale-[1.02] active:scale-[.98]">Continuar</button>
+          <div class="mt-auto flex items-center justify-between gap-3 pt-3">
+            <button type="button" id="prevBtn" class="invisible rounded-full px-4 py-3 text-sm font-semibold text-ink-700 hover:text-ink-900 min-h-[48px] touch-manipulation">← Voltar</button>
+            <button type="submit" id="nextBtn" class="rounded-full bg-caramel-500 px-6 py-3 font-display font-bold text-ink-900 shadow-soft hover:scale-[1.02] active:scale-[.98] min-h-[48px] touch-manipulation">Continuar</button>
           </div>
         </form>
       </div>
@@ -1064,15 +1122,21 @@
      MÓDULO 1 — HEADER (transparente na hero, claro depois)
   ===================================================================== */
   function initHeader() {
-    const header = $('#siteHeader'), btn = $('#menuBtn'), menu = $('#mobileMenu'), icon = $('#menuIcon'), float = $('#floatWa');
+    const header = $('#siteHeader'), btn = $('#menuBtn'), menu = $('#mobileMenu'), icon = $('#menuIcon'), float = $('#floatWa'), story = $('#storyBtn');
     let pastHero = false, onForm = false, open = false;
     const sync = () => {
       header.classList.toggle('is-solid', pastHero || open);
-      // Botão flutuante: aparece depois da hero e some sobre o formulário (para não cobrir o "Continuar")
-      float.classList.toggle('is-visible', pastHero && !onForm);
+      // Botão flutuante WhatsApp: aparece depois da hero e some sobre o formulário (para não cobrir o "Continuar")
+      if (float) float.classList.toggle('is-visible', pastHero && !onForm);
+      // Botão de Stories: ajusta na Hero e esconde sobre o formulário para nunca cobrir os inputs ou o botão "Continuar"
+      if (story) {
+        story.classList.toggle('is-on-hero', !pastHero);
+        story.classList.toggle('is-on-form', onForm);
+      }
     };
     new IntersectionObserver(([e]) => { pastHero = !e.isIntersecting; sync(); }, { rootMargin: '-72px 0px 0px 0px' }).observe($('#hero'));
-    new IntersectionObserver(([e]) => { onForm = e.isIntersecting; sync(); }, { threshold: 0.15 }).observe($('#orcamento'));
+    new IntersectionObserver(([e]) => { onForm = e.isIntersecting; sync(); }, { threshold: 0.10 }).observe($('#orcamento'));
+    sync();
 
     function setOpen(v) {
       open = v; menu.hidden = !v;
